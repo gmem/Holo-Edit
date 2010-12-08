@@ -41,7 +41,7 @@ import com.cycling74.max.MaxSystem;
 public class TjPlayer extends HoloPlayer
 {
 	private static boolean init=false;
-	private static String version = "4.5§3";
+	private static String version = "4.5§2.3";
 	private boolean cuemode = true;
 	private float speed  = 1.f;
 	private boolean share = false;
