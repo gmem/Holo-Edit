@@ -1,0 +1,1 @@
+open -a /Applications/_son/MaxMSP\ 4.5//MaxMSP\ Runtime\ 4.5.app /Volumes/Charlotte/_dev/_gmem/_Holophon/HoloSpat/Holo-Spat_v4.0_alpha4/Launcher.pat

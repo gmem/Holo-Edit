@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jardesc>
+<<<<<<< .mine
+/*<jar path="/holoedit.jar"/>*/
+=======
+<jar path="/Volumes/Charlotte/_dev/_gmem/_Holophon/HoloEdit/_eclipse/holoedit.jar"/>
+>>>>>>> .r119
+<options buildIfNeeded="true" compress="true" descriptionLocation="/holo-edit/holo-edit.jardesc" exportErrors="false" exportWarnings="false" includeDirectoryEntries="false" overwrite="true" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+<storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+<selectedProjects/>
+<manifest generateManifest="false" manifestLocation="/holo-edit/MANIFEST.MF" manifestVersion="1.0" reuseManifest="true" saveManifest="true" usesManifest="true">
+<sealing sealJar="false">
+<packagesToSeal/>
+<packagesToUnSeal/>
+</sealing>
+</manifest>
+<selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+<javaElement handleIdentifier="=holo-edit/&lt;holoedit.functions"/>
+<javaElement handleIdentifier="=holo-edit/&lt;holoedit.data"/>
+<javaElement handleIdentifier="=holo-edit/&lt;holoedit.rt"/>
+<javaElement handleIdentifier="=holo-edit/&lt;holoedit.opengl"/>
+<javaElement handleIdentifier="=holo-edit/&lt;holoedit.util"/>
+<javaElement handleIdentifier="=holo-edit/&lt;holoedit.gui"/>
+<javaElement handleIdentifier="=holo-edit/&lt;holoedit.fileio"/>
+<javaElement handleIdentifier="=holo-edit/&lt;holoedit"/>
+</selectedElements>
+</jardesc>

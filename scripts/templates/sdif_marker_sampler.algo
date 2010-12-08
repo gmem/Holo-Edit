@@ -1,0 +1,27 @@
+// Génération en fonction de l’enveloppe temporelle
+// à partir d'un SDIF-XTRD ( markers )
+
+import holoedit.data.*;
+import static holoedit.functions.ScriptEditorFunctions.*;
+
+// récupération de la donnée SDIF présente dans le score
+mySDIFdata = getSDIFdata("blips_1.mrk.sdif - st.0 XTRD - begin time=0:0:3'028 - Track:0")
+
+int beginDate = getBeginDate();	// date de début de la sélection dans le score
+amplitudeIndex = 2;			// numéro de colonne des matrices TRC contenant les amplitudes
+double duration = getDuration()
+
+HoloTraj trajectory = new HoloTraj();
+
+
+
+for (Double time : getTimes(mySDIFdata)) {
+	HoloPoint point = getTrajectoryPointTimePol((float)time);
+	if(point == null)
+		break;
+	point.date = time;
+	trajectory.addElement(point);
+}
+
+Object[] toReturn = [trajectory, duration , beginDate];
+return toReturn;

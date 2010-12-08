@@ -1,0 +1,61 @@
+{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
+{\fonttbl\f0\fswiss\fcharset77 Helvetica;\f1\fswiss\fcharset77 Helvetica-Oblique;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww23080\viewh14220\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 holobugs\
+\
+\
+************ A VOIR **********\
+++ avec save session j'ai  eu ca\
+\
+Exception in thread "holo-writer" java.lang.OutOfMemoryError: Java heap space\
+	at java.lang.AbstractStringBuilder.expandCapacity(AbstractStringBuilder.java:99)\
+	at java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:393)\
+	at java.lang.StringBuilder.append(StringBuilder.java:120)\
+	at holoedit.data.HoloTrack.toString(HoloTrack.java:173)\
+	at holoedit.fileio.HoloFileWriter.run(HoloFileWriter.java:91)\
+	at java.lang.Thread.run(Thread.java:613)\
+\
+++ certains chargement session bloque dans room3Dgui.java line 450 quand la room3D est ouverte\
+\
+++ click dans les menus a besoin que la souris bouge pour le faire apparaitre\
+\
++ \'f0 Z  ne marche pas \'88 la 1ere generation pour chaque track (avec fonctions g\'8en\'8eratrices ou script)\
+\
++ ameliorer progressbar\
+\
++ bug affichage speaker (effacer les fichiers holoSettings, lancer l'appli -> 1 seul gros speaker)\
+\
++ sous Windows XP, si on choisi le look & feel "Motif L&F" (menu Options), la f\'90netre de transport n'a plus les boutons 'loop' et 'record'.\
+\
++ bug fonction clear waveforms ds la sndPool quand on fait :  importer un son dans la soundpool; le mettre dans le score; faire clear dans la soundPool; revenir sur le score; d\'8eplacer le son entre deux tracks ... oups\
+\
+\
+************ CORRIGES **********\
+\
+++ clipper l'affichage des traj dans le score quand le Z est plus grand que 100 ( la courbe deborde dans l'espace dedi\'8e au waveform) - 13/06/08\
+	(et les coordonn\'8ees z ne sont plus limit\'8ees entre 0 et 100 mais entre -820 et 820 comme pour x et y)\
+\
+++ move to time ne marche plus bien lorsque on le fait avec une waveform + data - 12/06/08\
+	(la commande "
+\f1\i move this track to time
+\f0\i0 ..." d\'8eplacait de 2 fois la diff\'8erence de temps)\
+\
+++ begindate dans script - 12/06/08\
+\
+++ La selection de la piste active automatiquement s'affiche bien dans la fenetre script mais si on touche PAS il agit sur la track 1 - 12/06/08\
+\
+++ \'f0 Z apres l'application des scripts - 12/06/08\
+	(mais ne marche pas \'88 la toute 1ere generation ds chaque track, comme pour les  fonctions g\'8en\'8eratrices habituelles. A voir)\
+\
+++ pas mal de bugs quand on deplace des traj avec data associ\'8e ( avec Moveto time par exemple ) il faut ne faut pas que la data soit selectionnable \
+\
+++ quand zoom\'8e vertical dans score prendre la barre \'8edite la piste -> verifier les bornes de captation de la souris dans la fenetre pour l'edition des traj etc ... \
+\
+++ clipper l'affichage des traj dans le score quand le Z est plus grand que 100 ( la courbe deborde dans l'espace dedi\'8e au waveform )\
+\
+++ sauver les links entre wav/sdif dans .holo 4/07/2008\
+\
+++ bug du format de temps de move to}

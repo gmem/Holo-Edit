@@ -1,0 +1,1 @@
+java -showversion -classpath .:./holoedit.jar:./javaosc.jar:jogl.jar -Xdock:name=Holo-Edit -Dapple.laf.useScreenMenuBar=true -Xms100m -Xmx250m holoedit.Main

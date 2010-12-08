@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="jar">
+  <target name="jar">
+    <jar destfile="holoedit.jar"
+         basedir="."
+         includes="holoedit/**"
+         />
+  	<copy file="holoedit.jar" tofile="Max-HoloPlayer/holoedit.jar" />
+  </target>
+</project>

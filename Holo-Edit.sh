@@ -1,0 +1,1 @@
+java -showversion -classpath .:./holoedit.jar:./javaosc.jar:jogl.jar -Xms100m -Xmx250m holoedit.Main

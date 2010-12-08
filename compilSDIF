@@ -1,0 +1,17 @@
+MAJ : 10/06/2008DŽmarche testŽe avec : 	Easdif 1.4.7	CMake .4.8	swig-1.3.34Ce document rŽsume la marche ˆ suivre pour compiler
+la librairie easdif avec swig pour lÕutiliser dans holoedit. 1 - Telechargement de la derniere version sur le CVS	http://sourceforge.net/cvs/?group_id=166459>> cvs -d:pserver:anonymous@sdif.cvs.sourceforge.net:/cvsroot/sdif login (ne rien mettre au password demandŽ)>> cvs -z3 -d:pserver:anonymous@sdif.cvs.sourceforge.net:/cvsroot/sdif co -P EASDIF_SDIF2 Ð Telecharger cmake et swig :http://www.cmake.org/HTML/Download.htmlhttp://www.swig.org/download.html3 Ð build avec cmake :Modifier le fichier EASDIF_SDIF/SDIF/cmModules/UseSWIG.cmake avec lÕoption Ç - package È :	....
+	...      OUTPUT "${swig_generated_file_fullname}"      COMMAND "${SWIG_EXECUTABLE}"      ARGS "-${SWIG_MODULE_${name}_SWIG_LANGUAGE_FLAG}"      ${swig_source_file_flags}      ${CMAKE_SWIG_FLAGS}      -package sdifrevenir  dans le rŽpertoire EASDIF_SDIF crŽŽ par la commande CVS.crŽer un rŽpertoire pour le build :	>> mkdir buildLancer cmake en mode graphique dans le rŽpertoire supŽrieur :	
+>> ccmake ../	- presser ÔcÕ pour configurer	- rŽglage des options ˆ changer :		DOSWIG = ON		DOUNIVERSAL = ON		EASDIF_BUILD_STATIC = ON	- Presser ÔtÕ pour passer en mode avancŽ	- Inclure les .h nŽcessaires avec lÕoption CXX_FLAGS :		CMAKE_CXX_FLAGS = -I /System/Library/Frameworks/JavaVM.framework/Headers/	- presser ÔcÕ ˆ nouveau pour configurer (cmake demande normalement de faire a 2 fois avant de pouvoir gŽnŽrer)	- presser ÔgÕ pour gŽnŽrer.Toujours dans le rŽpertoire EASDIF_SDIF/build :>>  makepuis ouvrir /EASDIF_SDIF/build/swig/java/CMakeFiles/Easdif.dir/link.txt
+qui est normalement comme ceci :/usr/bin/c++   -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk 
+-I /System/Library/Frameworks/JavaVM.framework/Headers/ -O3 -DNDEBUG -bundle -headerpad_max_install_names
+-o ../../lib/eaSDIF.so "CMakeFiles/eaSDIF.dir/easdif-javaJAVA_wrap.o"
+-L/Volumes/iMac-G5_DATA/_cgondre/EASDIF_SDIF/build/lib -lpthread -lEasdif -lpthread et modifier la dernire ligne pour la compilation statique :/usr/bin/c++   -arch ppc -arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk
+-I /System/Library/Frameworks/JavaVM.framework/Headers/ -O3 -DNDEBUG -bundle -headerpad_max_install_names
+-o ../../lib/eaSDIF.so "CMakeFiles/eaSDIF.dir/easdif-javaJAVA_wrap.o"
+../../lib/libEasdif_static.a -lpthread -lpthread 
+
+>> cd ./swig/java>> makecopier /EASDIF_SDIF/build/lib/eaSDIF.so dans /EASDIF_SDIF/build/swig/java 
+et la renommer en : libeaSDIF.jnilibouvrir swig/java/main.java et y rajouter les imports suivant :
+import sdif.Entity;import sdif.Frame;import sdif.SdifFileModeET;import sdif.eaSDIF;import sdif.Matrix;
+
+compilation des .java :>> javac *.javacrŽation du jar sdif :>> mkdir sdif				// crŽation dÕun rŽpertoire sdif pour le package sdif>> mv *.class ./sdif>> mv  ./sdif/main.class .		// on retire le main>> jar cvf sdif.jar ./sdif/*.classon peut vŽrifier que tout fonctionne en exŽcutant le main :>> java Ðclasspath .:sdif.jar main

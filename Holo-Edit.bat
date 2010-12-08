@@ -1,0 +1,1 @@
+java -showversion -cp .;.\holoedit.jar;.\jogl.jar;.\javaosc.jar;.\groovy-all-1.5.1.jar holoedit.Main 1>console.log 2>error.log;
