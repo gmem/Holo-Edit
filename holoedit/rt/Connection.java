@@ -1224,13 +1224,13 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 				if(!paused)
 				{
 					oldDate = new Date().getTime();
-					if(loop && counter == end+1)
+					if(loop && counter >= end+1)
 					{
 						sendQ(keyOut+"/transport/looping",new Object[]{"bang"});
 						counter = beg;
 						looping = true;
 						loopNum++;
-						baseDate = new Date().getTime()+counter;
+						baseDate = new Date().getTime()-counter;
 					} else if(counter > total && !recording){
 						sendQ(keyOut+"/transport/stop",new Object[]{"bang"});
 						playing = false;

@@ -41,7 +41,7 @@ import com.cycling74.max.MaxSystem;
 public class TjPlayer extends HoloPlayer
 {
 	private static boolean init=false;
-	private static String version = "4.5§2.3";
+	private static String version = "4.5§4";
 	private boolean cuemode = true;
 	private float speed  = 1.f;
 	private boolean share = false;
@@ -49,6 +49,7 @@ public class TjPlayer extends HoloPlayer
 	private int lastcue = 1;
 	private int recordcue = 0;
 	private HoloTrack recTrack;
+	private int lastcounter = 0;
 	private float fcounter = 0.f;
 	private static TreeMap<String,GestionPistes> shared_gp_map = new TreeMap<String,GestionPistes>();
 	private GestionPistes shared_gp;
@@ -227,6 +228,7 @@ public class TjPlayer extends HoloPlayer
 							shared_cue.add("none");
 					
 					shared_gp.setActiveTrack(tocue);
+					shared_gp.tracks.get(tocue).clear();
 					shared_gp.importSeq2(tocue, 0);
 					shared_cue.set(tocue, session);
 				}
@@ -242,6 +244,7 @@ public class TjPlayer extends HoloPlayer
 							cue.add("none");
 					
 					gestionPistes.setActiveTrack(tocue);
+					gestionPistes.tracks.get(tocue).clear();
 					gestionPistes.importSeq2(tocue, 0);
 					cue.set(tocue, session);
 				}
@@ -426,7 +429,7 @@ public class TjPlayer extends HoloPlayer
 				looping = false;
 				fcounter += 1.f;
 				counter	= (int) (fcounter + 0.5f);
-				send("time",Atom.newAtom(counter));
+				if(counter%10 == 0) send("time",Atom.newAtom(counter));
 				clock.delay(tick);
 			}else
 			{
@@ -448,15 +451,15 @@ public class TjPlayer extends HoloPlayer
 					}
 				}
 	
-				send("time",Atom.newAtom(counter));
+				
 				
 				if(share)
 				{
 					if (cuemode)
 					{
-						send("cue",Atom.newAtom(lastcue + 1));
+						
 						currentTrack = shared_gp.getTrack(lastcue);
-						hp = currentTrack.getPointAt(counter, autostop, looping);
+						hp = currentTrack.getPointPlaySub(counter,lastcounter);//, autostop, looping);
 						if (hp != null && !hp.equals(ohp))
 						{
 							if(linemode && speed != 0.)
@@ -470,11 +473,15 @@ public class TjPlayer extends HoloPlayer
 								if(nhp != null)
 								{
 									nhp = nhp.copyScaleTrans(pscale, poffset);
+									send("time",Atom.newAtom(counter));
+									send("cue",Atom.newAtom(lastcue + 1));
 									send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z),Atom.newAtom(Math.abs((nhp.date-hp.date)/speed)),Atom.newAtom(nhp.x),Atom.newAtom(nhp.y),Atom.newAtom(nhp.z)});
 								}
 								else 
 								{
 									hp = hp.copyScaleTrans(pscale, poffset);
+									send("time",Atom.newAtom(counter));
+									send("cue",Atom.newAtom(lastcue + 1));
 									send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});
 								}
 									
@@ -482,6 +489,8 @@ public class TjPlayer extends HoloPlayer
 							else 
 							{
 								hp = hp.copyScaleTrans(pscale, poffset);
+								send("time",Atom.newAtom(counter));
+								send("cue",Atom.newAtom(lastcue + 1));
 								send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});
 							}
 						
@@ -491,13 +500,12 @@ public class TjPlayer extends HoloPlayer
 					}
 					else
 					{
-						send("cue",Atom.newAtom(-1));
 						for (int i = 0, last = shared_gp.getNbTracks(); i < last; i++)
 						{
 							currentTrack = shared_gp.getTrack(i);
 							if (currentTrack.isVisible())
 							{
-								hp = currentTrack.getPointAt(counter, autostop, looping);
+								hp = currentTrack.getPointPlaySub(counter,lastcounter);//, autostop, looping);
 								if (hp != null && !hp.equals(ohp))
 								{
 									if(linemode && speed != 0.)
@@ -511,15 +519,21 @@ public class TjPlayer extends HoloPlayer
 										if(nhp != null)
 										{
 											nhp = nhp.copyScaleTrans(pscale, poffset);
-											send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z),Atom.newAtom(Math.abs((nhp.date-hp.date)/speed)),Atom.newAtom(nhp.x),Atom.newAtom(nhp.y),Atom.newAtom(nhp.z)});
+											send("time",Atom.newAtom(counter));
+											send("tk",new Atom[]{Atom.newAtom(i+1),Atom.newAtom("pos"),Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z),Atom.newAtom(Math.abs((nhp.date-hp.date)/speed)),Atom.newAtom(nhp.x),Atom.newAtom(nhp.y),Atom.newAtom(nhp.z)});
 										}
-										else send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});
+										else 
+										{
+											send("time",Atom.newAtom(counter));
+											send("tk",new Atom[]{Atom.newAtom(i+1),Atom.newAtom("pos"),Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});
+										}
 											
 									}
 									else 
 									{
 										hp = hp.copyScaleTrans(pscale, poffset);
-										send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});								
+										send("time",Atom.newAtom(counter));
+										send("tk",new Atom[]{Atom.newAtom(i+1),Atom.newAtom("pos"),Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});								
 									}
 								
 									ohp = hp;
@@ -531,11 +545,12 @@ public class TjPlayer extends HoloPlayer
 				}
 				else
 				{
+					// CUEMODE 1 SHARE 0
 					if (cuemode)
 					{
-						send("cue",Atom.newAtom(lastcue + 1));
 						currentTrack = gestionPistes.getTrack(lastcue);
-						hp = currentTrack.getPointAt(counter, autostop, looping);
+						hp = currentTrack.getPointPlaySub(counter,lastcounter);//, autostop, looping);
+						//hp = currentTrack.getPointPlay(counter);//, autostop, looping);
 						if (hp != null && !hp.equals(ohp))
 						{
 							
@@ -550,14 +565,23 @@ public class TjPlayer extends HoloPlayer
 								if(nhp != null)
 								{
 									nhp = nhp.copyScaleTrans(pscale, poffset);
+									send("time",Atom.newAtom(counter));
+									send("cue",Atom.newAtom(lastcue + 1));
 									send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z),Atom.newAtom(Math.abs((nhp.date-hp.date)/speed)),Atom.newAtom(nhp.x),Atom.newAtom(nhp.y),Atom.newAtom(nhp.z)});
 								}
-								else send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});
+								else
+								{
+									send("time",Atom.newAtom(counter));
+									send("cue",Atom.newAtom(lastcue + 1));
+									send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});
+								}
 									
 							}
 							else
 							{
 								hp = hp.copyScaleTrans(pscale, poffset);
+								send("time",Atom.newAtom(counter));
+								send("cue",Atom.newAtom(lastcue + 1));
 								send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});						
 							}
 						
@@ -566,13 +590,12 @@ public class TjPlayer extends HoloPlayer
 					}
 					else
 					{
-						send("cue",Atom.newAtom(-1));
 						for (int i = 0, last = gestionPistes.getNbTracks(); i < last; i++)
 						{
 							currentTrack = gestionPistes.getTrack(i);
 							if (currentTrack.isVisible())
 							{
-								hp = currentTrack.getPointAt(counter, autostop, looping);
+								hp = currentTrack.getPointPlaySub(counter,lastcounter);//, autostop, looping);
 								if (hp != null && !hp.equals(ohp))
 								{
 									if(linemode && speed != 0.)
@@ -586,14 +609,20 @@ public class TjPlayer extends HoloPlayer
 										if(nhp != null)
 										{
 											nhp = nhp.copyScaleTrans(pscale, poffset);
-											send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z),Atom.newAtom(Math.abs((nhp.date-hp.date)/speed)),Atom.newAtom(nhp.x),Atom.newAtom(nhp.y),Atom.newAtom(nhp.z)});
+											send("time",Atom.newAtom(counter));
+											send("tk",new Atom[]{Atom.newAtom(i+1),Atom.newAtom("pos"),Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z),Atom.newAtom(Math.abs((nhp.date-hp.date)/speed)),Atom.newAtom(nhp.x),Atom.newAtom(nhp.y),Atom.newAtom(nhp.z)});
 										}
-										else send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});
+										else 
+										{
+											send("time",Atom.newAtom(counter));
+											send("tk",new Atom[]{Atom.newAtom(i+1),Atom.newAtom("pos"),Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});
+										}
 											
 									}
 									else {
 										hp = hp.copyScaleTrans(pscale, poffset);
-										send("pos",new Atom[]{Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});								
+										send("time",Atom.newAtom(counter));
+										send("tk",new Atom[]{Atom.newAtom(i+1),Atom.newAtom("pos"),Atom.newAtom(hp.x),Atom.newAtom(hp.y),Atom.newAtom(hp.z)});								
 									}
 									
 									ohp = hp;
@@ -607,6 +636,7 @@ public class TjPlayer extends HoloPlayer
 				
 			looping = false;
 			fcounter += speed;
+			lastcounter = counter;
 			counter	= (int) (fcounter + 0.5f);
 			if(!autostop)
 				clock.delay(tick);

@@ -35,6 +35,7 @@ import holoedit.util.Ut;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Vector;
 import javax.media.opengl.GL;
@@ -77,6 +78,7 @@ public class HoloTrack
 	public int nextPointIndex;
 	// time indexed tree set for playing
 	public TreeMap<Integer, HoloPoint> sequence;
+	public SortedMap<Integer, HoloPoint> subsequence;
 	// played point queue
 	public int[] playedPointsDate;
 	int playedIndex = 0;
@@ -846,7 +848,38 @@ public class HoloTrack
 		return	p ;
 	}
 	
-	
+	public HoloPoint getPointPlaySub(int date,int lastdate)
+	{
+		HoloPoint p = null;
+		if(date == lastdate)
+		{
+			p = (HoloPoint) sequence.get(date);
+		}
+		else if(date > lastdate)
+		{
+			subsequence = sequence.subMap(lastdate+1, date+1);
+			if(!subsequence.isEmpty())
+			{
+				p = subsequence.get(subsequence.lastKey());
+			}
+		}
+		else // date < lastdate
+		{
+			subsequence = sequence.subMap(date, lastdate);
+			if(!subsequence.isEmpty())
+			{
+				p = subsequence.get(subsequence.firstKey());
+			}
+		}
+		if(p!=null)
+		{
+			if(playedIndex >= playedPointsDate.length)
+				playedIndex = 0;
+			playedPointsDate[playedIndex] = date;
+			playedIndex = (playedIndex + 1) % playedPointsDate.length;
+		}
+		return	p;
+	}
 	
 	/** ************* RECHERCHE/AJOUT/SUPPRESSION **************** */
 	/** ************* RECHERCHE AJOUT SUPPRESSION **************** */

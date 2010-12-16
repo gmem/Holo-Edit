@@ -66,7 +66,7 @@ import com.sun.opengl.util.FPSAnimator;
 // FEATURE MAIN HISTORIQUE ANNULATION
 public class HoloEdit implements UncaughtExceptionHandler
 {
-	public static String buildDate = "29/11/2010";
+	public static String buildDate = "15/12/2010";
 	public static Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 	
 	/* standalone ?? */
@@ -407,6 +407,7 @@ public class HoloEdit implements UncaughtExceptionHandler
 
 	static public void main(String[] args)
 	{
+		System.out.println("GO GO GO Holo-Edit !!!");
 		try
 		{
 			System.loadLibrary("jogl");
