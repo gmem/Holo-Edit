@@ -125,13 +125,13 @@
 ,
 					"patching_rect" : [ 767.0, 110.0, 84.0, 17.0 ],
 					"saved_object_attributes" : 					{
-						"default_fontface" : 0,
+						"fontname" : "Arial",
+						"default_fontname" : "Arial",
+						"globalpatchername" : "",
+						"default_fontsize" : 12.0,
 						"fontface" : 0,
 						"fontsize" : 12.0,
-						"default_fontname" : "Arial",
-						"default_fontsize" : 12.0,
-						"fontname" : "Arial",
-						"globalpatchername" : ""
+						"default_fontface" : 0
 					}
 ,
 					"text" : "p osc-commands"
@@ -385,13 +385,13 @@
 ,
 					"patching_rect" : [ 811.0, 288.0, 90.0, 17.0 ],
 					"saved_object_attributes" : 					{
-						"default_fontface" : 0,
+						"fontname" : "Arial",
+						"default_fontname" : "Arial",
+						"globalpatchername" : "",
+						"default_fontsize" : 12.0,
 						"fontface" : 0,
 						"fontsize" : 12.0,
-						"default_fontname" : "Arial",
-						"default_fontsize" : 12.0,
-						"fontname" : "Arial",
-						"globalpatchername" : ""
+						"default_fontface" : 0
 					}
 ,
 					"text" : "p sound_paths"
@@ -1543,13 +1543,13 @@
 ,
 					"patching_rect" : [ 631.0, 288.0, 54.0, 17.0 ],
 					"saved_object_attributes" : 					{
-						"default_fontface" : 0,
+						"fontname" : "Arial",
+						"default_fontname" : "Arial",
+						"globalpatchername" : "",
+						"default_fontsize" : 12.0,
 						"fontface" : 0,
 						"fontsize" : 12.0,
-						"default_fontname" : "Arial",
-						"default_fontsize" : 12.0,
-						"fontname" : "Arial",
-						"globalpatchername" : ""
+						"default_fontface" : 0
 					}
 ,
 					"text" : "p source3"
@@ -1567,9 +1567,9 @@
 					"outlettype" : [ "list" ],
 					"patcher" : 					{
 						"fileversion" : 1,
-						"rect" : [ 520.0, 188.0, 946.0, 417.0 ],
+						"rect" : [ 494.0, 188.0, 946.0, 417.0 ],
 						"bglocked" : 0,
-						"defrect" : [ 520.0, 188.0, 946.0, 417.0 ],
+						"defrect" : [ 494.0, 188.0, 946.0, 417.0 ],
 						"openrect" : [ 0.0, 0.0, 0.0, 0.0 ],
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -2278,13 +2278,13 @@
 ,
 					"patching_rect" : [ 541.0, 288.0, 54.0, 17.0 ],
 					"saved_object_attributes" : 					{
-						"default_fontface" : 0,
+						"fontname" : "Arial",
+						"default_fontname" : "Arial",
+						"globalpatchername" : "",
+						"default_fontsize" : 12.0,
 						"fontface" : 0,
 						"fontsize" : 12.0,
-						"default_fontname" : "Arial",
-						"default_fontsize" : 12.0,
-						"fontname" : "Arial",
-						"globalpatchername" : ""
+						"default_fontface" : 0
 					}
 ,
 					"text" : "p source2"
@@ -2794,13 +2794,13 @@
 ,
 									"patching_rect" : [ 151.0, 91.0, 58.0, 17.0 ],
 									"saved_object_attributes" : 									{
-										"default_fontface" : 0,
+										"fontname" : "Arial",
+										"default_fontname" : "Arial",
+										"globalpatchername" : "",
+										"default_fontsize" : 12.0,
 										"fontface" : 0,
 										"fontsize" : 12.0,
-										"default_fontname" : "Arial",
-										"default_fontsize" : 12.0,
-										"fontname" : "Arial",
-										"globalpatchername" : ""
+										"default_fontface" : 0
 									}
 ,
 									"text" : "p speakers"
@@ -2879,13 +2879,13 @@
 ,
 					"patching_rect" : [ 736.0, 201.0, 90.0, 17.0 ],
 					"saved_object_attributes" : 					{
-						"default_fontface" : 0,
+						"fontname" : "Arial",
+						"default_fontname" : "Arial",
+						"globalpatchername" : "",
+						"default_fontsize" : 12.0,
 						"fontface" : 0,
 						"fontsize" : 12.0,
-						"default_fontname" : "Arial",
-						"default_fontsize" : 12.0,
-						"fontname" : "Arial",
-						"globalpatchername" : ""
+						"default_fontface" : 0
 					}
 ,
 					"text" : "p config-speakers"
@@ -2903,9 +2903,9 @@
 					"outlettype" : [ "list" ],
 					"patcher" : 					{
 						"fileversion" : 1,
-						"rect" : [ 645.0, 73.0, 946.0, 417.0 ],
+						"rect" : [ 494.0, 73.0, 946.0, 417.0 ],
 						"bglocked" : 0,
-						"defrect" : [ 645.0, 73.0, 946.0, 417.0 ],
+						"defrect" : [ 494.0, 73.0, 946.0, 417.0 ],
 						"openrect" : [ 0.0, 0.0, 0.0, 0.0 ],
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -3614,13 +3614,13 @@
 ,
 					"patching_rect" : [ 451.0, 288.0, 54.0, 17.0 ],
 					"saved_object_attributes" : 					{
-						"default_fontface" : 0,
+						"fontname" : "Arial",
+						"default_fontname" : "Arial",
+						"globalpatchername" : "",
+						"default_fontsize" : 12.0,
 						"fontface" : 0,
 						"fontsize" : 12.0,
-						"default_fontname" : "Arial",
-						"default_fontsize" : 12.0,
-						"fontname" : "Arial",
-						"globalpatchername" : ""
+						"default_fontface" : 0
 					}
 ,
 					"text" : "p source1"
@@ -4029,13 +4029,13 @@
 ,
 					"patching_rect" : [ 122.0, 328.0, 61.0, 17.0 ],
 					"saved_object_attributes" : 					{
-						"default_fontface" : 0,
+						"fontname" : "Arial",
+						"default_fontname" : "Arial",
+						"globalpatchername" : "",
+						"default_fontsize" : 12.0,
 						"fontface" : 0,
 						"fontsize" : 12.0,
-						"default_fontname" : "Arial",
-						"default_fontsize" : 12.0,
-						"fontname" : "Arial",
-						"globalpatchername" : ""
+						"default_fontface" : 0
 					}
 ,
 					"text" : "p recording"
@@ -4313,20 +4313,6 @@
 			}
 , 			{
 				"box" : 				{
-					"fontname" : "Arial",
-					"fontsize" : 9.0,
-					"id" : "obj-66",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "int" ],
-					"patching_rect" : [ 206.0, 278.0, 32.0, 17.0 ],
-					"text" : "* 10"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"bgcolor" : [ 0.866667, 0.866667, 0.866667, 1.0 ],
 					"fontname" : "Arial",
 					"fontsize" : 9.0,
@@ -4370,48 +4356,6 @@
 					"outlettype" : [ "int", "bang" ],
 					"patching_rect" : [ 206.0, 408.0, 55.0, 17.0 ],
 					"triscale" : 0.9
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontname" : "Arial",
-					"fontsize" : 9.0,
-					"id" : "obj-70",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "int" ],
-					"patching_rect" : [ 256.0, 278.0, 32.0, 17.0 ],
-					"text" : "* 10"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontname" : "Arial",
-					"fontsize" : 9.0,
-					"id" : "obj-71",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "int" ],
-					"patching_rect" : [ 306.0, 278.0, 32.0, 17.0 ],
-					"text" : "* 10"
-				}
-
-			}
-, 			{
-				"box" : 				{
-					"fontname" : "Arial",
-					"fontsize" : 9.0,
-					"id" : "obj-72",
-					"maxclass" : "newobj",
-					"numinlets" : 2,
-					"numoutlets" : 1,
-					"outlettype" : [ "int" ],
-					"patching_rect" : [ 356.0, 278.0, 32.0, 17.0 ],
-					"text" : "* 10"
 				}
 
 			}
@@ -4722,7 +4666,7 @@
 			}
 , 			{
 				"box" : 				{
-					"data" : [ 3617, "png", "IBkSG0fBZn....PCIgDQRA...PF...fFHX....PPJme4....DLmPIQEBHf.B7g.YHB..MfcRDEDUnEX6ZtGcUUkeG+ydedbO49H4xaRfnADnEvVIfOAl03pcIHXaUQqJZUbUqnV0N1YsFbPqN5zwY5nFeqPBDn0gp1+vJRQGW0AFdrfAIJAGQfDdHn7J4RdcSx804wt+w4duP3lDzwRr+Q+tVm0MYe1+1me+1+16eu1awEW4TU7+iuygmqKQiFE8NZu89rSBgnf1Tpud5u7zpTn5s1+ZNlea3gdc7Nyw5aBsmCkIWWWDBA5ZZZEzYWWWrsswwwAkmGf.DflThtgA555Hkxd8iJDBrcbHcxjn.BDH.FFF353fsiC1118foEBAFYGScc87s444gssM111m56n7YEMMs7zHDh9W3yRlq.bDJbA7Df.An.cDnoTnqNUe6MYxwwgjISB.lllDHP.bxJON43Qg.x9qttNFFFnookWA355hiiCN113kkmUJk+hDg.kmG5m9G0yyi3w6DSSCtfwcALoIegL5xGMAKJHszRKbf8ue97csKNwINAlllTTQEUvjgssMkUVYLwIOYjBAM1PC7Ye1mQQVVLtwOdtnoLEpnhJvvzjN5nCN9wOFMr2FX+6aeDOdbBFLHISlDgPv4e9mOSoxJYLicrDLTPRjHAwZNFewAN.6YO6gVN4IonfAwvvn2Wb.jQ.oDPXOXboELFaHhm+DTbIbHC3KM8+6.JvRUnRwwwgQNxQxjl7jQJk7EG7fTe80ikkEWv3FGWzTtHpnhJvzL.wiGmicziRiMz.6ae6iN6ry7xjTJo7xKmoTYkL1K3BHTnPjHYBZ9DMSiM1.wZt4SoPbccoyt5hK6xtTt8Er.tpYMKhDIROXLEvA1+AXMqd07uupUQSm3DEzmt5pKl9LmA+he4uD.d9ppBDBtm669XVyZVTRzRJXhKYxjr0srUpslZX8qacLkoMMl+sNelybmCCe3inf9qTJ16d1KuwpVEu0a8VjISFLMM6gRQ.jTnvPI35iK3uHtfIlRPwJPK6TtKBhKfFsT7AQT7AEqnSIDxqmJkt6tat7q3x4oqpJ.Xk0tBbbcXg268xUMqYSz9Rl15VYkKuVV2G9g7mNkovsda2FW8bmCiXDEJSNNNbf8e.DSb7SPYaaisiMK7dtWt+G39ojnQKffyD6ZWeNO9i9nT212NgCGNe6czdG72rf6fm9YeF.3KN3AIRwEyPG5POqiYrXwXSabiL8YLCJszROq8GfkWSM7y+YOE555b5leSHgxy.ObyRtxDBj.1.R.QNae.d3a1BT7wVJdlg4wNKxeGUNK8wiGmaY9ympdgmG.NxQNBABDfgMrgcV4uVNYKr4MuYtjK8RXTiZTm09KF+XFqJcpTrnEuXt+G7Ax+hFanAd228cYW+9cQhDcyHFwH36ekWIydNWMEWbw4Yz68tWHacKaghJpHfBUH4PSM0DaZiaj52wNHVywP44QICJJSZxSlqdNWMiZTitG8OYxj7I0UGadSalCe3CSFaaJNRDl3DmHydtygJpnB+ITOO9aWvcx5W25HTnP.BRHUbdYfpNljKJifjYm9+Jc3SKRwWYnPghQ4HYxIgQ3HvToHLBNgN7XC2ksFx27UuoPxgXMGiMtgMP80WOwZpIb87HZznLwIMQly0bMEn.RmJM0UWcr4MrAN7W9kX63PjvgY7SXBL2q4ZXLicLn2Ymcxcbm2I228+2C.oRkhZptZV5qsDZskVHPf.4cp8e91uMUN0oxi8Sdbt7q3J3HG4njISldMpgbn6t6lU85uNqbEqju5K+RDBARoDAfmRQlLYXEKa47JKYIT4TqD.1yt2MO5heT93Od63X6fttukUkRgssM0Tc07huxKyL+deOjRI+4y5p32t90C363tHO3GGSxeRFIIPQBIrxA4w6Thhl0gbQGjQ5wHsgm+nRpLkftAJyAlPFAaIT1fY5EjLQBV0uZUrxZqkCenCARI5ZZnTJTdd333vJqcE7Ru1qxzl1z.fF16d4e5QdDpa60QlLYxGPhmmGoyjgkUyx3Ee4WD8wOgIvC7fOHRoDWGG9YO4OkkUc0DNRDFxPFBddd.mJTscVe87PO3+.W8bmKqcMqglZpIhDIReFoya9FuAKdQOLQJtXJojBs0B96FWwxqkW90dE.n9crC1v5WGCa3CGsPEFE3wN1w3EdtmmYLyYhPH37Ju77lqRIfapCAe+tEzEJRKE73izk2OhhfJHhG.BrEftGrf1DLozfBElHnpg3wJGrh.d88hr+q0rFV7hdXBENTeZdee6aerrpqgoUS0Ykocxu4+9CYjibjDLTH+nwxhhEBh0bS7u7T+bzuoa9lo7yq7rSduIKeYKiRhFEcc8SoLf7g0EMZThEKFKu5pwxxp.m5mIZu01wvzjPgB0mJs.VVzbymfToRgkkEgBGlHEWbuFRqRoHXvfzZqsRhDIxalRo78GDzCt13Bb.LAdsA6x6EwiA456GA7i7xC3G0rj6ncANYcg+RCwiZFhh.JPi9NGk3w6DcC89Ulrrr3jwhQpjIwpnhHTnfTbwE6OlYmWOcYJb3vzTyMi97tga..5LdbVQs0hkkUOxGvOW.GD9ZkrCgeb1ttdjLQBT.Roj.ABTvtbCSCz5ibVNcb5wqqTp7O8k4vblw.+U2BfzRXxoDL1LBDn3PFBVSDEg7D4Yqj9oTwhhI31ZWfMJDH3EFpG0NXeyc53qv7DfrWXaCC+.H7775S9SoTnqo6maR1+2qelC76uF5kMpx.fs+QamCenCgkkU9IOOOOBGNBACELaBh89.JkZjISFh2Ymeqxh9aKrAFSZ+vVMPvmVjhV0AS0odeXO3GbRI2RG9JCkPvyMDEqbvJBmMb23Z9Jhh75KuHm6P9kYewAOH111XXX.3qw5tqt41WvcvBum6gzoS22aOKJHebc0wO5G9Cw4zxDefDprOCwg7llNpA3H7S3CfLR3OKtfauCA9bofpFpG+qCRQHke17Q7f40pjKNAzpF7RCyC6APsxoRLzyqGNZ.v00gRKqLF1vG9YcfJszQ1mkSYf.4lybkmpMo5TsK.r7fMDQwRR4wcztjpFlh+srJCcEzsDFrCb+sJXztv1BnP1KYtetD4UHit7xQOaIHxYWzvzjc86+L17l1LYxjoGJLaaaF5vFJUN0ohllFszRKjJcJDRYgekAHHAho4aZx.EUjwuFUdBPnHexgKanJ1XXW1kku4sbbrqHaV5JEowubJ1hAVyV5s0VaLnAMHtrK6xnzRKkie7imO2ifACx6s10x6s10l0IqOQBAzRKsvO3e7g3hujKA.ZrgFIQWcyYVrxARXnfCD.5VpP2SvTRBizVwwMAsr7toBb.9jf9QjkaxVA3BLoTBJwy2o9QMTzsT0qN1OWA46u12C.F5vFJy+VuU5tqtJH5FWWWTddnTdHDPGczAiZzila7u9l.7qe0l2zlxGs02EPguuhuvPwts7W0WpqfapCAIkprU30ueR72Ib5lyRHgA6pXNcJPGHMB1QQ96PFHWhIeq27MIdGwAf+t6YgbsyadzRKsfiiS9rpMLLvvzDSSSRkJEgBElm7I+oLoIOI.32sksxGsssQvfAG.Y8Bg.vVp3sKw+7JRih42lfarcIcn4GVrfBeRH8KK+c2hFWTJANHX+lvVBqvRMvZxRtiO4Sn1kub.+jYd5m8Y3tW3BIS5Lzd6sSpToHc5zzc2cSas0FkMpQwK9JuLW+MNO.3jm7j7bUUEN4hP663yezRIX8gU79gUDAAFH3wZRxC0rfPtPGRnKouC7NkJ5PBivVvSbBIKnMA1HvCXkC1iXZfkmXf0odQVVrjW8UYLicrbcW+0QznQ4e9W7T7Wds+Ur52Y0z3d2KISkhAO3AyLl4L45ug4QYk4m6R5zo4Ie7mfOcm6jnQi9cZNH4flxOS7mc3dLBGIyHkfjJ3daUxr6B1RPE6MfhDZJh3J4BSIXFcKXzN9qkLPwxGjGqsX+DJUhAVYR2LP.RmNMKdQKhN6LN27sbKXZZxUL8oyUL8oiqqKtttXZZ1CBat4l4I+IOAq9cdG+RB7+ATF4PQJ3jZJVTodrnXRlcWBL.FaFXbYD9mZHx7gXp.B.zt.Vwf7XYCQggJWY5GXgtRoHPf.jISFdze7hYqaYqbW20cwEeo9QOooo0iHmh2QG7q+0e.Kq5kxt+7cSwYq4TNnvuD.4fgwopTa+UlAoTKe.AlFl8Z+5Q+EBLylDauEYWHkfV0gGoTO1PmBtt3BtvjPDkHqhvuhud.wEvuInh+inJ1VHOBnDXbF4eb5kpQW2ne4ubPpIyOWnaXzuUEO+XmS.MMMQJkrlUuZ1zF1.UVYkL0oMMNuJp.KKKZqsVYO6d2T2GUGM1XC9mmQIkTPA.srrXO6d2T8RqFMMIa62sMBXY0uLSf.A3nG4HT8RqlfAKhcti5wzzruqiklFwi2Iq50+UDt3Hr6O+yQWumJEE9mmgs.d2hU7aCqXrYf+nzBJ01Oj2tzTbDCXuATbPSeScA8DETXQq.AXu6YOTyRqFMMM9nsss7oFzWvzzjicriwRWxRIXvf7o6bmX70PoH9iG236w9REfqiCYxjI+Mg.J7BIzW4ajqfjoRlBE969BDHvY8VXj6RDn77vnONu9SGdddjHQB+KFfgAACFre6uKfizOGjbmWXte0U9qL05CxyISISlDTfY.e9y6LpZaeKSJLLM5WYxM60.p.ExYNnmI9FeMfNGQSO3sy3Z4zuz0Ks80l1ukxT+QWNEhdu91ugez+2h1uIz7GJu8swM84ZYRHD7+.s.sdp8dCcjD.....IUjSD4pPfIH" ],
+					"data" : [ 3617, "", "IBkSG0fBZn....PCIgDQRA...PF...fFHX....PPJme4....DLmPIQEBHf.B7g.YHB..MfcRDEDUnEX6ZtGcUUkeG+ydedbO49H4xaRfnADnEvVIfOAl03pcIHXaUQqJZUbUqnV0N1YsFbPqN5zwY5nFeqPBDn0gp1+vJRQGW0AFdrfAIJAGQfDdHn7J4RdcSx804wt+w4duP3lDzwRr+Q+tVm0MYe1+1me+1+16eu1awEW4TU7+iuygmqKQiFE8NZu89rSBgnf1Tpud5u7zpTn5s1+ZNlea3gdc7Nyw5aBsmCkIWWWDBA5ZZZEzYWWWrsswwwAkmGf.DflThtgA555Hkxd8iJDBrcbHcxjn.BDH.FFF353fsiC1118foEBAFYGScc87s444gssM111m56n7YEMMs7zHDh9W3yRlq.bDJbA7Df.An.cDnoTnqNUe6MYxwwgjISB.lllDHP.bxJON43Qg.x9qttNFFFnookWA355hiiCN113kkmUJk+hDg.kmG5m9G0yyi3w6DSSCtfwcALoIegL5xGMAKJHszRKbf8ue97csKNwINAlllTTQEUvjgssMkUVYLwIOYjBAM1PC7Ye1mQQVVLtwOdtnoLEpnhJvvzjN5nCN9wOFMr2FX+6aeDOdbBFLHISlDgPv4e9mOSoxJYLicrDLTPRjHAwZNFewAN.6YO6gVN4IonfAwvvn2Wb.jQ.oDPXOXboELFaHhm+DTbIbHC3KM8+6.JvRUnRwwwgQNxQxjl7jQJk7EG7fTe80ikkEWv3FGWzTtHpnhJvzL.wiGmicziRiMz.6ae6iN6ry7xjTJo7xKmoTYkL1K3BHTnPjHYBZ9DMSiM1.wZt4SoPbccoyt5hK6xtTt8Er.tpYMKhDIROXLEvA1+AXMqd07uupUQSm3DEzmt5pKl9LmA+he4uD.d9ppBDBtm669XVyZVTRzRJXhKYxjr0srUpslZX8qacLkoMMl+sNelybmCCe3inf9qTJ16d1KuwpVEu0a8VjISFLMM6gRQ.jTnvPI35iK3uHtfIlRPwJPK6TtKBhKfFsT7AQT7AEqnSIDxqmJkt6tat7q3x4oqpJ.Xk0tBbbcXg268xUMqYSz9Rl15VYkKuVV2G9g7mNkovsda2FW8bmCiXDEJSNNNbf8e.DSb7SPYaaisiMK7dtWt+G39ojnQKffyD6ZWeNO9i9nT212NgCGNe6czdG72rf6fm9YeF.3KN3AIRwEyPG5POqiYrXwXSabiL8YLCJszROq8GfkWSM7y+YOE555b5leSHgxy.ObyRtxDBj.1.R.QNae.d3a1BT7wVJdlg4wNKxeGUNK8wiGmaY9ympdgmG.NxQNBABDfgMrgcV4uVNYKr4MuYtjK8RXTiZTm09KF+XFqJcpTrnEuXt+G7Ax+hFanAd228cYW+9cQhDcyHFwH36ekWIydNWMEWbw4Yz68tWHacKaghJpHfBUH4PSM0DaZiaj52wNHVywP44QICJJSZxSlqdNWMiZTitG8OYxj7I0UGadSalCe3CSFaaJNRDl3DmHydtygJpnB+ITOO9aWvcx5W25HTnP.BRHUbdYfpNljKJifjYm9+Jc3SKRwWYnPghQ4HYxIgQ3HvToHLBNgN7XC2ksFx27UuoPxgXMGiMtgMP80WOwZpIb87HZznLwIMQly0bMEn.RmJM0UWcr4MrAN7W9kX63PjvgY7SXBL2q4ZXLicLn2Ymcxcbm2I228+2C.oRkhZptZV5qsDZskVHPf.4cp8e91uMUN0oxi8Sdbt7q3J3HG4njISldMpgbn6t6lU85uNqbEqju5K+RDBARoDAfmRQlLYXEKa47JKYIT4TqD.1yt2MO5heT93Od63X6fttukUkRgssM0Tc07huxKyL+deOjRI+4y5p32t90C363tHO3GGSxeRFIIPQBIrxA4w6Thhl0gbQGjQ5wHsgm+nRpLkftAJyAlPFAaIT1fY5EjLQBV0uZUrxZqkCenCARI5ZZnTJTdd333vJqcE7Ru1qxzl1z.fF16d4e5QdDpa60QlLYxGPhmmGoyjgkUyx3Ee4WD8wOgIvC7fOHRoDWGG9YO4OkkUc0DNRDFxPFBddd.mJTscVe87PO3+.W8bmKqcMqglZpIhDIReFoya9FuAKdQOLQJtXJojBs0B96FWwxqkW90dE.n9crC1v5WGCa3CGsPEFE3wN1w3EdtmmYLyYhPH37Ju77lqRIfapCAe+tEzEJRKE73izk2OhhfJHhG.BrEftGrf1DLozfBElHnpg3wJGrh.d88hr+q0rFV7hdXBENTeZdee6aerrpqgoUS0Ykocxu4+9CYjibjDLTH+nwxhhEBh0bS7u7T+bzuoa9lo7yq7rSduIKeYKiRhFEcc8SoLf7g0EMZThEKFKu5pwxxp.m5mIZu01wvzjPgB0mJs.VVzbymfToRgkkEgBGlHEWbuFRqRoHXvfzZqsRhDIxalRo78GDzCt13Bb.LAdsA6x6EwiA456GA7i7xC3G0rj6ncANYcg+RCwiZFhh.JPi9NGk3w6DcC89Ulrrr3jwhQpjIwpnhHTnfTbwE6OlYmWOcYJb3vzTyMi97tga..5LdbVQs0hkkUOxGvOW.GD9ZkrCgeb1ttdjLQBT.Roj.ABTvtbCSCz5ibVNcb5wqqTp7O8k4vblw.+U2BfzRXxoDL1LBDn3PFBVSDEg7D4Yqj9oTwhhI31ZWfMJDH3EFpG0NXeyc53qv7DfrWXaCC+.H7775S9SoTnqo6maR1+2qelC76uF5kMpx.fs+QamCenCgkkU9IOOOOBGNBACELaBh89.JkZjISFh2Ymeqxh9aKrAFSZ+vVMPvmVjhV0AS0odeXO3GbRI2RG9JCkPvyMDEqbvJBmMb23Z9Jhh75KuHm6P9kYewAOH111XXX.3qw5tqt41WvcvBum6gzoS22aOKJHebc0wO5G9Cw4zxDefDprOCwg7llNpA3H7S3CfLR3OKtfauCA9bofpFpG+qCRQHke17Q7f40pjKNAzpF7RCyC6APsxoRLzyqGNZ.v00gRKqLF1vG9YcfJszQ1mkSYf.4lybkmpMo5TsK.r7fMDQwRR4wcztjpFlh+srJCcEzsDFrCb+sJXztv1BnP1KYtetD4UHit7xQOaIHxYWzvzjc86+L17l1LYxjoGJLaaaF5vFJUN0ohllFszRKjJcJDRYgekAHHAho4aZx.EUjwuFUdBPnHexgKanJ1XXW1kku4sbbrqHaV5JEowubJ1hAVyV5s0VaLnAMHtrK6xnzRKkie7imO2ifACx6s10x6s10l0IqOQBAzRKsvO3e7g3hujKA.ZrgFIQWcyYVrxARXnfCD.5VpP2SvTRBizVwwMAsr7toBb.9jf9QjkaxVA3BLoTBJwy2o9QMTzsT0qN1OWA46u12C.F5vFJy+VuU5tqtJH5FWWWTddnTdHDPGczAiZzila7u9l.7qe0l2zlxGs02EPguuhuvPwts7W0WpqfapCAIkprU30ueR72Ib5lyRHgA6pXNcJPGHMB1QQ96PFHWhIeq27MIdGwAf+t6YgbsyadzRKsfiiS9rpMLLvvzDSSSRkJEgBElm7I+oLoIOI.32sksxGsssQvfAG.Y8Bg.vVp3sKw+7JRih42lfarcIcn4GVrfBeRH8KK+c2hFWTJANHX+lvVBqvRMvZxRtiO4Sn1kub.+jYd5m8Y3tW3BIS5Lzd6sSpToHc5zzc2cSas0FkMpQwK9JuLW+MNO.3jm7j7bUUEN4hP663yezRIX8gU79gUDAAFH3wZRxC0rfPtPGRnKouC7NkJ5PBivVvSbBIKnMA1HvCXkC1iXZfkmXf0odQVVrjW8UYLicrbcW+0QznQ4e9W7T7Wds+Ur52Y0z3d2KISkhAO3AyLl4L45ug4QYk4m6R5zo4Ie7mfOcm6jnQi9cZNH4flxOS7mc3dLBGIyHkfjJ3daUxr6B1RPE6MfhDZJh3J4BSIXFcKXzN9qkLPwxGjGqsX+DJUhAVYR2LP.RmNMKdQKhN6LN27sbKXZZxUL8oyUL8oiqqKtttXZZ1CBat4l4I+IOAq9cdG+RB7+ATF4PQJ3jZJVTodrnXRlcWBL.FaFXbYD9mZHx7gXp.B.zt.Vwf7XYCQggJWY5GXgtRoHPf.jISFdze7hYqaYqbW20cwEeo9QOooo0iHmh2QG7q+0e.Kq5kxt+7cSwYq4TNnvuD.4fgwopTa+UlAoTKe.AlFl8Z+5Q+EBLylDauEYWHkfV0gGoTO1PmBtt3BtvjPDkHqhvuhud.wEvuInh+inJ1VHOBnDXbF4eb5kpQW2ne4ubPpIyOWnaXzuUEO+XmS.MMMQJkrlUuZ1zF1.UVYkL0oMMNuJp.KKKZqsVYO6d2T2GUGM1XC9mmQIkTPA.srrXO6d2T8RqFMMIa62sMBXY0uLSf.A3nG4HT8RqlfAKhcti5wzzruqiklFwi2Iq50+UDt3Hr6O+yQWumJEE9mmgs.d2hU7aCqXrYf+nzBJ01Oj2tzTbDCXuATbPSeScA8DETXQq.AXu6YOTyRqFMMM9nsss7oFzWvzzjicriwRWxRIXvf7o6bmX70PoH9iG236w9REfqiCYxjI+Mg.J7BIzW4ajqfjoRlBE969BDHvY8VXj6RDn77vnONu9SGdddjHQB+KFfgAACFre6uKfizOGjbmWXte0U9qL05CxyISISlDTfY.e9y6LpZaeKSJLLM5WYxM60.p.ExYNnmI9FeMfNGQSO3sy3Z4zuz0Ks80l1ukxT+QWNEhdu91ugez+2h1uIz7GJu8swM84ZYRHD7+.s.sdp8dCcjD.....IUjSD4pPfIH" ],
 					"embed" : 1,
 					"id" : "obj-95",
 					"maxclass" : "fpic",
@@ -5087,15 +5031,6 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-64", 0 ],
-					"hidden" : 0,
-					"midpoints" : [  ],
-					"source" : [ "obj-66", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
 					"destination" : [ "obj-83", 0 ],
 					"hidden" : 1,
 					"midpoints" : [  ],
@@ -5127,33 +5062,6 @@
 					"hidden" : 0,
 					"midpoints" : [  ],
 					"source" : [ "obj-7", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-73", 0 ],
-					"hidden" : 0,
-					"midpoints" : [  ],
-					"source" : [ "obj-70", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-74", 0 ],
-					"hidden" : 0,
-					"midpoints" : [  ],
-					"source" : [ "obj-71", 0 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-91", 0 ],
-					"hidden" : 0,
-					"midpoints" : [  ],
-					"source" : [ "obj-72", 0 ]
 				}
 
 			}
@@ -5285,7 +5193,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-66", 0 ],
+					"destination" : [ "obj-64", 0 ],
 					"hidden" : 0,
 					"midpoints" : [  ],
 					"source" : [ "obj-87", 4 ]
@@ -5294,7 +5202,7 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-70", 0 ],
+					"destination" : [ "obj-73", 0 ],
 					"hidden" : 0,
 					"midpoints" : [  ],
 					"source" : [ "obj-87", 5 ]
@@ -5303,19 +5211,10 @@
 			}
 , 			{
 				"patchline" : 				{
-					"destination" : [ "obj-71", 0 ],
+					"destination" : [ "obj-74", 0 ],
 					"hidden" : 0,
 					"midpoints" : [  ],
 					"source" : [ "obj-87", 6 ]
-				}
-
-			}
-, 			{
-				"patchline" : 				{
-					"destination" : [ "obj-72", 0 ],
-					"hidden" : 0,
-					"midpoints" : [  ],
-					"source" : [ "obj-87", 7 ]
 				}
 
 			}
@@ -5334,6 +5233,15 @@
 					"hidden" : 0,
 					"midpoints" : [ 64.625, 305.0, 15.0, 305.0 ],
 					"source" : [ "obj-87", 1 ]
+				}
+
+			}
+, 			{
+				"patchline" : 				{
+					"destination" : [ "obj-91", 0 ],
+					"hidden" : 0,
+					"midpoints" : [  ],
+					"source" : [ "obj-87", 7 ]
 				}
 
 			}
