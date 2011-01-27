@@ -31,7 +31,7 @@ import javax.swing.JTextField;
 public class TextParam extends JTextField implements Param, FocusListener
 {
 	// attributs graphiques
-	private int w = 80;
+	private int w = 90;
 	private int h = 25;
 	private Color selColor = Color.white;
 	// numero du champ

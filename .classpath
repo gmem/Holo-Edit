@@ -5,7 +5,11 @@
 	<classpathentry kind="lib" path="max.jar"/>
 	<classpathentry kind="lib" path="jogl.jar"/>
 	<classpathentry kind="lib" path="javaosc.jar"/>
-	<classpathentry kind="lib" path="sdif.jar"/>
+	<classpathentry kind="lib" path="sdif.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="holo-edit-dev"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="groovy-all-1.5.1.jar"/>
 	<classpathentry kind="lib" path="gluegen-rt.jar"/>
 	<classpathentry kind="output" path=""/>

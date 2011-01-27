@@ -33,7 +33,7 @@ public class CheckParam extends JCheckBox implements Param
 		super();
 		numero = _numero;
 		setValue(o);
-		setSize(20, 20);
+		setSize(30, 20);
 		setVisible(true);
 	}
 

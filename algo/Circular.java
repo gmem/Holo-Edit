@@ -34,18 +34,13 @@ public class Circular extends Algorithm
 {
 	public Circular(GestionPistes gp)
 	{
-		super(gp, TYPE_GEN, "circular", "Circular", "Generates a circular trajectory with different initial and final radius on the x and y axis.\n(Continue pastes it at the end, Replace replaces it)");
+		super(gp, TYPE_GEN, "circular", "Circular", "Generates a circular trajectory with different radius on the x and y axis (ellipse).\n(Continue pastes it at the end, Replace replaces it)");
 		addField(new Field("Apply To", Param.TYPE_COMBO, 0, "applyTo"));
 		addField(new Field("Track n" + Ut.numCar, Param.TYPE_COMBO, 1));
 		addField(new Field("Duration (sec)", Param.TYPE_DOUBLE, 20., 0.001, Double.MAX_VALUE));
-		addField(new Field("Time resolution (sec)", Param.TYPE_DOUBLE, 0.1, 0.001, Double.MAX_VALUE));
-		addField(new Field("Initial radius on X", 30.));
-		addField(new Field("Final radius on X", 20.));
-		addField(new Field("Initial radius on Y", 30.));
-		addField(new Field("Final radius on Y", 20.));
-		addField(new Field("Enable Z", false));
-		addField(new Field("Initial elevation on Z", Param.TYPE_DOUBLE, 0., HoloPoint.LOWLIMZ, HoloPoint.UPLIMZ));
-		addField(new Field("Final elevation on Z", Param.TYPE_DOUBLE, 0., HoloPoint.LOWLIMZ, HoloPoint.UPLIMZ));
+		addField(new Field("Time resolution (sec)", Param.TYPE_DOUBLE, 0.01, 0.001, Double.MAX_VALUE));
+		addField(new Field("Radius", Param.TYPE_DOUBLE, 100., 0., Double.MAX_VALUE));
+		addField(new Field("Ellipsoid %", Param.TYPE_DOUBLE, 0., -100., 100.));
 		addField(new Field("Circles per second", Param.TYPE_DOUBLE, 0.5, 0.01, Double.MAX_VALUE));
 		addField(new Field("Initial angle (" + Ut.numCar + "d)", Param.TYPE_DOUBLE, 0., -360, 360, 360));
 		addField(new Field("Direction", Param.TYPE_COMBO, 0, "clock"));
@@ -60,16 +55,14 @@ public class Circular extends Algorithm
 		double durPoint = (Double)results[3] * 1000; // 1/100e sec
 		double angle, angleElt;
 		// --- parametres fournis par l'utilisateur :
-		double Xi = (Double)results[4];
-		double Xf = (Double)results[5];
-		double Yi = (Double)results[6];
-		double Yf = (Double)results[7];
-		boolean enableZ = (Boolean)results[8];
-		double Zi = (Double)results[9];
-		double Zf = (Double)results[10];
-		double tourParSec = (Double)results[11];
-		double angleInit = (Double)results[12];
-		int sens = (Integer) results[13] > 0 ? 1 : -1;
+		double Radius = (Double)results[4];
+		double Ellipse = (Double)results[5];
+		Ellipse = (Ellipse/100.)+1.;
+		double Xi = Ellipse * Radius;
+		double Yi = (2-Ellipse) * Radius;
+		double tourParSec = (Double)results[6];
+		double angleInit = (Double)results[7];
+		int sens = (Integer) results[8] > 0 ? 1 : -1;
 		// -----------------------------------------------------
 		// -----------------------------------------------------
 		angleElt = (sens * tourParSec * durPoint * 2. * Math.PI / 1000.);
@@ -82,9 +75,9 @@ public class Circular extends Algorithm
 			curPt = new HoloPoint();
 			curPt.date = (int) curTime + dateBegin;
 			angle = angleInit + (n * angleElt);
-			curPt.x = HoloPoint.limit2D((float) polX(angle, Ut.interpol(Xi, Xf, (curTime / dur))));
-			curPt.y = HoloPoint.limit2D((float) polY(angle, Ut.interpol(Yi, Yf, (curTime / dur))));
-			curPt.z = enableZ ? HoloPoint.limitZ((float) Ut.interpol(Zi, Zf, (curTime / dur))) : 0;
+			curPt.x = HoloPoint.limit2D((float) polX(angle, Xi));
+			curPt.y = HoloPoint.limit2D((float) polY(angle, Yi));
+			curPt.z = 0;
 			ht.addElement(curPt);
 			inc();
 		}

@@ -40,7 +40,7 @@ class IntParam extends JTextField implements Param, FocusListener, KeyListener
 //	private static Formatter rf = new Formatter(-1,-1,-1,4);
 //	private static Formatter rf2 = new Formatter(-1,-1,-1,2);
 	// attributs graphiques
-	private int w = 80;
+	private int w = 90;
 	private int h = 25;
 	private Color selColor = Color.white;
 	// numero du champ

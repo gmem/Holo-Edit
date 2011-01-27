@@ -40,8 +40,8 @@ public class Random extends Algorithm
 		addField(new Field("Track n" + Ut.numCar, Param.TYPE_COMBO, 1));
 		addField(new Field("Duration (sec)", Param.TYPE_DOUBLE, 20., 0.001, Double.MAX_VALUE));
 		addField(new Field("Time resolution (sec)", Param.TYPE_DOUBLE, 0.1, 0.001, Double.MAX_VALUE));
-		addField(new Field("Initial distance", 40.));
-		addField(new Field("Final distance", 20.));
+		addField(new Field("Amplitude", 40.));
+		addField(new Field("Snap to speakers", false));
 		addField(new Field("Enable Z", false));
 		setCategory(CAT_GEN);
 	}
@@ -54,24 +54,43 @@ public class Random extends Algorithm
 		int alea;
 		int dur = (int)((Double)results[2] * 1000); // 1/1000e sec
 		int durPoint = (int)((Double)results[3] * 1000); // 1/1000e sec
-		double distI = (Double)results[4];
-		double distF = (Double)results[5];
+		double Amp = (Double)results[4];
+		boolean snapSpeakers = (Boolean)results[5];
 		boolean enableZ = (Boolean)results[6];
 		for(HoloSpeaker sp:gp.speakers)
 			sp.recalcDist();
-		for (int curTime = 0; curTime < dur; curTime += durPoint)
+		if(snapSpeakers)
 		{
-			scaler = (double)curTime / dur;
-			alea = (int) (gp.speakers.size() * Math.random());
-			dist = Ut.interpol(distI, distF, scaler);
-			dir = gp.speakers.get(alea).dir;
-			curPt = aleaPoint(dir, dist);
-			curPt.date = curTime + dateBegin;
-			curPt.x = HoloPoint.limit2D(curPt.x);
-			curPt.y = HoloPoint.limit2D(curPt.y);
-			curPt.z = enableZ ? (float) (gp.speakers.get(alea).Z * Math.random()) : 0;
-			ht.addElement(curPt);
-			inc();
+			for (int curTime = 0; curTime < dur; curTime += durPoint)
+			{
+				alea = (int) (gp.speakers.size() * Math.random());
+				dist = Amp;
+				dir = gp.speakers.get(alea).dir;
+				curPt = aleaPoint(dir, dist);
+				curPt.date = curTime + dateBegin;
+				curPt.x = HoloPoint.limit2D(curPt.x);
+				curPt.y = HoloPoint.limit2D(curPt.y);
+				curPt.z = enableZ ? (float) (gp.speakers.get(alea).Z * Math.random()) : 0;
+				ht.addElement(curPt);
+				inc();
+			}
+		}
+		else
+		{
+			for (int curTime = 0; curTime < dur; curTime += durPoint)
+			{
+				scaler = (double)curTime / dur;
+				alea = (int) (gp.speakers.size() * Math.random());
+				dist = Amp;
+				dir = gp.speakers.get(alea).dir;
+				curPt = aleaPoint(dir, dist);
+				curPt.date = curTime + dateBegin;
+				curPt.x = HoloPoint.limit2D((float) ((Math.random()-0.5)*2*Amp));
+				curPt.y = HoloPoint.limit2D((float) ((Math.random()-0.5)*2*Amp));
+				curPt.z = enableZ ? (float) (Math.random()*Amp) : 0;
+				ht.addElement(curPt);
+				inc();
+			}
 		}
 		finalizeTraj(tkNth, ht, dur);
 	}

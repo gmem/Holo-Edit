@@ -43,6 +43,7 @@ public class Field
 	int type = Param.TYPE_TEXT;
 	// Option (combo : track/applyTo/sym ; 
 	String option = "-";
+	String[] comboValues;
 	ActionListener a = null;
 
 	public Field(String _label, Object _val)
@@ -111,6 +112,16 @@ public class Field
 		defVal = _val;
 		type = _type;
 		option = _option;
+	}
+	
+	//unused
+	public Field(String _label, int _type, String[] _items,  Object _val)
+	{
+		label = _label;
+		defVal = _val;
+		type = _type;
+		comboValues = _items;
+		option = "generic";
 	}
 
 	public Field(String _label, int _type, Object _val, double min, double max)

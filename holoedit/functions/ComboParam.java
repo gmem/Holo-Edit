@@ -36,7 +36,7 @@ import javax.swing.JComboBox;
 public class ComboParam extends JComboBox implements Param, KeyListener
 {
 	// attributs graphiques
-	private int w = 80;
+	private int w = 100;
 	private int h = 25;
 	private String[] trackTitles;
 	private ArrayList<String> sdifNames;
@@ -49,6 +49,8 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 	 "clock"	(choix de l'orientation clockwise (-) / trigonometric (+))
 	 "sdif"		(choix de la holoSDIFdata)
 	 "sdifFields" (choix du field d'une holoSDIFdata ˆ partir duquel on gŽnre la trajectoire)
+	 "generic"	( les champs sont donnŽs par un vector ˆ la crŽation )
+	 "coord"	( choix de X Y Z )
 	 */
 	private String comboType;
 	// temps d'attente et boolean apres la frappe de la touche 1, pour pouvoir rentrer 12, 15 etc.. au clavier voir keyPressed
@@ -75,7 +77,23 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 		setValue(_val);
 		addKeyListener(this);
 	}
-
+	//generic type
+	public ComboParam(GestionPistes gp, int _numero, String[] _items, Object _val)
+	{
+		super();
+		gpRef = gp;
+		numero = _numero;
+		comboType = "generic";
+		setFont(f2);
+		
+		for(String s : _items)
+		{
+			addItem(s);
+		}
+		//if (!comboType.equalsIgnoreCase("sdif"))
+			setValue(_val);
+		addKeyListener(this);
+	}
 	// initialisation
 	public ComboParam(GestionPistes gp, int _numero, String _comboType, Object _val)
 	{
@@ -108,6 +126,10 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 		} else if (comboType.equalsIgnoreCase("sdifFields")) {
 			initSDIFNames();
 			updateFields(sdifNames.get(0));
+		} else if (comboType.equalsIgnoreCase("coord")) {
+			addItem("X");
+			addItem("Y");
+			addItem("Z");
 		}
 		if (comboType.equalsIgnoreCase("sdif") || comboType.equalsIgnoreCase("sdifFields")){
 			setPreferredSize(new Dimension(2*w, h));
@@ -233,6 +255,15 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 				if (val > 0)
 					setSelectedIndex(1);
 				else setSelectedIndex(0);
+			}
+			else if (comboType.equalsIgnoreCase("coord"))
+			{
+				if ((val >= 0) && (val <= 2))
+				{
+					// 0 : X , 1 : Y , 2 : Z
+					setSelectedIndex(val);
+				}
+				else setSelectedIndex(0); // X
 			}
 		}
 	}

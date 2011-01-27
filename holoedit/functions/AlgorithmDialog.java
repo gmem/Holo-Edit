@@ -417,6 +417,11 @@ public class AlgorithmDialog extends FloatingWindow implements KeyListener, Item
 					paramFields[i].setLocation(new java.awt.Point(160, 12 + ((i + 1) * (fieldH + fieldD))));
 					paramFields[i].addKeyListener(this);
 					add((ComboParam)paramFields[i]);
+				}else if (options[i].equalsIgnoreCase("coord")) {
+					paramFields[i] = new ComboParam(gp, i, "coord", results[i]);
+					paramFields[i].setLocation(new java.awt.Point(210, 12 + ((i + 1) * (fieldH + fieldD))));
+					paramFields[i].addKeyListener(this);
+					add((ComboParam)paramFields[i]);
 				}
 			}
 			// champs de type Button >> implementer l'actionlistener

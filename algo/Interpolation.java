@@ -40,12 +40,12 @@ public class Interpolation extends Algorithm
 		addField(new Field("A -> input track n" + Ut.numCar, Param.TYPE_COMBO, 1));
 		addField(new Field("-> B input track n" + Ut.numCar, Param.TYPE_COMBO, 2));
 		addField(new Field("Output track n" + Ut.numCar, Param.TYPE_COMBO, 3));
-		addField(new Field("Initial scaling fact. on X (%)", 100.));
-		addField(new Field("Final scaling fact. on X (%)", 0.));
-		addField(new Field("Initial scaling fact. on Y (%)", 100.));
-		addField(new Field("Final scaling fact. on Y (%)", 0.));
-		addField(new Field("Initial scaling fact. on Z (%)", 100.));
-		addField(new Field("Final scaling fact. on Z (%)", 0.));
+		addField(new Field("Initial scaling fact. on X (%)", 0.));
+		addField(new Field("Final scaling fact. on X (%)", 100.));
+		addField(new Field("Initial scaling fact. on Y (%)", 0.));
+		addField(new Field("Final scaling fact. on Y (%)", 100.));
+		addField(new Field("Initial scaling fact. on Z (%)", 0.));
+		addField(new Field("Final scaling fact. on Z (%)", 100.));
 		setCategory(CAT_TRANS_SPAT);
 	}
 	

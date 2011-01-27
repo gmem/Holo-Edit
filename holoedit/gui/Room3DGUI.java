@@ -447,6 +447,12 @@ public class Room3DGUI extends FloatingWindow implements MouseMotionListener
 				endTime = holoEditRef.counterPanel.getDate(2);
 		
 				HoloTrack at = holoEditRef.gestionPistes.getActiveTrack();
+				if(at == null)
+				{
+					holoEditRef.gestionPistes.setActiveTrack(1);
+					at = holoEditRef.gestionPistes.getActiveTrack();
+				}
+				
 				int num = at.nextTraj2(begTime);
 				if(num != -1)
 				{

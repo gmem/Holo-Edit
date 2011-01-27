@@ -30,7 +30,7 @@ import javax.swing.JButton;
 public class ButtonParam extends JButton implements Param
 {
 	// attributs graphiques
-	private int w = 80;
+	private int w = 90;
 	private int h = 25;
 	private Color selColor = Color.white;
 	// numero du champ
