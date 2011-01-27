@@ -174,7 +174,6 @@ public class GestionPistes
 	private WaveFormInstance w;
 	private SDIFdataInstance sdif;
 	public AlgoVector algos;
-	
 
 
 	public GestionPistes(HoloEdit owner)
@@ -2509,8 +2508,6 @@ public class GestionPistes
 		}
 	}
 	
-
-
 	public void recordNone()
 	{
 		for (int k = 0, last = getNbTracks(); k < last; k++)
@@ -2520,8 +2517,7 @@ public class GestionPistes
 		}
 
 	}
-	
-	
+
 	public void changeName(int tkNum)
 	{
 		String s = JOptionPane.showInputDialog(null, "Name this track : ", "Track Name", JOptionPane.QUESTION_MESSAGE);

@@ -395,7 +395,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 
 	protected void treatRecord(int tkNum, Object[] msg)
 	{
-		int loopDur = end - beg;
+
 		int date = counter;
 		boolean editable=false;
 		if(msg.length < 3 || !recording)
@@ -435,8 +435,6 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 	
 	protected void treatRecordSegment(int tkNum)
 	{
-		int loopDur = end - beg;
-		int date = counter;
 		
 		if(!recording)
 			return;
@@ -448,10 +446,74 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 			HoloTrack tk = holoEditRef.gestionPistes.getTrack(p);
 			if(tk.getNumber()==tkNum && tk.isRecEnable())
 			{
-				HoloTraj ht = new HoloTraj();
-				if(!recTrajs.get(p).isEmpty())
-					recTrajs.get(p).lastElement().setEditable(true);
+				HoloTraj ht = new HoloTraj(), lht = recTrajs.get(p);
+				if(!lht.isEmpty())
+				{
+					lht.lastElement().setEditable(true);
+					//tk.cut(lht.getFirstDate(), lht.getLastDate(), false,false);
+					//tk.addTraj(lht);
+				}
 				recTrajs.set(p, ht);
+			}
+		}
+		
+	}
+	
+	/*
+	  For recording from mouse gestures in room editor
+	  It records on all tracks with armed recording.
+	  It sends the position by the OSC out port
+	 */
+	public void treatRecordPoint(HoloPoint p)
+	{
+		if(!recording)
+			return;
+		int date = counter;
+		boolean editable=p.isEditable();	
+			
+		boolean empty = false;
+		HoloTraj ht;
+		HoloPoint np;
+		for(int i = 0 ; i < holoEditRef.gestionPistes.getNbTracks(); i++)
+		{
+			HoloTrack tk = holoEditRef.gestionPistes.getTrack(i);
+			
+			if(tk.isRecEnable())
+			{
+				ht = recTrajs.get(i);
+				empty = ht.isEmpty();
+				if(empty)
+				{
+					ht.add(np = new HoloPoint(p.x,p.y,p.z,date,true));
+					tk.addTraj(ht);
+					tk.update();
+				}else
+					ht.add(np = new HoloPoint(p.x,p.y,p.z,date,editable));
+				sendQ(keyOut+"/track/"+tk.getNumber()+"/xyz",new Object[]{np.x,np.y,np.z});
+			}
+			
+		}
+		sendBundle();
+	}
+	
+	public void treatRecordSegmentAll()
+	{	
+		if(!recording)
+			return;
+
+		for(int i = 0 ; i < holoEditRef.gestionPistes.getNbTracks() ; i++)
+		{
+			HoloTrack tk = holoEditRef.gestionPistes.getTrack(i);
+			if(tk.isRecEnable())
+			{
+				HoloTraj ht = new HoloTraj(), lht = recTrajs.get(i);
+				if(!lht.isEmpty())
+				{
+					lht.lastElement().setEditable(true);
+					//tk.cut(lht.getFirstDate(), lht.getLastDate(), false,false);
+					//tk.addTraj(lht);
+				}
+				recTrajs.set(i, ht);
 			}
 		}
 		
@@ -764,6 +826,9 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 				}
 				for(HoloTrack tk:holoEditRef.gestionPistes.tracks)
 					tk.update();
+					
+				treatRecordSegmentAll();
+				
 				recording = false;
 				holoEditRef.transport.rec.setIcon(holoEditRef.transport.recOffState);
 				if(order != ORDER_RECORD)

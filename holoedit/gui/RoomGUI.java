@@ -37,6 +37,7 @@ import holoedit.util.IntegerVector;
 import holoedit.util.Ut;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.MenuItem;
 import java.awt.Point;
 import java.awt.PopupMenu;
@@ -158,6 +159,7 @@ public class RoomGUI extends FloatingWindow
 	private boolean draggedTimeScaleSel = false;
 	private boolean draggedTimeScaleBeg = false;
 	private boolean draggedTimeScaleEnd = false;
+	private boolean draggedPointRecord = false;
 	@SuppressWarnings("unused")
 	private float oldCurrentX, oldCurrentY, oldCurrentZ, oldCurrentDir, oldCurrentDist;
 	private boolean selMode = false;
@@ -173,6 +175,8 @@ public class RoomGUI extends FloatingWindow
 		private int keyDown = -1;
 		private IntBuffer selectBuf;
 		public boolean scalescrollGUIdirty = true;
+		Cursor defaultCursor = new Cursor(Cursor.DEFAULT_CURSOR);
+		Cursor writeCursor = new Cursor(Cursor.CROSSHAIR_CURSOR);
 		
 
 		RoomGLCanvas(FloatingWindow fw)
@@ -376,6 +380,10 @@ public class RoomGUI extends FloatingWindow
 
 		public void mouseEntered(MouseEvent e)
 		{
+			if(holoEditRef.connection.isRecording())
+				setCursor(writeCursor);
+			else
+				setCursor(defaultCursor);
 		}
 
 		public void mouseExited(MouseEvent e)
@@ -498,6 +506,14 @@ public class RoomGUI extends FloatingWindow
 						oldCurrentX = convPosTime(e.getX());
 					}
 				} 
+			} else if (holoEditRef.connection.isRecording())
+			{
+				// RECORD POINT
+				draggedPointRecord = true;
+				drawMousePos = false;
+				oldCurrentX = mousex;
+				oldCurrentY = mousey;
+				
 			} else if(speakerSelected != RoomIndex.getNull()) {
 				RoomIndex.decode(speakerSelected);
 				currentSpeakerNum = RoomIndex.getPt();
@@ -670,7 +686,16 @@ public class RoomGUI extends FloatingWindow
 			posW = e.getX() - W_Y_SCALE;
 			posH = (height - H_BLANK_ZONE - H_X_SCROLL - H_TIME_SCALE) - e.getY();
 			
-			if (draggedPoint)
+			if(draggedPointRecord)
+			{
+				// TODO : RECORD DANS ROOM
+				HoloPoint newPoint = convPosPt(posW, posH);
+				newPoint.setEditable(false);
+				holoEditRef.connection.treatRecordPoint(newPoint);
+				
+				holoEditRef.gestionPistes.setDirty(Ut.DIRTY_ROOM);
+			}
+			else if (draggedPoint)
 			{
 				HoloPoint newPoint = convPosPt(posW, posH);
 				if (currentPoint.isEditable())
@@ -981,6 +1006,11 @@ public class RoomGUI extends FloatingWindow
 			posW = e.getX() - W_Y_SCALE;
 			posH = (height - H_BLANK_ZONE - H_X_SCROLL - H_TIME_SCALE) - e.getY();
 			
+			if(draggedPointRecord)
+			{
+				holoEditRef.connection.treatRecordSegmentAll();
+			}
+			
 			if(draggedSelZone && selMode)
 			{
 				treatSelIndex();
@@ -1004,6 +1034,7 @@ public class RoomGUI extends FloatingWindow
 			draggedTimeScaleSel = false;
 			draggedTimeScaleBeg = false;
 			draggedTimeScaleEnd = false;
+			draggedPointRecord = false;
 			drawMousePos = true;
 			
 			disp();
