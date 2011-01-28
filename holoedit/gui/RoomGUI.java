@@ -687,6 +687,7 @@ public class RoomGUI extends FloatingWindow
 
 		public void mouseDragged(MouseEvent e)
 		{
+			boolean antiDispRecord = false;
 			mousex = e.getX();
 			mousey = height - e.getY();
 			posW = e.getX() - W_Y_SCALE;
@@ -700,6 +701,8 @@ public class RoomGUI extends FloatingWindow
 				holoEditRef.connection.treatRecordPoint(newPoint);
 				
 				holoEditRef.gestionPistes.setDirty(Ut.DIRTY_ROOM);
+				
+				antiDispRecord = true; // prevent from drawing each drag event when recording
 			}
 			else if (draggedPoint)
 			{
@@ -1002,7 +1005,9 @@ public class RoomGUI extends FloatingWindow
 				oldCurrentX = X;
 				holoEditRef.gestionPistes.setDirty(Ut.DIRTY_ROOM);
 			}
-			disp();
+			
+			if( ! antiDispRecord )
+				disp();
 		}
 
 		public void mouseReleased(MouseEvent e)
