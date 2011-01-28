@@ -150,6 +150,14 @@ public class HoloMenuBar extends JMenuBar
 	private ButtonGroup coord;
 	private JRadioButtonMenuItem cartesMenuItem;
 	private JRadioButtonMenuItem polarMenuItem;
+	private JMenu windowOnTop;
+	//private ButtonGroup windowOnTopBg;
+	public JCheckBoxMenuItem transportOnTop;
+	public JCheckBoxMenuItem tracksOnTop;
+	public JCheckBoxMenuItem roomOnTop;
+	public JCheckBoxMenuItem room3dOnTop;
+	public JCheckBoxMenuItem scoreOnTop;
+	public JCheckBoxMenuItem timeOnTop;	
 	private JMenu lookAndFeelMenuItem;
 	private ButtonGroup bg;
 	public JRadioButtonMenuItem basicLAFMenuItem;
@@ -159,6 +167,7 @@ public class HoloMenuBar extends JMenuBar
 	private HoloMenuItem playMenuItem;
 	private HoloMenuItem pauseMenuItem;
 	private HoloMenuItem recMenuItem;
+	private HoloMenuItem recPlayMenuItem;
 	private HoloMenuItem loopMenuItem;
 	private HoloMenuItem spatUpdateMenuItem;
 	private JCheckBoxMenuItem openOscMenuItem;
@@ -391,6 +400,7 @@ public class HoloMenuBar extends JMenuBar
 		optionMenu.addSeparator();
 		openLastOnLoadMenuItem = new JCheckBoxMenuItem("Load last file on startup", false);
 		optionMenu.add(openLastOnLoadMenuItem);
+		/* cartesian menu */
 		optionMenu.addSeparator();
 		coordMenuItem = new JMenu("Coordinates");
 		coord = new ButtonGroup();
@@ -403,6 +413,100 @@ public class HoloMenuBar extends JMenuBar
 		coordMenuItem.add(cartesMenuItem);
 		coordMenuItem.add(polarMenuItem);
 		optionMenu.add(coordMenuItem);
+		
+//		private JMenu windowOnTop;
+//		private ButtonGroup windowOnTopBg;
+//		public JRadioButtonMenuItem transportOnTop;
+//		public JRadioButtonMenuItem tracksOnTop;
+//		public JRadioButtonMenuItem roomOnTop;
+//		public JRadioButtonMenuItem room3dOnTop;
+//		public JRadioButtonMenuItem scoreOnTop;
+//		public JRadioButtonMenuItem timeOnTop;
+		
+		/* Ontop menu */
+		
+		optionMenu.addSeparator();
+		windowOnTop = new JMenu("Windows on top");
+		//windowOnTopBg = new ButtonGroup();
+		transportOnTop = new JCheckBoxMenuItem("Transport", false);
+		tracksOnTop = new JCheckBoxMenuItem("Tracks", false);
+		roomOnTop = new JCheckBoxMenuItem("Room", false);
+		room3dOnTop = new JCheckBoxMenuItem("3D Room", false);
+		scoreOnTop = new JCheckBoxMenuItem("Score", false);
+		timeOnTop = new JCheckBoxMenuItem("Time Editor", false);
+		
+		windowOnTop.add(transportOnTop);
+		windowOnTop.add(tracksOnTop);
+		windowOnTop.add(roomOnTop);
+		windowOnTop.add(room3dOnTop);
+		windowOnTop.add(scoreOnTop);
+		windowOnTop.add(timeOnTop);
+		
+		optionMenu.add(windowOnTop);
+		
+		
+		transportOnTop.addItemListener(new java.awt.event.ItemListener()
+		{
+			public void itemStateChanged(java.awt.event.ItemEvent e)
+			{
+				if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED)
+					holoEditRef.transport.setAlwaysOnTop(true);
+				else holoEditRef.transport.setAlwaysOnTop(false);
+			}
+		});
+		
+		tracksOnTop.addItemListener(new java.awt.event.ItemListener()
+		{
+			public void itemStateChanged(java.awt.event.ItemEvent e)
+			{
+				if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED)
+					holoEditRef.gestionPistes.ts.setAlwaysOnTop(true);
+				else holoEditRef.gestionPistes.ts.setAlwaysOnTop(false);
+			}
+		});
+		
+		roomOnTop.addItemListener(new java.awt.event.ItemListener()
+		{
+			public void itemStateChanged(java.awt.event.ItemEvent e)
+			{
+				if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED)
+					holoEditRef.room.setAlwaysOnTop(true);
+				else holoEditRef.room.setAlwaysOnTop(false);
+			}
+		});
+		
+		room3dOnTop.addItemListener(new java.awt.event.ItemListener()
+		{
+			public void itemStateChanged(java.awt.event.ItemEvent e)
+			{
+				if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED)
+					holoEditRef.room3d.setAlwaysOnTop(true);
+				else holoEditRef.room3d.setAlwaysOnTop(false);
+			}
+		});
+		
+		scoreOnTop.addItemListener(new java.awt.event.ItemListener()
+		{
+			public void itemStateChanged(java.awt.event.ItemEvent e)
+			{
+				if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED)
+					holoEditRef.score.setAlwaysOnTop(true);
+				else holoEditRef.score.setAlwaysOnTop(false);
+			}
+		});
+		
+		timeOnTop.addItemListener(new java.awt.event.ItemListener()
+		{
+			public void itemStateChanged(java.awt.event.ItemEvent e)
+			{
+				if (e.getStateChange() == java.awt.event.ItemEvent.SELECTED)
+					holoEditRef.timeEditor.setAlwaysOnTop(true);
+				else holoEditRef.timeEditor.setAlwaysOnTop(false);
+			}
+		});
+		
+		/* Look&Feel menu */
+		
 		lookAndFeelMenuItem = new JMenu("Change Look And Feel");
 		bg = new ButtonGroup();
 		basicLAFMenuItem = new JRadioButtonMenuItem("Metal L&F", true);
@@ -517,10 +621,12 @@ public class HoloMenuBar extends JMenuBar
 		playMenuItem = new HoloMenuItem("Play / Stop", KeyEvent.VK_SPACE, false, aAction);
 		pauseMenuItem = new HoloMenuItem("Pause / Resume", KeyEvent.VK_SPACE, true, false, aAction);
 		loopMenuItem = new HoloMenuItem("Loop", KeyEvent.VK_L, true, false, aAction);		
+		recPlayMenuItem = new HoloMenuItem("Record & Play", KeyEvent.VK_SPACE, aAction); // ð+<space> 
 		recMenuItem = new HoloMenuItem("Record", KeyEvent.VK_R, true, false, aAction);		
 		transportMenu.add(playMenuItem);
 		transportMenu.add(pauseMenuItem);
 		transportMenu.add(loopMenuItem);
+		transportMenu.add(recPlayMenuItem);
 		transportMenu.add(recMenuItem);
 		transportMenu.setVisible(true);
 		// ******** View Menu *************/
@@ -719,6 +825,11 @@ public class HoloMenuBar extends JMenuBar
 				holoEditRef.connection.playstop();
 			else if (o == loopMenuItem)
 				holoEditRef.connection.loop(!holoEditRef.connection.getLoop());
+			else if (o == recPlayMenuItem)
+			{
+				holoEditRef.connection.record(true);
+				holoEditRef.connection.playstop();
+			}
 			else if (o == recMenuItem)
 				holoEditRef.connection.record(!holoEditRef.connection.isRecording());
 			else if (o == pauseMenuItem)

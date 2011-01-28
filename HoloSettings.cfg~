@@ -2,7 +2,7 @@
 <settings version="4.5">
 	<options maxRecentFiles="10" allTrackActive="false" viewOnlyEditablePoints="true" viewSpeakers="true" openLastOnLoad="false" drawPtsNb="10" coordinates="1" laf="1" shortView="false" focus="room" bonjour="false" scrollspeed="100.0" smooth="true" sdifExpert="true" lastScriptFile="/Users/charles/Documents/_GMEM/_dev/__java/workspace/holo-edit-dev/scripts/templates/algoGroovyFile.algo"/>
 	<osc portIn="13005" portOut="13008" address="localhost" open="true" keyIn="/holoedit" keyOut="/holospat" linemode="false"/>
-	<holo dir="/Users/charles/Documents/_GMEM/_dev/__holo/_pack/Holo-Edit-4.5b4-OSX/demo/kobol?/"/>
+	<holo dir="/Users/charles/Desktop/"/>
 	<midi dir=""/>
 	<midi7 dir=""/>
 	<txt dir=""/>
@@ -20,6 +20,10 @@
 	<label num="5" name="Track 6" color="-14336"/>
 	<label num="6" name="Track 7" color="-16745348"/>
 	<label num="7" name="Track 8" color="-16777216"/>
+	<last dir="/Users/charles/Desktop/" name="holo-tester-synth-ROZASSE.holo" type="4"/>
+	<recent dir="/Users/charles/Desktop/" name="holo-tester-synth-ROZASSE.holo" type="4"/>
+	<recent dir="/Users/charles/Desktop/" name="holo-tester-synth.holo" type="4"/>
+	<recent dir="/Users/charles/Desktop/" name="mouse-record.holo" type="4"/>
 	<recent dir="/Users/charles/Documents/_GMEM/_assist/Pascale_Weber/" name="T8.holo" type="4"/>
 	<recent dir="/Users/charles/Documents/_GMEM/_assist/Pascale_Weber/" name="T39.holo" type="4"/>
 	<recent dir="/Users/charles/Documents/holo/" name="unti.holo" type="4"/>
@@ -27,8 +31,6 @@
 	<recent dir="/Users/charles/Documents/holo/" name="testREC3.holo" type="4"/>
 	<recent dir="/Users/charles/Documents/holo/" name="testREC3-stereo.holo" type="4"/>
 	<recent dir="/Users/charles/Documents/holo/" name="test2.holo" type="4"/>
-	<recent dir="/Users/charles/Documents/holo/" name="test.holo" type="4"/>
-	<recent dir="/Users/charles/Documents/holo/" name="test-sound2.holo" type="4"/>
 	<speaker num="1" x="36.95518" y="-15.307338" z="0.0" d="1.1780972"/>
 	<speaker num="2" x="15.307337" y="-36.95518" z="0.0" d="0.39269906"/>
 	<speaker num="3" x="-15.307336" y="-36.95518" z="0.0" d="-0.39269906"/>
@@ -37,11 +39,11 @@
 	<speaker num="6" x="-15.307343" y="36.955177" z="0.0" d="-2.7488935"/>
 	<speaker num="7" x="15.3073435" y="36.955177" z="0.0" d="2.7488935"/>
 	<speaker num="8" x="36.95519" y="15.307319" z="0.0" d="1.9634949"/>
-	<trackselector x="26" y="29" w="193" h="357" v="true"/>
-	<transport x="388" y="427" w="241" h="368" v="true"/>
+	<trackselector x="14" y="394" w="193" h="357" v="true"/>
+	<transport x="13" y="22" w="241" h="368" v="true"/>
 	<soundpool  split="220" x="370" y="250" w="700" h="400" v="false"/>
-	<score x="555" y="153" w="794" h="643" v="true"/>
-	<room viewProj="-128.25919 130.64493 -140.18283 118.72129" x="792" y="22" w="648" h="694" v="true"/>
-	<room3d view3D="-73.46668 0.0 0.4449927 0.0 -10.0 -121.83472" x="564" y="182" w="809" h="697" v="false"/>
-	<time mode="2" curves="0 1 4 2 6" x="355" y="94" w="794" h="643" v="true"/>
+	<score x="134" y="197" w="1197" h="619" v="true"/>
+	<room viewProj="-128.84244 109.7556 -110.73612 127.861916" x="247" y="31" w="677" h="723" v="true"/>
+	<room3d view3D="-28.149942 0.0 -299.66025 0.0 -10.0 -280.98495" x="1052" y="505" w="405" h="337" v="true"/>
+	<time mode="2" curves="0 1 4 2 6" x="343" y="195" w="794" h="643" v="false"/>
 </settings>

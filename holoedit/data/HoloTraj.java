@@ -60,6 +60,7 @@ public class HoloTraj
 	public int currentRead = -1;
 	private float trajLineWidth = 1;
 	boolean isPlaying = false;
+	boolean Recording = false; // does it needs finalizing like overdubing on older trajs
 	
 	// pour display list
 	private int GLlistIDscore,GLlistIDroom,GLlistIDroom3D;
@@ -199,7 +200,16 @@ public class HoloTraj
 			
 	}
 	
+	/** */
+	public void setRecording(boolean v)
+	{
+		Recording = v;
+	}
 	
+	public boolean isRecording()
+	{
+		return Recording;
+	}
 	/** Modification de l'indice de depart begNumber (par rapport a la piste) */
 	public void setBegNumber(int bn)
 	{

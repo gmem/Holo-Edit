@@ -514,6 +514,12 @@ public class RoomGUI extends FloatingWindow
 				oldCurrentX = mousex;
 				oldCurrentY = mousey;
 				
+				HoloPoint newPoint = convPosPt(posW, posH);
+				newPoint.setEditable(false);
+				holoEditRef.connection.treatRecordPoint(newPoint);
+				
+				holoEditRef.gestionPistes.setDirty(Ut.DIRTY_ROOM);
+				
 			} else if(speakerSelected != RoomIndex.getNull()) {
 				RoomIndex.decode(speakerSelected);
 				currentSpeakerNum = RoomIndex.getPt();
@@ -1008,7 +1014,12 @@ public class RoomGUI extends FloatingWindow
 			
 			if(draggedPointRecord)
 			{
+				HoloPoint newPoint = convPosPt(posW, posH);
+				newPoint.setEditable(false);
+				holoEditRef.connection.treatRecordPoint(newPoint);
+				
 				holoEditRef.connection.treatRecordSegmentAll();
+				holoEditRef.gestionPistes.setDirty(Ut.DIRTY_ROOM);
 			}
 			
 			if(draggedSelZone && selMode)

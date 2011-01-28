@@ -83,6 +83,7 @@ public class HoloTrack
 	public int[] playedPointsDate;
 	int playedIndex = 0;
 	boolean playing = false;
+	boolean recording = false;
 
 
 	/** ******************* Constructeurs ******************* */
@@ -309,6 +310,16 @@ public class HoloTrack
 		{
 			sdif.setDirty(mask);
 		}
+	}
+	
+	public void setRecording(boolean v)
+	{
+		recording = v;
+	}
+	
+	public boolean isRecording()
+	{
+		return recording;
 	}
 	
 	/* ********************** AFFICHAGE ************************* */
@@ -1507,6 +1518,48 @@ public class HoloTrack
 		update();
 	}
 
+	/** on remplace tous les points par la trajectoire **/
+	public void cutExcptNew(int dateBegin, int dateEnd)
+	{
+		if (trajs.isEmpty() || dateBegin > dateEnd)
+			return;
+		
+		Vector<HoloTraj> toAdd = new Vector<HoloTraj>();
+		for(HoloTraj t:trajs)
+		{
+			if(!t.isRecording())
+			{
+				HoloTraj ta = t.cut(dateBegin,dateEnd);
+				if (ta != null)
+					toAdd.add(ta.dupliquer());
+			}
+			
+		}
+		for(HoloTraj ht:toAdd)
+			addTraj(ht,ht.getFirstDate());	
+		
+	}
+	
+	public void finalizeRecord()
+	{
+		Vector<HoloTraj> newTrajs = new Vector<HoloTraj>();
+		
+		for(HoloTraj tj : trajs )
+			if(tj.isRecording())
+				newTrajs.add(tj);
+		for(HoloTraj tj : newTrajs)
+		{
+			cutExcptNew(tj.getFirstDate(),tj.getLastDate());
+			
+		}
+		
+		for(HoloTraj tj : trajs )
+			if(tj != null)
+				tj.setRecording(false);
+		
+		update();
+	}
+	
 	// TODO
 	/** rogne la piste autour des dates begin & end */
 	public void crop(int dateBegin, int dateEnd, boolean wavesToo)

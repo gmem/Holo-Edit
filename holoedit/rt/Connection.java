@@ -427,6 +427,8 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 				}else
 					ht.add(new HoloPoint(x,y,z,date,editable));
 				
+				tk.setRecording(true);
+				
 			}
 		}
 		
@@ -450,9 +452,11 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 				if(!lht.isEmpty())
 				{
 					lht.lastElement().setEditable(true);
-					//tk.cut(lht.getFirstDate(), lht.getLastDate(), false,false);
-					//tk.addTraj(lht);
+					//tk.finalizeRecord();
+					tk.setRecording(false);
+
 				}
+				ht.setRecording(true);
 				recTrajs.set(p, ht);
 			}
 		}
@@ -489,6 +493,9 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 					tk.update();
 				}else
 					ht.add(np = new HoloPoint(p.x,p.y,p.z,date,editable));
+				
+				tk.setRecording(true);
+				
 				sendQ(keyOut+"/track/"+tk.getNumber()+"/xyz",new Object[]{np.x,np.y,np.z});
 			}
 			
@@ -510,13 +517,29 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 				if(!lht.isEmpty())
 				{
 					lht.lastElement().setEditable(true);
-					//tk.cut(lht.getFirstDate(), lht.getLastDate(), false,false);
-					//tk.addTraj(lht);
+					//tk.finalizeRecord();
+					tk.setRecording(false);
+
 				}
+				ht.setRecording(true);
 				recTrajs.set(i, ht);
 			}
 		}
 		
+	}
+	
+	public void finalizeRecordAll()
+	{
+		if(!recording)
+			return;
+		for(int i = 0 ; i < holoEditRef.gestionPistes.getNbTracks() ; i++)
+		{
+			HoloTrack tk = holoEditRef.gestionPistes.getTrack(i);
+			if(tk.isRecEnable())
+				tk.finalizeRecord();
+		}
+		
+		holoEditRef.gestionPistes.preparePlay();
 	}
 	
 	protected void send(String key, String msg) {
@@ -828,6 +851,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 					tk.update();
 					
 				treatRecordSegmentAll();
+				finalizeRecordAll();
 				
 				recording = false;
 				holoEditRef.transport.rec.setIcon(holoEditRef.transport.recOffState);
@@ -850,6 +874,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 					HoloTraj ht = new HoloTraj();
 					currentTrack = holoEditRef.gestionPistes.getTrack(i);
 					//ht.add(new HoloPoint(0,0,0,recBegDate,true));
+					ht.setRecording(true);
 					recTrajs.add(ht);
 					/*if(currentTrack.isVisible() && !currentTrack.isLocked() && currentTrack.isRecEnable())
 					{
@@ -1291,6 +1316,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 					oldDate = new Date().getTime();
 					if(loop && counter >= end+1)
 					{
+						finalizeRecordAll();
 						sendQ(keyOut+"/transport/looping",new Object[]{"bang"});
 						counter = beg;
 						looping = true;
@@ -1310,7 +1336,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 						currentTrack = holoEditRef.gestionPistes.getTrack(i);
 						if(currentTrack.isVisible())
 						{
-							if((recording && !currentTrack.isRecEnable()) || !recording)
+							if(!recording || !currentTrack.isRecEnable() || !currentTrack.isRecording())
 							{
 								if((p = currentTrack.getPointPlay(counter)) != null)
 								{	
