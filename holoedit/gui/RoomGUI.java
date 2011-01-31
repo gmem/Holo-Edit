@@ -24,6 +24,7 @@ package holoedit.gui;
 
 import holoedit.HoloEdit;
 import holoedit.data.HoloPoint;
+import holoedit.data.HoloPointBackRef;
 import holoedit.data.HoloSpeaker;
 import holoedit.data.HoloTrack;
 import holoedit.data.HoloTraj;
@@ -136,6 +137,8 @@ public class RoomGUI extends FloatingWindow
 	private int scaleBackSelected = RoomIndex.getNull();
 	private int scaleForwSelected = RoomIndex.getNull();
 	public Vector<Integer> selIndex = new Vector<Integer>(5, 1);
+	public Vector<HoloPoint> selPoints = new Vector<HoloPoint>();
+	public Vector<HoloPointBackRef> selRefs = new Vector<HoloPointBackRef>();
 	private HoloTrack currentTrack, currentTrack2, activ;
 	private HoloTraj currentSeq;
 	private HoloPoint currentPoint;
@@ -162,6 +165,7 @@ public class RoomGUI extends FloatingWindow
 	private boolean draggedPointRecord = false;
 	@SuppressWarnings("unused")
 	private float oldCurrentX, oldCurrentY, oldCurrentZ, oldCurrentDir, oldCurrentDist;
+	private float oldZ, deltaZ;
 	private boolean selMode = false;
 	private Thread status;
 	private class RoomGLCanvas extends GLCanvas implements GLEventListener, MouseWheelListener, MouseListener, MouseMotionListener, KeyListener
@@ -367,12 +371,18 @@ public class RoomGUI extends FloatingWindow
 					selIndex.addAll(holoEditRef.gestionPistes.getActiveTrack().getAllRoomPoints(holoEditRef.gestionPistes.getActiveTrackNb(), begTime, endTime, selMode || holoEditRef.viewOnlyEditablePoints));
 					holoEditRef.gestionPistes.getActiveTrack().setDirty(true);
 				}
+				updateSelRefs();
 				
 			}
 			else
 			{
-				selIndex = new Vector<Integer>(5, 1);
-				selected = RoomIndex.getNull();
+				if( false )//!(draggedPoint || draggedPointZ || draggedPointSZ || draggedPointS || draggedPointZ))
+				{
+					Ut.print("clicked reset selIndex");
+					selIndex = new Vector<Integer>(5, 1);
+					updateSelRefs();
+					selected = RoomIndex.getNull();
+				}
 				holoEditRef.gestionPistes.setDirty(true);
 			}
 			display();
@@ -569,9 +579,14 @@ public class RoomGUI extends FloatingWindow
 						// MULTI SELECT
 						if (e.isAltDown() && e.getButton() == MouseEvent.BUTTON1)
 						{
-							// REMOVE POINTS
+							// MOVE POINTS on Z
 							holoEditRef.gestionPistes.StoreToUndoAll();
-							removePoints();
+							draggedPointSZ = true;
+							oldCurrentZ = convPosZ(posH);
+							
+							oldZ = currentPoint.z;
+							deltaZ = 0.f;
+							
 						}
 						else if (((e.isMetaDown() && Ut.MAC) || (e.isControlDown() && !Ut.MAC)) && e.isShiftDown())
 						{
@@ -600,11 +615,13 @@ public class RoomGUI extends FloatingWindow
 						}
 						else if (e.isAltDown() && !e.isShiftDown() && e.getButton() == MouseEvent.BUTTON1)
 						{
-							// REMOVE POINT
+							// MOVE POINT on Z
 							holoEditRef.gestionPistes.StoreToUndo(currentTrackNum);
-							currentSeq.removeElementAtReal(currentPointNum);
-							currentTrack.update();
-							selected = RoomIndex.getNull();
+							draggedPointZ = true;
+							oldCurrentZ = convPosZ(posH);
+							
+							oldZ = currentPoint.z;
+							deltaZ = 0.f;
 						}
 						else if (((e.isMetaDown() && Ut.MAC) || (e.isControlDown() && !Ut.MAC)) && e.isShiftDown())
 						{
@@ -624,8 +641,14 @@ public class RoomGUI extends FloatingWindow
 							draggedPoint = true;
 							oldCurrentX = currentPoint.getX();
 							oldCurrentY = currentPoint.getY();
+							
+							selIndex.add(selected);
 						}
+						
+						updateSelRefs();
 					}
+				
+					currentTrack.setDirty(Ut.DIRTY_ROOM);
 				}
 				else if (RoomIndex.isLine())
 				{
@@ -746,6 +769,8 @@ public class RoomGUI extends FloatingWindow
 					currentPoint.translaterZ(dZ);
 				oldCurrentZ = Z;
 				
+				deltaZ = currentPoint.z - oldZ;
+				
 				currentTrack.setDirty(Ut.DIRTY_ROOM);
 			}
 			else if (draggedSelZone)
@@ -842,6 +867,9 @@ public class RoomGUI extends FloatingWindow
 							eT.setDirty(true);
 						}
 					}
+					
+					deltaZ = currentPoint.z - oldZ;
+					
 				}
 				else dragSelIndexZ(dZ);
 				oldCurrentZ = Z;
@@ -1027,9 +1055,10 @@ public class RoomGUI extends FloatingWindow
 				holoEditRef.gestionPistes.setDirty(Ut.DIRTY_ROOM);
 			}
 			
-			if(draggedSelZone && selMode)
+			if(draggedSelZone )
 			{
-				treatSelIndex();
+				if(selMode)
+					treatSelIndex();
 				holoEditRef.gestionPistes.setDirty(true);
 			}
 
@@ -1268,6 +1297,7 @@ public class RoomGUI extends FloatingWindow
 				{
 					selected = RoomIndex.getNull();
 					selIndex = new Vector<Integer>(5, 1);
+					updateSelRefs();
 					return;
 				}
 				int offset = 0;
@@ -1291,6 +1321,8 @@ public class RoomGUI extends FloatingWindow
 						offset++;
 					}
 				}
+				
+				updateSelRefs();
 			}
 		}
 
@@ -2139,6 +2171,16 @@ public class RoomGUI extends FloatingWindow
 					gl.glVertex2f(X,YM);
 					gl.glVertex2f(X,-800);
 				gl.glEnd();
+			
+			
+			if(draggedPointSZ || draggedPointZ)
+			{
+				//gl.glRasterPos2f(TPOS, i);
+				gl.glColor3f(0.25f,0.25f,0.25f);
+				gl.glRasterPos2f(XP,YP);
+				glut.glutBitmapString(GLUT.BITMAP_HELVETICA_12, " point Z : " + ((int) (currentPoint.z *10))/10. +"  delta Z : "+ ((int) (deltaZ *10))/10.);
+			}
+			
 			}
 		}		
 			
@@ -2366,6 +2408,8 @@ public class RoomGUI extends FloatingWindow
 				oldTrackNum = currentTrackNum;
 			}
 			selIndex.addAll(holoEditRef.gestionPistes.tracks.get(oldTrackNum).getRoomPointsFromTo(oldTrackNum, a, b));
+			
+			updateSelRefs();
 		}
 
 		private void dragSelIndex(HoloPoint newPoint)
@@ -2411,14 +2455,16 @@ public class RoomGUI extends FloatingWindow
 			RoomIndex.decode(sortSelVector.firstElement());
 			int a = RoomIndex.getPt(), b = -1, oldSeqNum = -1, oldTrackNum = -1;
 			HoloTraj oldSeq = null;
+			HoloPoint curPoint;
+			
 			for (int i : sortSelVector)
 			{
 				RoomIndex.decode(i);
 				currentTrackNum = RoomIndex.getTrack();
 				currentSeqNum = RoomIndex.getSeq();
 				currentSeq = holoEditRef.gestionPistes.tracks.get(currentTrackNum).getHoloTraj(currentSeqNum);
-				currentPoint = currentSeq.points.get(RoomIndex.getPt());
-				if (currentPoint.isEditable() && (currentSeqNum != oldSeqNum || currentTrackNum != oldTrackNum))
+				curPoint = currentSeq.points.get(RoomIndex.getPt());
+				if (curPoint.isEditable() && (currentSeqNum != oldSeqNum || currentTrackNum != oldTrackNum))
 				{
 					if (b != -1)
 					{
@@ -2432,6 +2478,8 @@ public class RoomGUI extends FloatingWindow
 				oldTrackNum = currentTrackNum;
 			}
 			oldSeq.calcNewPosSelectionZ(a, b, dZ);
+			
+			deltaZ = currentPoint.z - oldZ;
 		}
 
 		private void prepMultiSel(boolean b)
@@ -2439,6 +2487,7 @@ public class RoomGUI extends FloatingWindow
 			mousex2 = mousex1 = mousex;
 			mousey2 = mousey1 = mousey;
 			selIndex = new Vector<Integer>(5, 1);
+			updateSelRefs();
 			selZonePt2 = selZonePt1 = convPosPt(posW, posH);
 			draggedSelZone = true;
 			drawSelZone = true;
@@ -2596,6 +2645,7 @@ public class RoomGUI extends FloatingWindow
 	{
 		selected = RoomIndex.getNull();
 		selIndex = new Vector<Integer>(5,1);
+		updateSelRefs();
 		speakerSelected = RoomIndex.getNull();
 		scaleSelected = RoomIndex.getNull();
 		scaleBackSelected = RoomIndex.getNull();
@@ -2609,6 +2659,52 @@ public class RoomGUI extends FloatingWindow
 			display();
 	}
 
+	public void updateSelRefs()
+	{
+		HoloTrack tk;
+		HoloPointBackRef hp_ref;
+		selRefs.clear();
+		IntegerVector v = new IntegerVector(selIndex);
+		v.sort();
+		
+		for (int i : v)
+		{
+			int[] iA = RoomIndex.decode(i);
+			if (RoomIndex.isPoint())
+			{
+				currentTrackNum = iA[1];
+				tk =  holoEditRef.gestionPistes.tracks.get(currentTrackNum);
+				HoloPoint p = tk.getHoloTraj(iA[2]).points.get(iA[3]);
+				hp_ref = new HoloPointBackRef(p);
+				hp_ref.setFromRoom(i);
+				
+				selRefs.add(hp_ref);
+				
+				//tk.setDirty(Ut.DIRTY_TIME);
+				tk.getHoloTraj(iA[2]).setDirty(true);
+			}
+		}
+		
+		//Ut.print("Room update sel ref "+selRefs.size());
+		holoEditRef.gestionPistes.setDirty(true);
+		holoEditRef.timeEditor.setSelectedPoints(selRefs);
+
+	}
+	
+	public void setSelectedPoints(Vector<HoloPointBackRef> _selRefs)
+	{
+		selIndex.clear();
+		selPoints.clear();
+		
+		for(HoloPointBackRef r : _selRefs)
+		{
+			selIndex.add(r.encodeRoom());
+			selPoints.add(r.p);
+		}
+		
+		display();
+	}
+	
 	public void removePoints()
 	{
 		IntegerVector sortSelVector = new IntegerVector(selIndex);
@@ -2625,7 +2721,8 @@ public class RoomGUI extends FloatingWindow
 				{
 					currentPoint = currentSeq.elementAtReal(currentPointNum);
 					if (currentPoint.isEditable())
-						currentSeq.removeElementAtReal2(currentPointNum);
+						//currentSeq.removeElementAtReal2(currentPointNum);
+						currentSeq.removeElementAtReal(currentPointNum);
 				}
 				catch (ArrayIndexOutOfBoundsException aioobe) {}
 			}
@@ -2642,6 +2739,7 @@ public class RoomGUI extends FloatingWindow
 			}
 		}
 		selIndex = new Vector<Integer>(5, 1);
+		updateSelRefs();
 		selected = RoomIndex.getNull();
 	}
 

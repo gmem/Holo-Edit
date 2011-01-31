@@ -930,6 +930,9 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 			looping = !firstCue;
 			oversleep = 0;
 			baseDate = new Date().getTime()-counter;
+			
+			holoEditRef.transport.setPlay(true);
+			
 			runner.start();
 			if (!holoEditRef.rtDisplay.isAnimating())
 				holoEditRef.rtDisplay.start();
@@ -956,8 +959,9 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 			paused = false;
 			if(holoEditRef.rtDisplay.isAnimating())
 				holoEditRef.rtDisplay.stop();
-			holoEditRef.transport.start.setIcon(holoEditRef.transport.stopState);
-			holoEditRef.transport.resume.setIcon(holoEditRef.transport.resumeState);
+			
+			
+			holoEditRef.transport.setPlay(false);
 			
 			send(keyOut+"/track/*/cue",new Object[]{0});
 		}
@@ -1322,11 +1326,17 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 						looping = true;
 						loopNum++;
 						baseDate = new Date().getTime()-counter;
-					} else if(counter > total && !recording){
+					} else if(!loop && counter > total && !recording){
 						sendQ(keyOut+"/transport/stop",new Object[]{"bang"});
 						playing = false;
 						paused = false;
 						autostop = true;
+					}else if (!loop && counter >= total && recording)
+					{
+						setTotalTime(total+5000); // add 5 sec to total time when recording
+						//Ut.print("total "+total);
+						end = total;
+						holoEditRef.counterPanel.setCompteur2(2,total);
 					}
 					if(counter%10 == 0)
 						sendQ(keyOut+"/transport/time",new Object[]{counter});

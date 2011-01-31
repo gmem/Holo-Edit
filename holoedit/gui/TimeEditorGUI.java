@@ -25,6 +25,7 @@ package holoedit.gui;
 import groovy.util.slurpersupport.GPathResult;
 import holoedit.HoloEdit;
 import holoedit.data.HoloPoint;
+import holoedit.data.HoloPointBackRef;
 import holoedit.data.HoloTrack;
 import holoedit.data.HoloTraj;
 import holoedit.data.WaveFormInstance;
@@ -164,6 +165,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 	private int curveSelected = -1;
 	public Vector<Integer> selIndex = new Vector<Integer>();
 	public Vector<HoloPoint> selPoints = new Vector<HoloPoint>();
+	public Vector<HoloPointBackRef> selRefs = new Vector<HoloPointBackRef>();
 	private int scaleSelected = TimeIndex.getNull();
 	private int scaleBackSelected = TimeIndex.getNull();
 	private int scaleForwSelected = TimeIndex.getNull();
@@ -324,6 +326,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 	public void display(GLAutoDrawable drawable)
 	{
 		if(!visible)return;
+		
 		gl = drawable.getGL();
 		gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 		gl.glLoadIdentity();
@@ -362,6 +365,9 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 			selPoints = new Vector<HoloPoint>(5, 1);
 		}
 		headerSelected = TimeIndex.getNull();
+		
+		//Ut.print("display with "+selIndex.size()+"-"+selPoints.size());
+		
 		for (int i = curves.size() - 1; i >= 0; i--)
 		{
 			currentCurve = curves.get(i);
@@ -1331,8 +1337,8 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 			}
 			else
 			{
-				selIndex = new Vector<Integer>();
-				selPoints = new Vector<HoloPoint>();
+				//selIndex = new Vector<Integer>();
+				//selPoints = new Vector<HoloPoint>();
 			}
 		}
 	}
@@ -1413,6 +1419,15 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 					{
 						selIndex = new Vector<Integer>();
 						selPoints = new Vector<HoloPoint>();
+						
+						HoloPoint p = activTrack.getHoloTraj(iA[2]).points.get(iA[3]);
+						
+						if (!selPoints.contains(p))
+						{
+							selPoints.add(p);
+							selIndex.add(selected);
+						}
+						
 						if (e.isAltDown() && e.getButton() == MouseEvent.BUTTON1)
 						{
 							currentSeq.removeElementAtReal(iA[3]);
@@ -1440,6 +1455,8 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 								prepareDraggPointTime();
 							}
 						}
+						
+						updateSelRefs();
 					}
 				}
 			}
@@ -2881,12 +2898,15 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 
 	public void treatSelIndex()
 	{
-		if (selIndex.isEmpty())
+		/*if (selIndex.isEmpty())
 			return;
+		*/
+		
 		IntegerVector v = new IntegerVector(selIndex);
 		v.sort();
 		selIndex = new Vector<Integer>();
 		selPoints = new Vector<HoloPoint>();
+		
 		for (int i : v)
 		{
 			int[] iA = TimeIndex.decode(i);
@@ -2897,9 +2917,59 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 				{
 					selPoints.add(p);
 					selIndex.add(i);
+					
 				}
 			}
 		}
+		
+		updateSelRefs();
+	}
+	
+	public void updateSelRefs()
+	{
+		HoloPointBackRef hp_ref;
+		selRefs.clear();
+		IntegerVector v = new IntegerVector(selIndex);
+		v.sort();
+		
+		for (int i : v)
+		{
+			int[] iA = TimeIndex.decode(i);
+			if (TimeIndex.isPoint())
+			{
+				HoloPoint p = activTrack.getHoloTraj(iA[2]).points.get(iA[3]);
+				hp_ref = new HoloPointBackRef(p);
+				hp_ref.setFromTime(i, activTrack.getNumber()-1);
+				selRefs.add(hp_ref);
+					
+			}
+		}
+		
+		holoEditRef.gestionPistes.setDirty(Ut.DIRTY_ROOM);
+		holoEditRef.room.setSelectedPoints(selRefs);
+	}
+	
+	public void setSelectedPoints(Vector<HoloPointBackRef> _selRefs)
+	{
+		
+		selIndex.clear();
+		selPoints.clear();
+		
+		if(activTrack == null)
+			activTrack = holoEditRef.gestionPistes.getActiveTrack();
+		
+		for(HoloPointBackRef r : _selRefs)
+		{
+			if(holoEditRef.gestionPistes.tracks.get(r.tkNum).getNumber() == activTrack.getNumber() )
+			{		
+				selIndex.add(r.encodeTime());
+				selPoints.add(r.p);
+			}
+		}
+		
+		//Ut.print("setSel with "+_selRefs.size()+" ---> "+selIndex.size()+"-"+selPoints.size());
+		
+		display();
 	}
 
 	private void removePoints()
@@ -2923,6 +2993,8 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 		activTrack.update();
 		selIndex = new Vector<Integer>();
 		selPoints = new Vector<HoloPoint>();
+		updateSelRefs();
+		
 		selected = TimeIndex.getNull();
 	}
 	
@@ -3914,7 +3986,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 				}
 			float[] cc = OpenGLUt.glColor(gl, activTrack.getColor());
 			float[] ccSel = cc.clone();
-			ccSel[3] = 0.5f;
+			ccSel[3] = 0.3f;
 			if (activTrack.isVisible() && !activTrack.trajs.isEmpty())
 			{
 				for (int k = 0, last2 = activTrack.trajs.size(); k < last2; k++)
@@ -3951,7 +4023,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 								int index = TimeIndex.encode(TimeIndex.TYPE_PT, curveNum, k, l);
 								if (index == selected || selPoints.contains(p) || (selIndex.contains(index) && (!selMode || p.isEditable())))
 								{
-									gl.glPointSize(p.isEditable() ? 10 : 6);
+									gl.glPointSize(p.isEditable() ? 14 : 10);
 									OpenGLUt.glColor(gl, ccSel);
 									gl.glBegin(GL.GL_POINTS);
 									p.drawX(gl);
@@ -4012,7 +4084,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 				}
 			float[] cc = OpenGLUt.glColor(gl, activTrack.getColor());
 			float[] ccSel = cc.clone();
-			ccSel[3] = 0.5f;
+			ccSel[3] = 0.3f;
 			if (activTrack.isVisible() && !activTrack.trajs.isEmpty())
 			{
 				for (int k = 0, last2 = activTrack.trajs.size(); k < last2; k++)
@@ -4049,7 +4121,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 								int index = TimeIndex.encode(TimeIndex.TYPE_PT, curveNum, k, l);
 								if (index == selected || selPoints.contains(p) || (selIndex.contains(index) && (!selMode || p.isEditable())))
 								{
-									gl.glPointSize(p.isEditable() ? 10 : 6);
+									gl.glPointSize(p.isEditable() ? 14 : 10);
 									OpenGLUt.glColor(gl, ccSel);
 									gl.glBegin(GL.GL_POINTS);
 									p.drawY(gl);
@@ -4110,7 +4182,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 				}
 			float[] cc = OpenGLUt.glColor(gl, activTrack.getColor());
 			float[] ccSel = cc.clone();
-			ccSel[3] = 0.5f;
+			ccSel[3] = 0.3f;
 			if (activTrack.isVisible() && !activTrack.trajs.isEmpty())
 			{
 				for (int k = 0, last2 = activTrack.trajs.size(); k < last2; k++)
@@ -4147,7 +4219,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 								int index = TimeIndex.encode(TimeIndex.TYPE_PT, curveNum, k, l);
 								if (index == selected || selPoints.contains(p) || (selIndex.contains(index) && (!selMode || p.isEditable())))
 								{
-									gl.glPointSize(p.isEditable() ? 10 : 6);
+									gl.glPointSize(p.isEditable() ? 14 : 10);
 									OpenGLUt.glColor(gl, ccSel);
 									gl.glBegin(GL.GL_POINTS);
 									p.drawZ(gl);
@@ -4208,7 +4280,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 				}
 			float[] cc = OpenGLUt.glColor(gl, activTrack.getColor());
 			float[] ccSel = cc.clone();
-			ccSel[3] = 0.5f;
+			ccSel[3] = 0.3f;
 			if (activTrack.isVisible() && !activTrack.trajs.isEmpty())
 			{
 				for (int k = 0, last2 = activTrack.trajs.size(); k < last2; k++)
@@ -4245,7 +4317,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 								int index = TimeIndex.encode(TimeIndex.TYPE_PT, curveNum, k, l);
 								if (index == selected || selPoints.contains(p) || (selIndex.contains(index) && (!selMode || p.isEditable())))
 								{
-									gl.glPointSize(p.isEditable() ? 10 : 6);
+									gl.glPointSize(p.isEditable() ? 14 : 10);
 									OpenGLUt.glColor(gl, ccSel);
 									gl.glBegin(GL.GL_POINTS);
 									p.drawR(gl);
@@ -4306,7 +4378,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 				}
 			float[] cc = OpenGLUt.glColor(gl, activTrack.getColor());
 			float[] ccSel = cc.clone();
-			ccSel[3] = 0.5f;
+			ccSel[3] = 0.3f;
 			if (activTrack.isVisible() && !activTrack.trajs.isEmpty())
 			{
 				for (int k = 0, last2 = activTrack.trajs.size(); k < last2; k++)
@@ -4343,7 +4415,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 								int index = TimeIndex.encode(TimeIndex.TYPE_PT, curveNum, k, l);
 								if (index == selected || selPoints.contains(p) || (selIndex.contains(index) && (!selMode || p.isEditable())))
 								{
-									gl.glPointSize(p.isEditable() ? 10 : 6);
+									gl.glPointSize(p.isEditable() ? 14 : 10);
 									OpenGLUt.glColor(gl, ccSel);
 									gl.glBegin(GL.GL_POINTS);
 									p.drawT(gl);
@@ -4661,6 +4733,7 @@ public class TimeEditorGUI extends FloatingWindow implements GLEventListener, Mo
 		curveSelected = -1;
 		selIndex = new Vector<Integer>();
 		selPoints = new Vector<HoloPoint>();
+		updateSelRefs();
 		scaleSelected = TimeIndex.getNull();
 		scrollHSelected = TimeIndex.getNull();
 		draggedSelZone = false;

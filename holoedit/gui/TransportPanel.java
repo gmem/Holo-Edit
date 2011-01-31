@@ -87,6 +87,7 @@ public class TransportPanel extends FloatingWindow
 		preload.setEnabled(true);
 		preload.setToolTipText("position at begin time");
 		preload.setSize(new java.awt.Dimension(60, 30));
+		preload.setFocusable(false);
 		preload.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -111,6 +112,7 @@ public class TransportPanel extends FloatingWindow
 		stop.setEnabled(true);
 		stop.setToolTipText("stop");
 		stop.setSize(new java.awt.Dimension(60, 30));
+		stop.setFocusable(false);
 		stop.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -135,6 +137,7 @@ public class TransportPanel extends FloatingWindow
 		start.setEnabled(true);
 		start.setToolTipText("start");
 		start.setSize(new java.awt.Dimension(60, 30));
+		start.setFocusable(false);
 		start.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
@@ -159,6 +162,7 @@ public class TransportPanel extends FloatingWindow
 		resume.setEnabled(true);
 		resume.setToolTipText("pause/resume");
 		resume.setSize(new java.awt.Dimension(60, 30));
+		resume.setFocusable(false);
 		resume.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -183,6 +187,7 @@ public class TransportPanel extends FloatingWindow
 		loop.setEnabled(true);
 		loop.setToolTipText("loop on/off");
 		loop.setSize(new java.awt.Dimension(60, 30));
+		loop.setFocusable(false);
 		loop.addActionListener(new ActionListener()	{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -206,6 +211,7 @@ public class TransportPanel extends FloatingWindow
 		rec.setEnabled(true);
 		rec.setToolTipText("Record on/off");
 		rec.setSize(new java.awt.Dimension(60, 30));
+		rec.setFocusable(false);
 		rec.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -240,7 +246,7 @@ public class TransportPanel extends FloatingWindow
 		connectionSettings.setIcon(expandIcon);
 		connectionSettings.setMargin(new Insets(1, 10, 1, 10));
 		connectionSettings.setBorderPainted(false); // pour ressembler a un simple label
-
+		connectionSettings.setFocusable(false);
 		
 		connectionSettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -267,6 +273,20 @@ public class TransportPanel extends FloatingWindow
 		pack();
 	}
 
+	
+	public void setPlay(boolean v)
+	{
+		if(v)
+			start.setIcon(playState);
+		else
+		{
+			start.setIcon(stopState);
+			resume.setIcon(resumeState);
+		}
+			
+	}
+	
+	
 	public void setConnectionStatus(String whatsConnected, boolean updateTextFields){
 		
 		if (whatsConnected==null) {

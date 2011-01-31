@@ -311,38 +311,30 @@ public class HoloTraj
 			}
 			return cpt;
 		} else {
-			// suppression avec déplacement XY et changement de date;
-			int datej, datei, dur;
-			float dx, dy, dz, fact;
-			HoloPoint prevPt, actualPt, nthPt;
+			// suppression avec déplacement de la morphologie au milieu des pts editables precedents et suivant;
+			
+			HoloPoint prevPt, actualPt, nextPt, nthPt, newPt;
 			int j = prevEditPoint(realIndex); // point editable precedent
 			int k = nextEditPoint(realIndex); // point editable suivant
 			if(j != -1 && k != -1)
 			{
 				prevPt = points.elementAt(j);
 				actualPt = points.elementAt(realIndex);
-				datej = prevPt.date;
-				datei = actualPt.date;
-				dur = datei - datej;
-				dx = prevPt.x - actualPt.x;
-				dy = prevPt.y - actualPt.y;
-				dz = prevPt.z - actualPt.z;
-				for (int nth = realIndex + 1, last = size() ; nth < last ; nth++)
-				{
-					nthPt = points.elementAt(nth);
-					if (nth < k)
-					{ // ----- changement de position du point
-						fact = (float) (k == realIndex ? 0. : (float) (k - nth) / (float) (k - realIndex));
-						nthPt.translater(dx * fact, dy * fact, dz * fact);
-					}
-					nthPt.date = nthPt.date - dur; // changement de date des points
-				}
+				nextPt = points.elementAt(k);
+				
+				newPt = new HoloPoint();
+				
+				newPt.x = prevPt.x + (nextPt.x - prevPt.x) / 2.f;
+				newPt.y = prevPt.y + (nextPt.y - prevPt.y) / 2.f;
+				newPt.z = prevPt.z + (nextPt.z - prevPt.z) / 2.f;	
+				
+				calcNewPosSeg(realIndex, newPt);
+				
+				actualPt.setEditable(false);
+				
+				
 				int cpt = 0;
-				for (int nth = realIndex; nth > j; nth--)
-				{
-					points.remove(nth);
-					cpt++;
-				}
+				
 				return cpt;
 			}
 
@@ -1375,10 +1367,10 @@ public class HoloTraj
 				//if(selIndex)
 				// Dessin des points editable selectionnés
 				float tmp = color[3];
-				color[3] = 0.5f;
+				color[3] = 0.3f;
 				gl.glColor4fv(color,0);
 				
-				gl.glPointSize(10);
+				gl.glPointSize(14);
 				gl.glBegin(GL.GL_POINTS);
 				for (int i = 0; i < points.size(); i++)
 				{
@@ -1391,7 +1383,7 @@ public class HoloTraj
 				// Dessin des points non editable selectionnés
 				if(!onlyEditable)
 				{
-					gl.glPointSize(6);
+					gl.glPointSize(10);
 					gl.glBegin(GL.GL_POINTS);
 					for (int i = 0; i < points.size(); i++)
 					{

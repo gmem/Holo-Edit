@@ -175,7 +175,6 @@ public class GestionPistes
 	private SDIFdataInstance sdif;
 	public AlgoVector algos;
 
-
 	public GestionPistes(HoloEdit owner)
 	{
 		holoEditRef = owner;

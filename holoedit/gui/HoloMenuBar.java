@@ -267,7 +267,7 @@ public class HoloMenuBar extends JMenuBar
 		editMenu.add(replaceMenuItem);
 		insertMenuItem = new HoloMenuItem("Insert", KeyEvent.VK_I, aAction);
 		editMenu.add(insertMenuItem);
-		eraseMenuItem = new HoloMenuItem("Erase", KeyEvent.VK_E, aAction);
+		eraseMenuItem = new HoloMenuItem("Erase", KeyEvent.VK_BACK_SPACE,false, aAction);
 		editMenu.add(eraseMenuItem);
 		editMenu.addSeparator();
 		selectAllMenuItem = new HoloMenuItem("Select All", KeyEvent.VK_A, aAction);
@@ -428,7 +428,7 @@ public class HoloMenuBar extends JMenuBar
 		optionMenu.addSeparator();
 		windowOnTop = new JMenu("Windows on top");
 		//windowOnTopBg = new ButtonGroup();
-		transportOnTop = new JCheckBoxMenuItem("Transport", false);
+		transportOnTop = new JCheckBoxMenuItem("Transport", false	);
 		tracksOnTop = new JCheckBoxMenuItem("Tracks", false);
 		roomOnTop = new JCheckBoxMenuItem("Room", false);
 		room3dOnTop = new JCheckBoxMenuItem("3D Room", false);
