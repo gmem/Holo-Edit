@@ -381,7 +381,7 @@ public class HoloFileReader extends DefaultHandler implements Runnable {
 			File f = new File(filename);
 			String fdir = f.getParentFile().getAbsolutePath();
 			File sf;
-			if(Ut.MAC)
+			if(Ut.MAC  || Ut.LINUX )
 			{
 				sfn = sfn.replace('\\','/');
 				splitname = sfn.split("/");

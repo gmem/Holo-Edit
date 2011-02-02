@@ -238,7 +238,11 @@ public class HoloEdit implements UncaughtExceptionHandler
 			// On recupere le nom du system d'exploitation et on affecte les variables en fonction
 			Ut.APP_PATH = System.getProperty("user.dir");
 			Ut.hv = "Holo-Edit v" + Ut.version;
+			Ut.print( ".. GO on system "+System.getProperty("os.name"));
 			Ut.MAC = System.getProperty("os.name").indexOf("Mac") >= 0;
+			Ut.LINUX = System.getProperty("os.name").indexOf("Linux") >= 0;
+			Ut.WIN = !Ut.MAC && !Ut.LINUX;
+			
 			if (Ut.MAC)
 			{
 				Ut.dirCar = "/";
@@ -250,7 +254,13 @@ public class HoloEdit implements UncaughtExceptionHandler
 					ClassLoader.getSystemClassLoader().loadClass("com.apple.eio.FileManager");
 				}
 				
-			} else {
+			} else if (Ut.LINUX)
+			{
+				Ut.dirCar = "/";
+				Ut.numCar = '¡';
+				Ut.numCar2 = '°';
+				
+			}else {
 				Ut.dirCar = "\\";
 				Ut.numCar = '°';
 				Ut.numCar2 = '¡';
@@ -415,6 +425,9 @@ public class HoloEdit implements UncaughtExceptionHandler
 		} catch (UnsatisfiedLinkError ule)
 		{
 			Ut.alert("Jogl Error", "Jogl ");
+			
+			System.out.println("¥ No jogl in library path. Update LD_LIBRARY_PATH.");
+			System.out.println(" Exiting ...");
 			System.exit(1);
 		}
 		splash();

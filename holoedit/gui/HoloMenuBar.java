@@ -1012,6 +1012,8 @@ public class HoloMenuBar extends JMenuBar
 		{
 			if (Ut.MAC)
 				r.exec("open ./Documentations/help.html");
+			if (Ut.LINUX)
+				r.exec("firefox ./Documentations/help.html");
 			else r.exec("cmd /c start .\\Documentations\\help.html");
 		}
 		catch (Exception exc)
@@ -1025,9 +1027,11 @@ public class HoloMenuBar extends JMenuBar
 		Runtime r = Runtime.getRuntime();
 		try
 		{
-			if (!Ut.MAC)
-				r.exec("cmd /c start .\\Documentations\\Doc-Holophon-"+lang+"-V4.0.pdf");
-			else r.exec("open ./Documentations/Doc-Holophon-"+lang+"-V4.0.pdf");
+			if (Ut.WIN)
+				r.exec("cmd /c start .\\Documentations\\Doc-Holophon-"+lang+"-V4.2.pdf");
+			else if (Ut.LINUX)
+				 r.exec("firefox ./Documentations/Doc-Holophon-"+lang+"-V4.2.pdf");
+			else r.exec("open ./Documentations/Doc-Holophon-"+lang+"-V4.2.pdf");
 		}
 		catch (IOException ex)
 		{

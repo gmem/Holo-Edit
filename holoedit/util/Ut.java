@@ -397,6 +397,8 @@ public class Ut {
 	 * cette distinction permet de compiler l'application sur n'importe quelle plate-forme
 	 * tout en permettant l'execution du code compile sur n'importe quelle plate-forme. */
 	public static boolean MAC;
+	public static boolean LINUX;
+	public static boolean WIN;
 	/** Les codes de caractere etant differents sous mac et pc, chaque fois qu'on
 	 * fait appel a certains d'entre eux
 	 * on vient les chercher ici.

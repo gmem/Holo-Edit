@@ -86,7 +86,7 @@ public class HoloWaveForm
 
 	public String toString2(String parentPath)
 	{
-		if (Ut.MAC)
+		if (Ut.MAC || Ut.LINUX)
 		{
 			// EN DESSOUS DANS LA MEME ARBORESCENCE
 			if (soundFile.getAbsolutePath().startsWith(parentPath))
@@ -168,7 +168,7 @@ public class HoloWaveForm
 			tmp = tmp.substring("/Volumes/".length(),tmp.length()).replaceFirst("/",":");
 		if(tmp.indexOf(' ') != -1 && !(tmp.startsWith("\"") && tmp.endsWith("\"")))
 			tmp = "\""+tmp+"\"";
-		return Ut.MAC ? tmp : tmp.replace('\\','/');
+		return Ut.MAC || Ut.LINUX ? tmp : tmp.replace('\\','/');
 	}
 	
 	public String getPathWoQuote()
@@ -176,7 +176,7 @@ public class HoloWaveForm
 		String tmp = soundFile.getParent();
 		if(tmp.startsWith("/Volumes/") && Ut.MAC)
 			tmp = tmp.substring("/Volumes/".length(),tmp.length()).replaceFirst("/",":");
-		return Ut.MAC ? tmp : tmp.replace('\\','/');
+		return Ut.MAC  || Ut.LINUX ? tmp : tmp.replace('\\','/');
 	}
 	
 	
@@ -187,7 +187,7 @@ public class HoloWaveForm
 			tmp = tmp.substring("/Volumes/".length(),tmp.length()).replaceFirst("/",":");
 		if(tmp.indexOf(' ') != -1 && !(tmp.startsWith("\"") && tmp.endsWith("\"")))
 			tmp = "\""+tmp+"\"";
-		return Ut.MAC ? tmp : tmp.replace('\\','/');
+		return Ut.MAC  || Ut.LINUX ? tmp : tmp.replace('\\','/');
 		
 	}
 	
@@ -197,7 +197,7 @@ public class HoloWaveForm
 		String tmp = soundFile.getAbsolutePath();
 		if(tmp.startsWith("/Volumes/") && Ut.MAC)
 			tmp = tmp.substring("/Volumes/".length(),tmp.length()).replaceFirst("/",":");
-		return Ut.MAC ? tmp : tmp.replace('\\','/');
+		return Ut.MAC  || Ut.LINUX ? tmp : tmp.replace('\\','/');
 		
 	}
 	

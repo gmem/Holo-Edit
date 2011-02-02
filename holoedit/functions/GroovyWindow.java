@@ -539,6 +539,9 @@ public class GroovyWindow extends FloatingWindow implements KeyListener{
 			if (Ut.MAC) {
 				r.exec("open ./Documentations/ScriptEditorFunctions.html");
 				r.exec("open ./Documentations/HoloPoint.html");
+			}else if (Ut.LINUX) {
+				r.exec("firefox ./Documentations/ScriptEditorFunctions.html");
+				r.exec("firefox ./Documentations/HoloPoint.html");
 			}else {
 				 r.exec("cmd /c start .\\Documentations\\ScriptEditorFunctions.html");
 				 r.exec("cmd /c start .\\Documentations\\HoloPoint.html");				

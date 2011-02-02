@@ -1,1 +1,1 @@
-java -showversion -cp .;.\holoedit.jar;.\jogl.jar;.\javaosc.jar;.\groovy-all-1.5.1.jar holoedit.Main 1>console.log 2>error.log;
+java -showversion -cp .;.\holoedit.jar;.\jogl.jar;.\javaosc.jar;.\groovy-all-1.5.6.jar;.\sdif.jar;.\gluegen-rt.jar -Dsun.awt.noerasebackground=true holoedit.HoloEdit 1>console.log 2>error.log;              

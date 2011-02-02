@@ -107,7 +107,7 @@ public class HoloExternalData { //implements Serializable{
 	 */
 	public String toString2(String parentPath)
 	{
-		if (Ut.MAC)
+		if (Ut.MAC || Ut.LINUX)
 		{
 			// EN DESSOUS DANS LA MEME ARBORESCENCE
 			if (extDataFile.getAbsolutePath().startsWith(parentPath))

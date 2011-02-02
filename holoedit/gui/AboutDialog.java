@@ -143,6 +143,8 @@ public class AboutDialog extends FloatingModalWindow implements ActionListener
 	 			try {
 	 				if(Ut.MAC)
 	 					r.exec("open http://www.gmem.org");
+	 				else if(Ut.LINUX)
+	 					r.exec("firefox http://www.gmem.org");
 	 				else
 	 					r.exec("cmd /c start http://www.gmem.org");
 	 			} catch (Exception exc) {}
@@ -167,6 +169,8 @@ public class AboutDialog extends FloatingModalWindow implements ActionListener
 	 			try {
 	 				if(Ut.MAC)
 	 					r.exec("open mailto:holophon@gmem.org");
+	 				else if(Ut.LINUX)
+	 					r.exec("firefox mailto:holophon@gmem.org");
 	 				else
 	 					r.exec("cmd /c start mailto:holophon@gmem.org");
 	 			} catch (Exception exc) {}

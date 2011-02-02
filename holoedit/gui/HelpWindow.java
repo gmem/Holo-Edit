@@ -89,7 +89,7 @@ public class HelpWindow extends FloatingWindow {
 	/** charge Documentations/helpWindowDoc.html#index dans cette fentre d'aide.
 	 * */
 	public void jumpToIndex(String index, boolean updateComboBox){
-		if (Ut.MAC) {
+		if (Ut.MAC || Ut.LINUX) {
 			loadPage("file://"+Ut.dir(Ut.APP_PATH)+"Documentations/helpWindowDoc.html"+index);
 		} else {
 			loadPage("file:///"+Ut.dir(Ut.APP_PATH)+"Documentations\\helpWindowDoc.html"+index);			

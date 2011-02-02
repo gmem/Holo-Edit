@@ -1,1 +1,1 @@
-java -showversion -classpath .:./holoedit.jar:./javaosc.jar:jogl.jar -Xms100m -Xmx250m holoedit.Main
+java -showversion -cp .:./holoedit.jar:./jogl.jar:./javaosc.jar:./groovy-all-1.5.6.jar:./sdif.jar:./gluegen-rt.jar -Dsun.awt.noerasebackground=true holoedit.HoloEdit 1>console.log 2>error.log 
