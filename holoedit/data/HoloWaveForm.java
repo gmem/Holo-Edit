@@ -179,6 +179,30 @@ public class HoloWaveForm
 		return Ut.MAC ? tmp : tmp.replace('\\','/');
 	}
 	
+	
+	public String getCompletePath()
+	{
+		String tmp = soundFile.getAbsolutePath();
+		if(tmp.startsWith("/Volumes/") && Ut.MAC)
+			tmp = tmp.substring("/Volumes/".length(),tmp.length()).replaceFirst("/",":");
+		if(tmp.indexOf(' ') != -1 && !(tmp.startsWith("\"") && tmp.endsWith("\"")))
+			tmp = "\""+tmp+"\"";
+		return Ut.MAC ? tmp : tmp.replace('\\','/');
+		
+	}
+	
+	
+	public String getCompletePathWoQuote()
+	{
+		String tmp = soundFile.getAbsolutePath();
+		if(tmp.startsWith("/Volumes/") && Ut.MAC)
+			tmp = tmp.substring("/Volumes/".length(),tmp.length()).replaceFirst("/",":");
+		return Ut.MAC ? tmp : tmp.replace('\\','/');
+		
+	}
+	
+	
+	
 	public float getSampleRate()
 	{
 		return sampleRate;

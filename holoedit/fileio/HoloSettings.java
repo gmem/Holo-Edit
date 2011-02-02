@@ -289,6 +289,12 @@ public class HoloSettings extends DefaultHandler
 				holoEditRef.connection.setLineMode(true);
 				holoEditRef.counterPanel.lineMode.setSelected(true);
 			}
+			
+			if (new Boolean(attrs.getValue("preloadAbs")))
+			{
+				holoEditRef.connection.setPreloadAbs(true);
+				//holoEditRef.counterPanel.lineMode.setSelected(true);
+			}
 		}
 		else if (qName.equalsIgnoreCase("holo"))
 		{

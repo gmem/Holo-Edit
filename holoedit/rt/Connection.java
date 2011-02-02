@@ -84,6 +84,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 	protected HoloEdit holoEditRef;
 	protected boolean looping = false;
 	protected boolean preloading;
+	protected boolean preloadAbsolute = false;
 	protected long oldDate = -1, date = -1;
 	protected int oversleep = 0;
 	protected long baseDate;
@@ -1088,10 +1089,18 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 	public void preloadWaveForm(WaveFormInstance w,HoloTrack tk, int cueNb, int cursorTime, int begL, int endL)
 	{
 		HoloWaveForm hwf = w.getWave();
+
 		if(hwf == null)
 			w.update();
 		if(hwf == null)
 			return;
+		
+		String hwfName;
+		if(preloadAbsolute)
+			hwfName = hwf.getCompletePathWoQuote();
+		else
+			hwfName = hwf.getStripPathWoQuote();
+		
 		w.loopDefined = -1;
 		w.cue = cueNb;
 		w.begLoop = begL;
@@ -1103,28 +1112,28 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 		{
 			if(w.getLastDate() > w.endLoop && cursorTime < w.endLoop)
 			{
-				send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.CURSOR_CUE_LOOP,hwf.getStripPathWoQuote(),(cursorTime-w.getFirstDate()),(w.endLoop-w.getFirstDate())});
+				send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.CURSOR_CUE_LOOP, hwfName,(cursorTime-w.getFirstDate()),(w.endLoop-w.getFirstDate())});
 				w.loopDefined = w.LOOP_END_CUE;
 			}
-				send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.CURSOR_CUE,hwf.getStripPathWoQuote(),(cursorTime-w.getFirstDate())});
+				send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.CURSOR_CUE, hwfName,(cursorTime-w.getFirstDate())});
 		}
 		if(Ut.between(w.getFirstDate(),w.begLoop,w.endLoop) && !Ut.between(w.getLastDate(),w.begLoop,w.endLoop))
 		{
-			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.LOOP_END_CUE,hwf.getStripPathWoQuote(),0,(w.endLoop-w.getFirstDate())});
-			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.LOOP_AFTER_CUE,hwf.getStripPathWoQuote(),(w.endLoop-w.getFirstDate())});
+			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.LOOP_END_CUE, hwfName,0,(w.endLoop-w.getFirstDate())});
+			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.LOOP_AFTER_CUE, hwfName,(w.endLoop-w.getFirstDate())});
 			w.loopDefined = w.LOOP_END_CUE;
 		} else if(!Ut.between(w.getFirstDate(),w.begLoop,w.endLoop) && Ut.between(w.getLastDate(),w.begLoop,w.endLoop))
 		{
-			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.LOOP_BEGIN_CUE,hwf.getStripPathWoQuote(),(w.begLoop-w.getFirstDate())});
+			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.LOOP_BEGIN_CUE, hwfName,(w.begLoop-w.getFirstDate())});
 			w.loopDefined = w.LOOP_BEGIN_CUE;
 		} else if(w.getFirstDate() < w.begLoop && w.getLastDate() > w.endLoop)
 		{
-			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.LOOP_IN_CUE,hwf.getStripPathWoQuote(),(w.begLoop-w.getFirstDate()),(w.endLoop-w.getFirstDate())});
-			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.LOOP_AFTER_CUE,hwf.getStripPathWoQuote(),(w.endLoop-w.getFirstDate())  });
+			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.LOOP_IN_CUE, hwfName,(w.begLoop-w.getFirstDate()),(w.endLoop-w.getFirstDate())});
+			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueOffset+w.LOOP_AFTER_CUE, hwfName,(w.endLoop-w.getFirstDate())  });
 			w.loopDefined = w.LOOP_IN_CUE;
 		}
 		
-			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueNb,hwf.getStripPathWoQuote()});
+			send(keyOut+"/track/"+tkNb+"/preload",new Object[]{cueNb, hwfName});
 		return;
 	}
 	
@@ -1282,6 +1291,16 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 		
 	}
 
+	public void setPreloadAbs(boolean v)
+	{
+		preloadAbsolute = v;
+	}
+	
+	public boolean getPreloadAbs()
+	{
+		return preloadAbsolute;
+	}
+	
 	public void sendPaths()
 	{
 		Vector<String> paths = new Vector<String>();
@@ -1294,6 +1313,20 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 		send(keyOut+"/soundpool/paths",new Object[]{paths.size()});
 		for(int i = 0 ; i < paths.size() ; i++)
 			send(keyOut+"/soundpool/path",new Object[]{i,paths.get(i)});
+		
+		paths.clear();
+		
+		for(HoloWaveForm hwf:holoEditRef.gestionPistes.soundPool.getSounds())
+		{	
+			String p = hwf.getCompletePathWoQuote();
+			if(!paths.contains(p))
+				paths.add(p);
+		}
+		
+		for(int i = 0 ; i < paths.size() ; i++)
+			send(keyOut+"/soundpool/abspath",new Object[]{i,paths.get(i)});
+		
+		
 	}
 	
 	public String getAddress()
@@ -1398,7 +1431,8 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 	{
 		return "\t<osc portIn=\"" + holoEditRef.connection.getIn() + "\"" + " portOut=\"" + holoEditRef.connection.getOut() + "\""
 		+ " address=\"" + holoEditRef.connection.getAddress() + "\"" + " open=\"" + holoEditRef.connection.isOpen() + "\""
-		+ " keyIn=\"" + keyIn + "\"" + " keyOut=\"" + keyOut + "\"" + " linemode=\"" + holoEditRef.connection.getLineMode() + "\"" + "/>\n";		
+		+ " keyIn=\"" + keyIn + "\"" + " keyOut=\"" + keyOut + "\"" + " linemode=\"" + holoEditRef.connection.getLineMode() + "\"" 
+		+ " preloadAbs=\"" + holoEditRef.connection.getPreloadAbs() + "\"" + "/>\n";		
 	}
 
 	public void sendSpeakers()
@@ -1442,17 +1476,17 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 		setOut(newOscPortOut);
 	}
 	public void connectToService(EventObject event, String serviceName){
-		if (holoEditRef.bonjour){
-			try {
-				BonjourConnection bonjourConnection =  (BonjourConnection) holoEditRef.connection;
-				DNSSD.resolve(0, 0, serviceName, bonjourConnection.registeringService 
-						, bonjourConnection.spatmap.get(serviceName) , bonjourConnection);
-				
-			} catch (DNSSDException e) {
-				System.err.println("OSCConnection : DNSSDException while trying to register.");
-				e.printStackTrace();
-			}
-		}
+//		if (holoEditRef.bonjour){
+//			try {
+//				BonjourConnection bonjourConnection =  (BonjourConnection) holoEditRef.connection;
+//				DNSSD.resolve(0, 0, serviceName, bonjourConnection.registeringService 
+//						, bonjourConnection.spatmap.get(serviceName) , bonjourConnection);
+//				
+//			} catch (DNSSDException e) {
+//				System.err.println("OSCConnection : DNSSDException while trying to register.");
+//				e.printStackTrace();
+//			}
+//		}
 	}	
 	public void disconnectCalled(EventObject event){
 		close();

@@ -62,6 +62,7 @@ public class PrefPane extends FloatingModalWindow implements KeyListener
 	private JTextField oscAddress;
 	private JTextField oscKeyIn;
 	private JTextField oscKeyOut;
+	private JCheckBox oscabspath;
 	private HoloEdit holoEditRef;
 
 	public PrefPane(HoloEdit m)
@@ -150,7 +151,7 @@ public class PrefPane extends FloatingModalWindow implements KeyListener
 		tabbedPane.addTab("Options", null, optionSettings, "Options settings");
 		
 		// OSC Settings
-		JPanel oscSettings = new JPanel(new GridLayout(7, 2));
+		JPanel oscSettings = new JPanel(new GridLayout(9, 2));
 		
 		oscOpen = new JCheckBox();
 		oscOpen.setHorizontalAlignment(JCheckBox.CENTER);
@@ -177,45 +178,52 @@ public class PrefPane extends FloatingModalWindow implements KeyListener
 		oscPortIn = new JTextField(""+m.connection.getIn());
 		oscPortIn.setHorizontalAlignment(JTextField.CENTER);
 		oscPortIn.setFont(NumberBox.f);
-		oscPortIn.setPreferredSize(new Dimension(60,20));
-		oscPortIn.setMinimumSize(new Dimension(60,20));
-		oscPortIn.setMaximumSize(new Dimension(60,20));
+//		oscPortIn.setPreferredSize(new Dimension(60,20));
+//		oscPortIn.setMinimumSize(new Dimension(60,20));
+//		oscPortIn.setMaximumSize(new Dimension(60,20));
 		oscPortIn.addKeyListener(this);
 		
 		oscPortOut = new JTextField(""+m.connection.getOut());
 		oscPortOut.setHorizontalAlignment(JTextField.CENTER);
 		oscPortOut.setFont(NumberBox.f);
-		oscPortOut.setPreferredSize(new Dimension(60,20));
-		oscPortOut.setMinimumSize(new Dimension(60,20));
-		oscPortOut.setMaximumSize(new Dimension(60,20));
+//		oscPortOut.setPreferredSize(new Dimension(60,20));
+//		oscPortOut.setMinimumSize(new Dimension(60,20));
+//		oscPortOut.setMaximumSize(new Dimension(60,20));
 		oscPortOut.setEnabled(!holoEditRef.bonjour);
 		oscPortOut.addKeyListener(this);
 		
 		oscAddress = new JTextField(m.connection.getAddress());
 		oscAddress.setHorizontalAlignment(JTextField.CENTER);
 		oscAddress.setFont(NumberBox.f);
-		oscAddress.setPreferredSize(new Dimension(150,20));
-		oscAddress.setMinimumSize(new Dimension(150,20));
-		oscAddress.setMaximumSize(new Dimension(150,20));
+//		oscAddress.setPreferredSize(new Dimension(150,20));
+//		oscAddress.setMinimumSize(new Dimension(150,20));
+//		oscAddress.setMaximumSize(new Dimension(150,20));
 		oscAddress.setEnabled(!holoEditRef.bonjour);
 		oscAddress.addKeyListener(this);
 		
 		oscKeyIn = new JTextField(m.connection.getKeyIn());
 		oscKeyIn.setHorizontalAlignment(JTextField.CENTER);
 		oscKeyIn.setFont(NumberBox.f);
-		oscKeyIn.setPreferredSize(new Dimension(100,20));
-		oscKeyIn.setMinimumSize(new Dimension(100,20));
-		oscKeyIn.setMaximumSize(new Dimension(100,20));
+//		oscKeyIn.setPreferredSize(new Dimension(100,20));
+//		oscKeyIn.setMinimumSize(new Dimension(100,20));
+//		oscKeyIn.setMaximumSize(new Dimension(100,20));
 		oscKeyIn.addKeyListener(this);
 		
 		oscKeyOut = new JTextField(m.connection.getKeyOut());
 		oscKeyOut.setHorizontalAlignment(JTextField.CENTER);
 		oscKeyOut.setFont(NumberBox.f);
-		oscKeyOut.setPreferredSize(new Dimension(100,20));
-		oscKeyOut.setMinimumSize(new Dimension(100,20));
-		oscKeyOut.setMaximumSize(new Dimension(100,20));
+//		oscKeyOut.setPreferredSize(new Dimension(100,20));
+//		oscKeyOut.setMinimumSize(new Dimension(100,20));
+//		oscKeyOut.setMaximumSize(new Dimension(100,20));
 		oscKeyOut.setEnabled(!holoEditRef.bonjour);
 		oscKeyOut.addKeyListener(this);
+		
+		oscabspath = new JCheckBox();
+		oscabspath.setHorizontalAlignment(JCheckBox.CENTER);
+		oscabspath.setSelected(m.connection.getPreloadAbs());
+		oscabspath.setEnabled(true);
+		oscabspath.addKeyListener(this);
+		
 		
 		oscSettings.add(new JLabel("OSC enable : ", JLabel.RIGHT));
 		oscSettings.add(oscOpen);
@@ -231,6 +239,8 @@ public class PrefPane extends FloatingModalWindow implements KeyListener
 		oscSettings.add(oscKeyIn);
 		oscSettings.add(new JLabel("OSC key out : ", JLabel.RIGHT));
 		oscSettings.add(oscKeyOut);
+		oscSettings.add(new JLabel("Absolute path in preload : ", JLabel.RIGHT));
+		oscSettings.add(oscabspath);
 		
 		tabbedPane.addTab("OSC ", null, oscSettings, "Osc Settings");
 		
@@ -301,6 +311,10 @@ public class PrefPane extends FloatingModalWindow implements KeyListener
 			changes = true;
 		}
 
+		//preload absolute path
+		holoEditRef.connection.setPreloadAbs(oscabspath.isSelected());
+
+		
 		try
 		{
 			int i = Integer.parseInt(oscPortIn.getText());

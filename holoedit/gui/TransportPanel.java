@@ -228,17 +228,20 @@ public class TransportPanel extends FloatingWindow
 		JPanel detailsButtonPanel = new JPanel();
 		detailsButtonPanel.setLayout(new BoxLayout(detailsButtonPanel, BoxLayout.Y_AXIS));	
 
-		detailsButtonPanel.add(javax.swing.Box.createRigidArea(new Dimension(0, 20)));
+		detailsButtonPanel.add(javax.swing.Box.createRigidArea(new Dimension(10, 20)));
 		JLabel statusLabel = new JLabel("Connected to : ");
 		statusLabel.setFont(verdana10);
+		//statusLabel.setHorizontalAlignment(BorderLayout.CENTER);
 		whatsConnectedLabel = new JLabel(" -- ");
 		whatsConnectedLabel.setFont(verdana14);;
-		detailsButtonPanel.add(statusLabel);
-		detailsButtonPanel.add(whatsConnectedLabel);
-		detailsButtonPanel.add(javax.swing.Box.createRigidArea(new Dimension(0, 20)));
+		detailsButtonPanel.add(statusLabel,detailsButtonPanel.CENTER_ALIGNMENT);
+		detailsButtonPanel.add(whatsConnectedLabel,detailsButtonPanel.CENTER_ALIGNMENT);
+		detailsButtonPanel.add(javax.swing.Box.createRigidArea(new Dimension(0, 10)));
 		final ConnectionPanel connectionSettingsPanel = holoEditRef.connectionPanel;
 		connectionSettingsPanel.setVisible(false);
 
+		// Currently inactive
+		
 		expandIcon = new ImageIcon("./images/expand.png");
 		collapseIcon = new ImageIcon("./images/collapse.png");
 		detailsButtonPanel.add(connectionSettingsPanel);
@@ -247,6 +250,8 @@ public class TransportPanel extends FloatingWindow
 		connectionSettings.setMargin(new Insets(1, 10, 1, 10));
 		connectionSettings.setBorderPainted(false); // pour ressembler a un simple label
 		connectionSettings.setFocusable(false);
+		connectionSettings.setEnabled(false);
+		connectionSettings.setVisible(false); // desactived
 		
 		connectionSettings.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

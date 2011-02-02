@@ -66,7 +66,7 @@ import com.sun.opengl.util.FPSAnimator;
 // FEATURE MAIN HISTORIQUE ANNULATION
 public class HoloEdit implements UncaughtExceptionHandler
 {
-	public static String buildDate = "15/12/2010";
+	public static String buildDate = "01/02/2011";
 	public static Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 	
 	/* standalone ?? */
@@ -255,20 +255,21 @@ public class HoloEdit implements UncaughtExceptionHandler
 				Ut.numCar = '°';
 				Ut.numCar2 = '¡';
 			}
-				if(bonjour && !standalone)
-				{
-					try{
-						ClassLoader.getSystemClassLoader().loadClass("com.apple.dnssd.DNSSD");
-						connection = (Connection)ClassLoader.getSystemClassLoader().loadClass("holoedit.rt.BonjourConnection").getConstructor(new Class[]{this.getClass()}).newInstance(new Object[]{this});
-					} catch(ClassNotFoundException cnfe) {
-						Ut.alert("Error","Bonjour has not been installed on this computer, see documentation.");
-						connection = new OSCConnection(this);
-						bonjourInstalled = false;
-						bonjour = false;
-					}
-				}else
+//				if(bonjour && !standalone)
+//				{
+//					try{
+//						ClassLoader.getSystemClassLoader().loadClass("com.apple.dnssd.DNSSD");
+//						connection = (Connection)ClassLoader.getSystemClassLoader().loadClass("holoedit.rt.BonjourConnection").getConstructor(new Class[]{this.getClass()}).newInstance(new Object[]{this});
+//					} catch(ClassNotFoundException cnfe) {
+//						Ut.alert("Error","Bonjour has not been installed on this computer, see documentation.");
+//						connection = new OSCConnection(this);
+//						bonjourInstalled = false;
+//						bonjour = false;
+//					}
+//				}else
 				{
 					connection = new OSCConnection(this);
+					bonjourInstalled = false;
 					bonjour = false;
 				}
 				

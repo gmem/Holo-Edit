@@ -422,7 +422,7 @@ public class HoloFileReader extends DefaultHandler implements Runnable {
 			} else //TODO : fix for windows fn
 			{
 				sfn = sfn.replace('/','\\');
-				splitname = sfn.split("\\");
+				splitname = sfn.split("\\\\");
 				stripname = splitname[splitname.length - 1];
 				if (sfn.startsWith(".."))
 				{

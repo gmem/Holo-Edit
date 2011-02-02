@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/JVM 1.5.0 (MacOS X Default)"/>
-	<classpathentry excluding="Documentations/|Documentations/Example.java|scripts/myNewGroovyFile.groovy" kind="src" path=""/>
+	<classpathentry excluding="Documentations/|Documentations/Example.java|scripts/myNewGroovyFile.groovy|holoedit/rt/BonjourConnection.java" kind="src" path=""/>
 	<classpathentry kind="lib" path="max.jar"/>
 	<classpathentry kind="lib" path="jogl.jar"/>
 	<classpathentry kind="lib" path="javaosc.jar"/>
