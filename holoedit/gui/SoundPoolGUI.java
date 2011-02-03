@@ -30,7 +30,6 @@ import holoedit.data.HoloSDIFdata;
 import holoedit.fileio.WaveFormReader;
 import holoedit.fileio.SDIFreader;
 import holoedit.fileio.TextFileReader;
-import holoedit.util.MacFileManager;
 import holoedit.util.Ut;
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -144,7 +143,7 @@ public class SoundPoolGUI extends FloatingWindow implements DropTargetListener, 
 
 		soundTree.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				// La ligne suivante est impérative pour l'affichage du jpopupmenu sous XP				
+				// La ligne suivante est impÔøΩrative pour l'affichage du jpopupmenu sous XP				
 				popupSound.setLightWeightPopupEnabled(false);
 				if ((e.isControlDown() && Ut.MAC) || e.getButton() == MouseEvent.BUTTON3) {
 					if (selectedSndNode == null) {
@@ -152,7 +151,7 @@ public class SoundPoolGUI extends FloatingWindow implements DropTargetListener, 
 						popupSound.show(e.getComponent().getParent(), e.getX(), e.getY());
 						return;
 					}
-					// remove autorisé si le noeud n'est pas la racine
+					// remove autorisÔøΩ si le noeud n'est pas la racine
 					removeSndMI.setEnabled(!selectedSndNode.isRoot());
 					 popupSound.show(e.getComponent().getParent(), e.getX(), e.getY());
 					return;
@@ -162,7 +161,7 @@ public class SoundPoolGUI extends FloatingWindow implements DropTargetListener, 
 
 		dataTree.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				// les 2 lignes suivantes sont impératives pour l'affichage correct du jpopupmenu sous XP
+				// les 2 lignes suivantes sont impÔøΩratives pour l'affichage correct du jpopupmenu sous XP
 				JPopupMenu.setDefaultLightWeightPopupEnabled(false); // pour les JRadioButtonMenuItem
 				popupData.setLightWeightPopupEnabled(false);
 				if ((e.isControlDown() && Ut.MAC) || e.getButton() == MouseEvent.BUTTON3) {
@@ -295,14 +294,14 @@ public class SoundPoolGUI extends FloatingWindow implements DropTargetListener, 
 						// remove de la dataPool
 						holoEditRef.gestionPistes.externalDataPool.remove(hsdifdt);
 						// TODO virer
-						  // On libère l'objet : 
+						  // On libÔøΩre l'objet : 
 						hsdifdt.sdifTreeMap = null;
 						hsdifdt = null;	
 						System.gc();					 
 					} else {
 						// TODO if necessary
 					}
-					// si la data a remover est selectionnée dans le sound tree
+					// si la data a remover est selectionnÔøΩe dans le sound tree
 					// TODO pareil avec les peres du dataTree si ca entraine
 					// leur remove
 					if (selectedSndNode != null && selectedSndNode.getUserObject() == selectedDtNode.getUserObject())
@@ -401,7 +400,7 @@ public class SoundPoolGUI extends FloatingWindow implements DropTargetListener, 
 	}
 /**
  * 
- * @param toSelec Si un noeud particulier doit etre sélectionné.
+ * @param toSelec Si un noeud particulier doit etre sÔøΩlectionnÔøΩ.
  * 
  */
 	public void updateSoundTree(final DefaultMutableTreeNode toSelec) {
@@ -747,13 +746,13 @@ public class SoundPoolGUI extends FloatingWindow implements DropTargetListener, 
 					if (droppedExternalData.getFileType().equalsIgnoreCase("SDIF") || droppedExternalData.getFileType().equalsIgnoreCase("TXT")) {
 						HoloSDIFdata hsdifdt = (HoloSDIFdata) droppedExternalData;
 						HoloWaveForm wave = (HoloWaveForm) parentNode.getUserObject();
-						// on vérifie que l'enfant n'existe pas deja
+						// on vÔøΩrifie que l'enfant n'existe pas deja
 						if (!wave.containsLinkedData(hsdifdt)) {
 							wave.addLinkedData(hsdifdt);
-							// on dé-selectionne le noeud du dataTree :
+							// on dÔøΩ-selectionne le noeud du dataTree :
 							dataTree.getTree().getSelectionModel().clearSelection();
 							// update du soundTree avec selection du dernier child
-							// ajouté à parentNode
+							// ajoutÔøΩ ÔøΩ parentNode
 							updateSoundTree(parentNode);
 						}
 					}
@@ -805,13 +804,9 @@ public class SoundPoolGUI extends FloatingWindow implements DropTargetListener, 
 		for (File f : files) {
 			if (f.isDirectory()) {
 				File[] contentFile;
-				if (Ut.MAC) {
-					MacFileManager OSXFileManager = new MacFileManager(holoEditRef);
-					// allowing sound and data files
-					contentFile = OSXFileManager.SoundAndDataFileFilter(f.listFiles());
-				} else
-					// allowing sound and data files
-					contentFile = f.listFiles(holoEditRef.gestionPistes.sndNdtFilter);
+		
+				// allowing sound and data files
+				contentFile = f.listFiles(holoEditRef.gestionPistes.sndNdtFilter);
 
 				for (File cf : contentFile)
 					if ((cf.getName().substring(cf.getName().lastIndexOf('.') + 1).equalsIgnoreCase("SDIF")) || (cf.getName().substring(cf.getName().lastIndexOf('.') + 1).equalsIgnoreCase("txt"))) {

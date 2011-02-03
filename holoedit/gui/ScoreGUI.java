@@ -787,7 +787,7 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 	}
 
 	/** Dessine la zone de selection.
-	 * @param tkNb Le nombre de tracks dessinŽs dans le score
+	 * @param tkNb Le nombre de tracks dessinï¿½s dans le score
 	 * @param rest
 	 */
 	private void drawSelZone(int tkNb, int rest)
@@ -1104,8 +1104,8 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 		gl.glLoadIdentity();
 	}	
 
-	/** Dessin de la scrollBar servant ˆ zoomer verticalement.
-	 * (fait varier le nombre de track ˆ dessiner). */
+	/** Dessin de la scrollBar servant ï¿½ zoomer verticalement.
+	 * (fait varier le nombre de track ï¿½ dessiner). */
 	private void drawTrackScroll(boolean render)
 	{
 		// TRACK SCROLL
@@ -1150,7 +1150,7 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 		gl.glLoadIdentity();
 	}
 	
-	/** Dessin de la scrollBar servant ˆ zoomer dans le temps. */
+	/** Dessin de la scrollBar servant ï¿½ zoomer dans le temps. */
 	private void drawTimeScroll(boolean render)
 	{
 		// TIME SCROLL
@@ -4310,15 +4310,9 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 			if (f.isDirectory())
 			{
 				File[] contentFile;
-				if(Ut.MAC)
-				{
-					MacFileManager OSXFileManager = new MacFileManager(holoEditRef);
-					contentFile = OSXFileManager.SoundFileFilter(f.listFiles());
-				}
-				else
-				{
-					contentFile = f.listFiles(holoEditRef.gestionPistes.sndFilter);
-				}
+					
+				contentFile = f.listFiles(holoEditRef.gestionPistes.sndFilter);
+				
 				for (File cf : contentFile)
 					filesToImport.add(cf);
 			}

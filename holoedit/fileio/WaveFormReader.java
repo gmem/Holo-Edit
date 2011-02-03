@@ -25,7 +25,6 @@ package holoedit.fileio;
 import holoedit.HoloEdit;
 import holoedit.data.HoloWaveForm;
 import holoedit.gui.ProgressBar;
-import holoedit.util.MacFileManager;
 import holoedit.util.Ut;
 import java.io.File;
 import java.io.FileInputStream;
@@ -202,18 +201,7 @@ public class WaveFormReader implements Runnable, Serializable
 				}
 				catch (UnsupportedAudioFileException uaf)
 				{
-					if(Ut.MAC)
-					{
-						MacFileManager OSXFileManager = new MacFileManager(holoEditRef);
-						int type = OSXFileManager.getFileType(soundFile.getAbsolutePath());
-						String typeString = OSXFileManager.getCode(type);
-						//System.out.println("------ type "+OSXFileManager.getCode(type));
-						if(typeString.equalsIgnoreCase("Sd2f"))
-						{
-							isMacSd2f = true;
-						}
-					}
-					if(isMacSd2f || HoloFilenameFilterXP.getExtension(soundFile).equalsIgnoreCase(".sd2"))
+					if(HoloFilenameFilterXP.getExtension(soundFile).equalsIgnoreCase(".sd2"))
 					{
 						readSd2File();						
 						if(error < 2)

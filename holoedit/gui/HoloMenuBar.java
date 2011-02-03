@@ -621,7 +621,7 @@ public class HoloMenuBar extends JMenuBar
 		playMenuItem = new HoloMenuItem("Play / Stop", KeyEvent.VK_SPACE, false, aAction);
 		pauseMenuItem = new HoloMenuItem("Pause / Resume", KeyEvent.VK_SPACE, true, false, aAction);
 		loopMenuItem = new HoloMenuItem("Loop", KeyEvent.VK_L, true, false, aAction);		
-		recPlayMenuItem = new HoloMenuItem("Record & Play", KeyEvent.VK_SPACE, aAction); // ð+<space> 
+		recPlayMenuItem = new HoloMenuItem("Record & Play", KeyEvent.VK_SPACE, aAction); // ï¿½+<space> 
 		recMenuItem = new HoloMenuItem("Record", KeyEvent.VK_R, true, false, aAction);		
 		transportMenu.add(playMenuItem);
 		transportMenu.add(pauseMenuItem);
@@ -1039,7 +1039,7 @@ public class HoloMenuBar extends JMenuBar
 		}
 	}
 
-	// Mise ˆ jour du menu
+	// Mise ï¿½ jour du menu
 	public void update()
 	{
 		if (holoEditRef != null)

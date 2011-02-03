@@ -38,11 +38,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.EventObject;
 import java.util.Vector;
-
 import javax.swing.JComboBox;
-
-import com.apple.dnssd.DNSSD;
-import com.apple.dnssd.DNSSDException;
 import com.illposed.osc.OSCListener;
 import com.illposed.osc.OSCMessage;
 import com.illposed.osc.OSCPortIn;
@@ -1336,7 +1332,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 	
 	public void run()
 	{
-		// si modif, modifier Žgalement HoloPlayer
+		// si modif, modifier ï¿½galement HoloPlayer
 		try
 		{
 			while(playing)

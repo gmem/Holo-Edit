@@ -149,8 +149,10 @@ public class FloatingWindow extends JFrame implements FocusListener, WindowListe
 	public void open()
 	{
 		visible = true;
+		setVisible(false);
 		setVisible(visible);
 		toFront();
+		
 	}
 	
 	public void setVisi(boolean visi)

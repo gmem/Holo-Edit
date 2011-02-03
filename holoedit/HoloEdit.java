@@ -39,7 +39,6 @@ import holoedit.gui.TransportPanel;
 import holoedit.gui.HelpWindow;
 import holoedit.rt.Connection;
 import holoedit.rt.OSCConnection;
-import holoedit.util.MacFileManager;
 import holoedit.util.Ut;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
@@ -248,16 +247,11 @@ public class HoloEdit implements UncaughtExceptionHandler
 				Ut.dirCar = "/";
 				Ut.numCar = '�';
 				Ut.numCar2 = '�';
-				if(standalone)
-				{
-					ClassLoader.getSystemClassLoader().loadClass("holoedit.util.MacApplication").getConstructor(new Class[]{this.getClass()}).newInstance(new Object[]{this});
-					ClassLoader.getSystemClassLoader().loadClass("com.apple.eio.FileManager");
-				}
 				
 			} else if (Ut.LINUX)
 			{
 				Ut.dirCar = "/";
-				Ut.numCar = '�';
+				Ut.numCar = '°';
 				Ut.numCar2 = '�';
 				
 			}else {

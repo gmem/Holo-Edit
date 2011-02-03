@@ -51,9 +51,6 @@ import java.text.NumberFormat;
 import java.util.EventObject;
 import javax.swing.JFormattedTextField.*;
 
-import com.apple.dnssd.DNSSD;
-import com.apple.dnssd.DNSSDException;
-
 
 /**
  * A panel containing some info about the osc connection status
