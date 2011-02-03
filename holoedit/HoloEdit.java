@@ -117,8 +117,8 @@ public class HoloEdit implements UncaughtExceptionHandler
 	public boolean openLastOnLoad = false;
 	// boolean qui memorise la visibilite des haut-parleurs
 	public boolean viewSpeakers = true;
-	// boolean qui memorise la possibilitŽ de voir les options
-	// avancŽe lors de l'importation de SDIF
+	// boolean qui memorise la possibilitï¿½ de voir les options
+	// avancï¿½e lors de l'importation de SDIF
 	public boolean sdifExpert = false;
 	// boolean de sauvegarde (permet de savoir si une modification a ete effectuee)
 	protected boolean savedState = true;
@@ -246,8 +246,8 @@ public class HoloEdit implements UncaughtExceptionHandler
 			if (Ut.MAC)
 			{
 				Ut.dirCar = "/";
-				Ut.numCar = '¡';
-				Ut.numCar2 = '°';
+				Ut.numCar = 'ï¿½';
+				Ut.numCar2 = 'ï¿½';
 				if(standalone)
 				{
 					ClassLoader.getSystemClassLoader().loadClass("holoedit.util.MacApplication").getConstructor(new Class[]{this.getClass()}).newInstance(new Object[]{this});
@@ -257,13 +257,13 @@ public class HoloEdit implements UncaughtExceptionHandler
 			} else if (Ut.LINUX)
 			{
 				Ut.dirCar = "/";
-				Ut.numCar = '¡';
-				Ut.numCar2 = '°';
+				Ut.numCar = 'ï¿½';
+				Ut.numCar2 = 'ï¿½';
 				
 			}else {
 				Ut.dirCar = "\\";
-				Ut.numCar = '°';
-				Ut.numCar2 = '¡';
+				Ut.numCar = 'ï¿½';
+				Ut.numCar2 = 'ï¿½';
 			}
 //				if(bonjour && !standalone)
 //				{
@@ -426,7 +426,7 @@ public class HoloEdit implements UncaughtExceptionHandler
 		{
 			Ut.alert("Jogl Error", "Jogl ");
 			
-			System.out.println("¥ No jogl in library path. Update LD_LIBRARY_PATH.");
+			System.out.println("ï¿½ No jogl in library path. Update LD_LIBRARY_PATH.");
 			System.out.println(" Exiting ...");
 			System.exit(1);
 		}

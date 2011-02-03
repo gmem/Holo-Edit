@@ -1,1 +1,2 @@
-java -showversion -cp .:./holoedit.jar:./jogl.jar:./javaosc.jar:./groovy-all-1.5.6.jar:./sdif.jar:./gluegen-rt.jar -Dsun.awt.noerasebackground=true holoedit.HoloEdit 1>console.log 2>error.log 
+export LD_LIBRARY_PATH=.:LD_LIBRARY_PATH
+java -cp .:holoedit.jar:jogl.jar:javaosc.jar:gluegen-rt.jar:groovy-all-1.5.6.jar holoedit.HoloEdit
