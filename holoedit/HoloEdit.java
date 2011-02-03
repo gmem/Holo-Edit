@@ -245,19 +245,19 @@ public class HoloEdit implements UncaughtExceptionHandler
 			if (Ut.MAC)
 			{
 				Ut.dirCar = "/";
-				Ut.numCar = 'ï¿½';
-				Ut.numCar2 = 'ï¿½';
+				Ut.numCar = '¡';
+				Ut.numCar2 = '°';
 				
 			} else if (Ut.LINUX)
 			{
 				Ut.dirCar = "/";
-				Ut.numCar = 'Â°';
-				Ut.numCar2 = 'ï¿½';
+				Ut.numCar = '¡';
+				Ut.numCar2 = '°';
 				
 			}else {
 				Ut.dirCar = "\\";
-				Ut.numCar = 'ï¿½';
-				Ut.numCar2 = 'ï¿½';
+				Ut.numCar = '°';
+				Ut.numCar2 = '¡';
 			}
 //				if(bonjour && !standalone)
 //				{
