@@ -245,37 +245,26 @@ public class HoloEdit implements UncaughtExceptionHandler
 			if (Ut.MAC)
 			{
 				Ut.dirCar = "/";
-				Ut.numCar = '¡';
-				Ut.numCar2 = '°';
+				Ut.numCar = '\u00B0';
+				Ut.numCar2 = '\u221E';
 				
 			} else if (Ut.LINUX)
 			{
 				Ut.dirCar = "/";
-				Ut.numCar = '¡';
-				Ut.numCar2 = '°';
+				Ut.numCar = '\u00B0';
+				Ut.numCar2 = '\u221E';
 				
 			}else {
 				Ut.dirCar = "\\";
-				Ut.numCar = '°';
-				Ut.numCar2 = '¡';
+				Ut.numCar = '\u00B0';
+				Ut.numCar2 = '\u221E';
 			}
-//				if(bonjour && !standalone)
-//				{
-//					try{
-//						ClassLoader.getSystemClassLoader().loadClass("com.apple.dnssd.DNSSD");
-//						connection = (Connection)ClassLoader.getSystemClassLoader().loadClass("holoedit.rt.BonjourConnection").getConstructor(new Class[]{this.getClass()}).newInstance(new Object[]{this});
-//					} catch(ClassNotFoundException cnfe) {
-//						Ut.alert("Error","Bonjour has not been installed on this computer, see documentation.");
-//						connection = new OSCConnection(this);
-//						bonjourInstalled = false;
-//						bonjour = false;
-//					}
-//				}else
-				{
-					connection = new OSCConnection(this);
-					bonjourInstalled = false;
-					bonjour = false;
-				}
+
+			{
+				connection = new OSCConnection(this);
+				bonjourInstalled = false;
+				bonjour = false;
+			}
 				
 			counterPanel = new CounterPanel(this);
 			connectionPanel = new ConnectionPanel(this);
