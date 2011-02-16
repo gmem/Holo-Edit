@@ -170,7 +170,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 					treatRecordSegment(tkNum);
 				else if (node.equalsIgnoreCase("enable"))
 				{
-					boolean tkRecOn = (Integer)msg[0] > 0;
+					boolean tkRecOn = oscToInt(msg[0]) > 0;
 					for(int p = 0 ; p < holoEditRef.gestionPistes.getNbTracks() && !found ; p++)
 					{
 						HoloTrack tk = holoEditRef.gestionPistes.getTrack(p);
@@ -216,7 +216,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 				else if (node.equalsIgnoreCase("record") && msg.length > 0)
 				{
 					order = ORDER_RECORD;
-					record((Integer)msg[0] > 0);
+					record(oscToInt(msg[0]) > 0);
 				}
 				
 				else if (node.equalsIgnoreCase("position"))
@@ -224,15 +224,15 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 				else if (node.equalsIgnoreCase("update"))
 					spatUpdate();
 				else if (node.equalsIgnoreCase("time") && msg.length > 0)
-					setTime((Integer)msg[0]);
+					setTime(oscToInt(msg[0]));
 				else if (node.equalsIgnoreCase("begtime") && msg.length > 0)
-					setBegTime((Integer)msg[0]);
+					setBegTime(oscToInt(msg[0]));
 				else if (node.equalsIgnoreCase("endtime") && msg.length > 0)
-					setEndTime((Integer)msg[0]);
+					setEndTime(oscToInt(msg[0]));
 				else if (node.equalsIgnoreCase("totaltime") && msg.length > 0)
-					setTotalTime((Integer)msg[0]);
+					setTotalTime(oscToInt(msg[0]));
 				else if (node.equalsIgnoreCase("loop") && msg.length > 0)
-					setLoop((Integer)msg[0]);
+					setLoop(oscToInt(msg[0]));
 			}
 			
 			// ---- connection ----
@@ -255,7 +255,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 				{	
 					boolean connect = true;
 					if(msg.length > 0)
-						connect = (Integer)msg[0] > 0;
+						connect = oscToInt(msg[0]) > 0;
 					if(connect)
 						open();
 					else
@@ -297,7 +297,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 						{
 							found = true;
 							holoEditRef.gestionPistes.changeVisible(p);
-							holoEditRef.gestionPistes.ts.checkVisible[p].check(((Integer)msg[0])>0);
+							holoEditRef.gestionPistes.ts.checkVisible[p].check((oscToInt(msg[0]))>0);
 						}
 					holoEditRef.room.display();
 				}
@@ -348,14 +348,14 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 				
 				if((node.equalsIgnoreCase("xyz")) && msg.length > 1)
 				{
-					float x = (Float)msg[0];
-					float y = (Float)msg[1];
+					float x = oscToFloat(msg[0]);
+					float y = oscToFloat(msg[1]);
 					float z ;
 					HoloSpeaker sp;
 					boolean spfound = false;
 					
 					if(msg.length>2)
-						z = (Float)msg[2];
+						z = oscToFloat(msg[2]);
 					else
 						z = 0;
 					
@@ -395,15 +395,15 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 
 		int date = counter;
 		boolean editable=false;
-		if(msg.length < 3 || !recording)
+		if(msg.length < 3 || !(recording && playing))
 			return;
-		float x = (Float)msg[0];
-		float y = (Float)msg[1];
-		float z = (Float)msg[2];
+		float x = oscToFloat(msg[0]);
+		float y = oscToFloat(msg[1]);
+		float z = oscToFloat(msg[2]);
 		if(msg.length > 3)
-			editable = (Integer)msg[3] > 0;
+			editable = oscToInt(msg[3]) > 0;
 		if(msg.length > 4)
-			date = (Integer)msg[4];
+			date = oscToInt(msg[4]);
 		
 			
 		boolean found = false, empty = false;
@@ -435,7 +435,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 	protected void treatRecordSegment(int tkNum)
 	{
 		
-		if(!recording)
+		if(!(recording && playing))
 			return;
 
 		
@@ -467,7 +467,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 	 */
 	public void treatRecordPoint(HoloPoint p)
 	{
-		if(!recording)
+		if(!(recording && playing))
 			return;
 		int date = counter;
 		boolean editable=p.isEditable();	
@@ -502,7 +502,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 	
 	public void treatRecordSegmentAll()
 	{	
-		if(!recording)
+		if(!(recording && playing))
 			return;
 
 		for(int i = 0 ; i < holoEditRef.gestionPistes.getNbTracks() ; i++)
@@ -893,6 +893,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 		//if(open && !playing)
 		if(!playing)
 		{
+			playing = true;
 			runner = new Thread(this);
 			runner.setName("RT-player");
 			runner.setPriority(Thread.MAX_PRIORITY);
@@ -920,7 +921,6 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 			else 
 				order = ORDER_NONE;
 			autostop = false;
-			playing = true;
 			firstCue = true;
 			loopNum = 0;
 			counter = holoEditRef.score.cursorTime;
@@ -1484,7 +1484,34 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 //			}
 //		}
 	}	
+	
 	public void disconnectCalled(EventObject event){
 		close();
 	}
+	
+	public float oscToFloat(Object o)
+	{
+		if(o.getClass().equals(Float.class))
+			return (Float)o;
+		else if(o.getClass().equals(Integer.class))
+			return (float)((Integer)o);		
+		else
+		{
+			Ut.print("OSC in : error parsing Float");
+			return 0.f;
+		}
+			
+	}
+	
+	public int oscToInt(Object o)
+	{
+		if(o.getClass().equals(Integer.class))
+			return (Integer)o;
+		else if(o.getClass().equals(Float.class))
+			return ((Float)o).intValue();		
+		
+		Ut.print("OSC in : error parsing Int");
+		return 0;
+	}
+	
 }
