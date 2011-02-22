@@ -47,8 +47,8 @@ import com.illposed.osc.OSCBundle;
 
 public abstract class Connection implements Runnable, OSCListener, ConnectionListener {
 	public String PROTOCOL_VERSION = "0.1";
-	protected static final boolean VERBOSE_IN = true;
-	protected static final boolean VERBOSE_OUT = true;
+	protected static final boolean VERBOSE_IN = false;
+	protected static final boolean VERBOSE_OUT = false;
 	protected static final int ORDER_NONE = -1;
 	protected static final int ORDER_STOP = 0;
 	protected static final int ORDER_PLAY = 1;
