@@ -220,11 +220,11 @@ public class GroovyWindow extends FloatingWindow implements KeyListener{
 		//////*******************************************
 		
 		JLabel trackLabel = new JLabel("Track n" + Ut.numCar);
-		trackLabel.setAlignmentX(0.2f);
+		trackLabel.setAlignmentX(0.7f);
 		trackCombo = new ComboParam(gp, 0, "track", 0);
-		trackCombo.setAlignmentX(0.2f);
+		//trackCombo.setAlignmentX(0.2f);
 		trackCombo.setEnabled(true);
-		trackCombo.setSelectedIndex(gp.getActiveTrackNb()+1); // +1 cause first item is : "n¡"
+		trackCombo.select(gp.getActiveTrackNb()+1); // +1 cause first item is : "n¡"
 		results[2] = gp.getActiveTrackNb()+1;	
 		trackCombo.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
@@ -236,9 +236,9 @@ public class GroovyWindow extends FloatingWindow implements KeyListener{
 		});
 		
 		JLabel applyToLabel = new JLabel("Apply to :");
-		applyToLabel.setAlignmentX(0.2f);
+		applyToLabel.setAlignmentX(0.7f);
 		applyToCombo = new ComboParam(gp, 0, "applyTo", 0);
-		applyToCombo.setAlignmentX(0.2f);
+		//applyToCombo.setAlignmentX(0.2f);
 		applyToCombo.setEnabled(true);
 		applyToCombo.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
@@ -266,12 +266,12 @@ public class GroovyWindow extends FloatingWindow implements KeyListener{
 			}
 		});
 
-		JLabel inputTrackLabel = new JLabel("Input Track n" + Ut.numCar);
-		inputTrackLabel.setAlignmentX(0.2f);
+		JLabel inputTrackLabel = new JLabel("Input Track");
+		inputTrackLabel.setAlignmentX(0.5f);
 		inputTrackCombo = new ComboParam(gp, 0, "track", 0);
-		inputTrackCombo.setAlignmentX(0.2f);
+		//inputTrackCombo.setAlignmentX(0.2f);
 		inputTrackCombo.setEnabled(false);
-		inputTrackCombo.setSelectedIndex(gp.getActiveTrackNb()+1);
+		inputTrackCombo.select(gp.getActiveTrackNb()+1);
 		results[3] = gp.getActiveTrackNb()+1;
 		inputTrackCombo.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
@@ -281,12 +281,12 @@ public class GroovyWindow extends FloatingWindow implements KeyListener{
 			}
 		});
 
-		JLabel outputTrackLabel = new JLabel("Output Track  n" + Ut.numCar);
-		outputTrackLabel.setAlignmentX(0.2f);
+		JLabel outputTrackLabel = new JLabel("Output Track");
+		outputTrackLabel.setAlignmentX(0.5f);
 		outputTrackCombo = new ComboParam(gp, 0, "track", 0);
-		outputTrackCombo.setAlignmentX(0.2f);
+		//outputTrackCombo.setAlignmentX(0.2f);
 		outputTrackCombo.setEnabled(false);
-		outputTrackCombo.setSelectedIndex(gp.getActiveTrackNb()+1);
+		outputTrackCombo.select(gp.getActiveTrackNb()+1);
 		results[4] = gp.getActiveTrackNb()+1;
 		outputTrackCombo.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
@@ -298,13 +298,13 @@ public class GroovyWindow extends FloatingWindow implements KeyListener{
 		
 		// selection Generative / trasformation
 		JLabel genTransLabel = new JLabel("Algorithm Type :");
-		genTransLabel.setAlignmentX(0.2f);
+		genTransLabel.setAlignmentX(0.5f);
 		genTransCombo = new JComboBox();
 		genTransCombo.addItem("Generation");
 		genTransCombo.addItem("Transformation");
 		genTransCombo.setSelectedIndex(0);
 		results[0] = 0;
-		genTransCombo.setAlignmentX(0.2f);
+		//genTransCombo.setAlignmentX(0.2f);
 		genTransCombo.setEnabled(true);
 		genTransCombo.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {

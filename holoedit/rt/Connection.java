@@ -47,8 +47,8 @@ import com.illposed.osc.OSCBundle;
 
 public abstract class Connection implements Runnable, OSCListener, ConnectionListener {
 	public String PROTOCOL_VERSION = "0.1";
-	protected static final boolean VERBOSE_IN = false;
-	protected static final boolean VERBOSE_OUT = false;
+	protected static final boolean VERBOSE_IN = true;
+	protected static final boolean VERBOSE_OUT = true;
 	protected static final int ORDER_NONE = -1;
 	protected static final int ORDER_STOP = 0;
 	protected static final int ORDER_PLAY = 1;
@@ -120,7 +120,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 					
 		if(VERBOSE_IN)
 		{
-			System.out.print("OSCIN : "+key);
+			System.out.print("OSCIN  <<  "+key);
 			//for(String k:keys)
 			//	System.out.print("-"+k+"-");
 			//System.out.println();
@@ -546,7 +546,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 				if(sender != null)
 					sender.send(new OSCMessage(key,new Object[]{msg}));
 				if(VERBOSE_OUT)
-					System.out.println("OSCOUT : "+key+" "+msg);
+					System.out.println("    OSCOUT >> "+key+" "+msg);
 			} catch (IOException e) {}
 	}
 	
@@ -557,7 +557,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 				if(sender != null)
 					sender.send(new OSCMessage(key,msg));
 				if(VERBOSE_OUT){
-					System.out.print("OSCOUT : "+key);
+					System.out.print("    OSCOUT >> "+key);
 					for(Object a:msg)
 						System.out.print(" "+a.toString());
 					System.out.println();
@@ -584,7 +584,7 @@ public abstract class Connection implements Runnable, OSCListener, ConnectionLis
 		bundle.addPacket(new OSCMessage(key,msg));
 		
 		if(VERBOSE_OUT){
-			System.out.print("OSCOUT : "+key);
+			System.out.print("    OSCOUT >> "+key);
 			for(Object a:msg)
 				System.out.print(" "+a.toString());
 			System.out.println();

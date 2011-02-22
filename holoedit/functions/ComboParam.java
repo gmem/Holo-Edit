@@ -32,8 +32,9 @@ import java.awt.event.KeyListener;
 import java.util.Vector;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
+import java.awt.Choice;
 
-public class ComboParam extends JComboBox implements Param, KeyListener
+public class ComboParam extends Choice implements Param, KeyListener
 {
 	// attributs graphiques
 	private int w = 100;
@@ -144,6 +145,7 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 		}
 		//if (!comboType.equalsIgnoreCase("sdif"))
 			setValue(_val);
+			setVisible(true);
 		addKeyListener(this);
 	}
 
@@ -168,7 +170,8 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 	
 	public void updateFields(String _selectedSDIF)
 	{	
-		removeAllItems();
+		//removeAllItems();
+		removeAll();
 		if (!selected.equals(_selectedSDIF)) {
 			selected = _selectedSDIF;
 			if (!_selectedSDIF.equalsIgnoreCase("none")){
@@ -212,9 +215,9 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 	{
 		if (comboType.equalsIgnoreCase("sdif")){
 			if (this.getItemCount()>1)
-				setSelectedIndex(1);
+				select(1);
 			else
-				setSelectedIndex(0);
+				select(0);
 			return;
 		}
 		int val;
@@ -228,17 +231,17 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 			if (comboType.equalsIgnoreCase("track"))
 			{
 				if ((val >= 0) && (val < getItemCount()))
-					setSelectedIndex(val); // numero de piste
-				else setSelectedIndex(0); // "n¡ ?"
+					select(val); // numero de piste
+				else select(0); // "n¡ ?"
 			}
 			else if (comboType.equalsIgnoreCase("applyTo"))
 			{
 				if ((val >= 0) && (val <= 2))
 				{
 					// 0 : piste active , 1 : pistes visibles, 2 : toutes les pistes
-					setSelectedIndex(val);
+					select(val);
 				}
-				else setSelectedIndex(0); // piste active
+				else select(0); // piste active
 			}
 			else if (comboType.equalsIgnoreCase("sym"))
 			{
@@ -246,24 +249,24 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 				{
 					// symetrie
 					// 0 : centrale , 1 : horizontale , 2 : verticale
-					setSelectedIndex(val);
+					select(val);
 				}
-				else setSelectedIndex(0); // centrale
+				else select(0); // centrale
 			}
 			else if (comboType.equalsIgnoreCase("clock"))
 			{
 				if (val > 0)
-					setSelectedIndex(1);
-				else setSelectedIndex(0);
+					select(1);
+				else select(0);
 			}
 			else if (comboType.equalsIgnoreCase("coord"))
 			{
 				if ((val >= 0) && (val <= 2))
 				{
 					// 0 : X , 1 : Y , 2 : Z
-					setSelectedIndex(val);
+					select(val);
 				}
-				else setSelectedIndex(0); // X
+				else select(0); // X
 			}
 		}
 	}
@@ -333,7 +336,7 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 				}
 				// par surete on on verifie
 				if ((itemToSel < getItemCount()) && (itemToSel > 0))
-					setSelectedIndex(itemToSel);
+					select(itemToSel);
 			}
 		} else if (comboType.equalsIgnoreCase("sym"))
 		{
@@ -344,15 +347,15 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 				{
 				case '0': // centrale
 				case 'c':
-					setSelectedIndex(0);
+					select(0);
 					break;
 				case '1': // horizontale
 				case 'h':
-					setSelectedIndex(1);
+					select(1);
 					break;
 				case '2': // verticale
 				case 'v':
-					setSelectedIndex(2);
+					select(2);
 					break;
 				default:
 					break;
@@ -367,15 +370,15 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 				{
 				case '0': // one
 				case 'o':
-					setSelectedIndex(0);
+					select(0);
 					break;
 				case '1': // visible
 				case 'v':
-					setSelectedIndex(1);
+					select(1);
 					break;
 				case '2': // all
 				case 'a':
-					setSelectedIndex(2);
+					select(2);
 					break;
 				default:
 					break;
@@ -390,11 +393,11 @@ public class ComboParam extends JComboBox implements Param, KeyListener
 				{
 				case '0': // trigonometric
 				case 't':
-					setSelectedIndex(0);
+					select(0);
 					break;
 				case '1': // clockwise
 				case 'c':
-					setSelectedIndex(1);
+					select(1);
 					break;
 				default:
 					break;
