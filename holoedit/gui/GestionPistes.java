@@ -132,7 +132,7 @@ public class GestionPistes
 	// filtre de fichier Track
 	private HoloFilenameFilter tkFilter = new HoloFilenameFilter(".tk", "Holo-Edit Track File (*.tk)", true);
 	// filtre de fichier Seq
-	private HoloFilenameFilter tjFilter = new HoloFilenameFilter(".tj", "Holo-Edit Trajectory File (*.tj)", true);
+	public HoloFilenameFilter tjFilter = new HoloFilenameFilter(".tj", "Holo-Edit Trajectory File (*.tj)", true);
 	
 	// filtre de fichier Holo
 	private HoloFilenameFilterXP holoFilterXP = new HoloFilenameFilterXP(".holo .holo~", "Holo-Edit Session (*.holo)", true);

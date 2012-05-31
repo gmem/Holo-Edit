@@ -116,6 +116,34 @@ public class HoloFilenameFilter implements FilenameFilter
 		this.description = description;
 	}
 
+	
+	public boolean accept(File file)
+	{
+		if (!multi)
+		{
+			if (file != null)
+			{
+				String fileExt = getExtension(file.getName());
+				// System.out.println(extension+"_"+fileExt);
+				if (fileExt != null)
+					if (fileExt.equalsIgnoreCase(extension))
+						return true;
+			}
+		} else
+		{
+			if (file != null)
+			{
+				String fileExt = getExtension(file.getName());
+				// System.out.println("text ext:"+fileExt);
+				if (fileExt != null && !extVector.isEmpty())
+					if (extVector.contains(fileExt))
+						return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public boolean accept(File fd, String fn)
 	{
 		if (!multi)

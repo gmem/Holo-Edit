@@ -79,7 +79,7 @@ public class TjFileReader extends DefaultHandler implements Runnable
 			{
 				gp.holoEditRef.counterPanel.setCompteur(1, atTime);
 				gp.holoEditRef.counterPanel.setCompteur(2, atTime+currentTraj.getDuration());
-				gp.holoEditRef.score.zoomAll();
+				//gp.holoEditRef.score.zoomAll();
 				gp.holoEditRef.modify();
 			} else {
 				gp.hpRef.setBegin(atTime);

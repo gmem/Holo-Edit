@@ -30,6 +30,7 @@ import holoedit.data.HoloSDIFdata;
 import holoedit.data.HoloExternalData;
 import holoedit.data.WaveFormInstance;
 import holoedit.data.SDIFdataInstance;
+import holoedit.fileio.TjFileReader;
 import holoedit.fileio.WaveFormReader;
 import holoedit.opengl.OpenGLUt;
 import holoedit.opengl.ScoreIndex;
@@ -4321,54 +4322,69 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 		}
 		boolean b = true;
 		int where = (int)mouseCursor.getDate();
-		for (File sndFile : filesToImport)
+		for (File dropFile : filesToImport)
 		{
-			System.out.println("Importing " + sndFile.getAbsolutePath());
-			holoEditRef.soundPoolGui.importSound(sndFile, false);
-			try
+			// sound dropped
+			if(holoEditRef.gestionPistes.sndFilter.accept(dropFile))
 			{
-				while(!holoEditRef.soundPoolGui.done)
+				System.out.println("Importing " + dropFile.getAbsolutePath());
+				holoEditRef.soundPoolGui.importSound(dropFile, false);
+				try
 				{
-//					System.out.println("score-import-waiting");
-					Thread.sleep(500);
+					while(!holoEditRef.soundPoolGui.done)
+					{
+//						System.out.println("score-import-waiting");
+						Thread.sleep(500);
+					}
+				}
+				catch (InterruptedException e)
+				{
+					e.printStackTrace();
+				}
+				if(holoEditRef.soundPoolGui.fine)
+				{
+					currentTrack = holoEditRef.gestionPistes.getTrack(trackSelected);
+					currentTrack.addWave(new WaveFormInstance(holoEditRef.gestionPistes,holoEditRef.soundPoolGui.last.toString(),where));
+					where = where + holoEditRef.soundPoolGui.last.getFileLengthCS();
+					currentTrack.update();
+					holoEditRef.modify();
+					b = b && true;
+					
+				} else {
+					switch(holoEditRef.soundPoolGui.error)
+					{
+					case WaveFormReader.NO_ERROR :
+						break;
+					case WaveFormReader.MONO_ERROR :
+						Ut.alert("Error","Only mono file for instance,\nOnly the left channel has been read.");
+						break;
+					case WaveFormReader.TYPE_ERROR :
+						Ut.alert("Import Error", holoEditRef.soundPoolGui.errorFileName + " is not a supported file type.");
+						break;
+					case WaveFormReader.PATH_ERROR :
+						Ut.alert("Import Error", "Please rename the soundfile, for compatibility reasons with Max/MSP,\nit cannot be longer than 32 characters (including the extension).");
+						break;
+					case WaveFormReader.PATH2_ERROR :
+						Ut.alert("Import Error", "Please rename the soundfile, for compatibility reasons with Max/MSP,\nit cannot contain blank spaces.");
+						break;
+					default :
+						Ut.alert("Import Error", "Problem while loading soundfile, aborted.");
+						break;
+					}
+					b = b && false;
 				}
 			}
-			catch (InterruptedException e)
+			
+			else if (holoEditRef.gestionPistes.tjFilter.accept(dropFile))
 			{
-				e.printStackTrace();
-			}
-			if(holoEditRef.soundPoolGui.fine)
-			{
-				currentTrack = holoEditRef.gestionPistes.getTrack(trackSelected);
-				currentTrack.addWave(new WaveFormInstance(holoEditRef.gestionPistes,holoEditRef.soundPoolGui.last.toString(),where));
-				where = where + holoEditRef.soundPoolGui.last.getFileLengthCS();
-				currentTrack.update();
-				holoEditRef.modify();
-				b = b && true;
+				System.out.println("Importing traj " + dropFile.getAbsolutePath());
 				
-			} else {
-				switch(holoEditRef.soundPoolGui.error)
-				{
-				case WaveFormReader.NO_ERROR :
-					break;
-				case WaveFormReader.MONO_ERROR :
-					Ut.alert("Error","Only mono file for instance,\nOnly the left channel has been read.");
-					break;
-				case WaveFormReader.TYPE_ERROR :
-					Ut.alert("Import Error", holoEditRef.soundPoolGui.errorFileName + " is not a supported file type.");
-					break;
-				case WaveFormReader.PATH_ERROR :
-					Ut.alert("Import Error", "Please rename the soundfile, for compatibility reasons with Max/MSP,\nit cannot be longer than 32 characters (including the extension).");
-					break;
-				case WaveFormReader.PATH2_ERROR :
-					Ut.alert("Import Error", "Please rename the soundfile, for compatibility reasons with Max/MSP,\nit cannot contain blank spaces.");
-					break;
-				default :
-					Ut.alert("Import Error", "Problem while loading soundfile, aborted.");
-					break;
-				}
-				b = b && false;
+				currentTrack = holoEditRef.gestionPistes.getTrack(trackSelected);
+				
+				new TjFileReader(holoEditRef.gestionPistes, dropFile.getAbsolutePath(), currentTrack.getNumber()-1, where);
+				
 			}
+			
 		}
 		return b;
 	}

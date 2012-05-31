@@ -526,6 +526,14 @@ public class HoloMenuBar extends JMenuBar
 			optionMenu.addSeparator();
 			optionMenu.add(lookAndFeelMenuItem);
 		}
+		
+		if(Ut.MAC)
+		{
+			optionMenu.addSeparator();
+			optionMenu.add(prefsMenuItem);
+		}
+		
+		
 		// ******** Functions & Speakers Menu *************/
 		functionsMenu = new JMenu("Functions");
 		hpMenu = new JMenu("Speakers");
@@ -666,14 +674,20 @@ public class HoloMenuBar extends JMenuBar
 		helpMenuItem = new HoloMenuItem("Quick Help", KeyEvent.VK_F1, false, aAction);
 		docFrMenuItem = new HoloMenuItem("Documentation (Fr)", aAction);
 		docEnMenuItem = new HoloMenuItem("Documentation (En)", aAction);
-		if(!Ut.MAC)
-		{
-			helpMenu.add(aboutMenuItem);
-			helpMenu.addSeparator();
-		}
+//		if(!Ut.MAC)
+//		{
+//			helpMenu.add(aboutMenuItem);
+//			helpMenu.addSeparator();
+//		}
 		helpMenu.add(helpMenuItem);
 		helpMenu.add(docFrMenuItem);
 		helpMenu.add(docEnMenuItem);
+		
+		{
+			helpMenu.addSeparator();
+			helpMenu.add(aboutMenuItem);
+		}
+		
 		add(fileMenu);
 		add(editMenu);
 		add(trackMenu);

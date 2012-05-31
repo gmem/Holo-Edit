@@ -55,8 +55,9 @@ public class HoloPlayer extends MaxObject implements Executable,Player
 	protected static final int CUE_OFFSET = 150; // limit number of tracks to 24 ( because of SPECIAL CUES management )
 	public GestionPistes gestionPistes;
 	public SimpleSoundPool soundPool;
-	protected static final int tick = 1;
+	protected int tick = 1;
 	protected double tack;
+	protected double delay;
 	protected String vc,wc;
 	double mytime, deltatack;
 	protected double realcounterf;

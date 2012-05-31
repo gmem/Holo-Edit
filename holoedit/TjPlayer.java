@@ -41,7 +41,7 @@ import com.cycling74.max.MaxSystem;
 public class TjPlayer extends HoloPlayer
 {
 	private static boolean init=false;
-	private static String version = "4.5§4";
+	private static String version = "4.5§7";
 	private boolean cuemode = true;
 	private float speed  = 1.f;
 	private boolean share = false;
@@ -85,6 +85,7 @@ public class TjPlayer extends HoloPlayer
 		declareAttribute("share","isShare","setShare");
 		declareAttribute("sharename","getShareName","setShareName");
 		declareAttribute("linemode","getLineMode","setLineMode");
+		declareAttribute("grain","getGrain","setGrain");
 		
 		if(share)
 		{
@@ -417,6 +418,8 @@ public class TjPlayer extends HoloPlayer
 			}
 		}
 		looping = !firstCue;
+		delay = 0;
+		tack = System.currentTimeMillis();
 		clock.delay(0);
 	}
 	
@@ -427,7 +430,7 @@ public class TjPlayer extends HoloPlayer
 			if(recordcue>0)
 			{
 				looping = false;
-				fcounter += 1.f;
+				fcounter += tick;
 				counter	= (int) (fcounter + 0.5f);
 				if(counter%10 == 0) send("time",Atom.newAtom(counter));
 				clock.delay(tick);
@@ -443,12 +446,23 @@ public class TjPlayer extends HoloPlayer
 						fcounter = counter;
 						looping = true;
 						loopNum++;
+						delay = 0;
 					} else {
 						send("stop");
 						playing = false;
 						paused = false;
 						autostop = true;
 					}
+				}else
+				{
+					// if system overloaded :
+					delay += System.currentTimeMillis() - ( tack + tick ); 
+					//if(delay < 0.) delay = 0;
+					fcounter += ((int)delay)*speed;
+					counter	= (int) (fcounter + 0.5f);
+					//post("tj delay : "+delay+"  count incr "+((int)delay)*speed);
+					delay -= (int)delay;
+					
 				}
 	
 				
@@ -632,11 +646,11 @@ public class TjPlayer extends HoloPlayer
 					}
 				}
 			
-				//post(hp.hashCode());
 				
 			looping = false;
-			fcounter += speed;
+			fcounter += speed*tick;
 			lastcounter = counter;
+			tack = System.currentTimeMillis();
 			counter	= (int) (fcounter + 0.5f);
 			if(!autostop)
 				clock.delay(tick);
@@ -803,6 +817,16 @@ public class TjPlayer extends HoloPlayer
 		return speed;
 	}
 
+	private void setGrain(int grain)
+	{
+		if(grain < 1) grain = 1;
+		tick = grain;
+	}
+	
+	private int getGrain()
+	{
+		return tick;
+	}
 	
 	private void setOffset(float x, float y, float z)
 	{
