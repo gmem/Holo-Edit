@@ -116,7 +116,6 @@ public class HoloFilenameFilter implements FilenameFilter
 		this.description = description;
 	}
 
-	
 	public boolean accept(File file)
 	{
 		if (!multi)

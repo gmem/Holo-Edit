@@ -114,6 +114,7 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 	private MenuItem importSeq3;
 	private MenuItem exportSeq;
 	private MenuItem exportSeqICST;
+	private MenuItem exportSeqSDIF;
 	private MenuItem importTrack1;
 	private MenuItem importTrack2;
 	private MenuItem importTrack3;
@@ -348,6 +349,8 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 					exportSeq();
 				else if (o == exportSeqICST)
 					exportSeqICST();
+				else if (o == exportSeqSDIF)
+					exportSeqSDIF();
 				else if (o == importTrack1 || o == importTrack2 ||o == importTrack3)
 					holoEditRef.gestionPistes.importTrack(trackSelected,(int)oldCurrentX);
 				else if (o == importSeq1 || o == importSeq2 || o == importSeq3)
@@ -414,6 +417,7 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 		importWave3 = new MenuItem("Import WaveForm from SoundPool...");
 		exportSeq = new MenuItem("Export Trajectory...");
 		exportSeqICST = new MenuItem("Export ICST Trajectory...");
+		exportSeqSDIF = new MenuItem("Export SDIF Trajectory...");
 		setCursor1.addActionListener(aa);
 		setCursor2.addActionListener(aa);
 		setCursor3.addActionListener(aa);
@@ -465,6 +469,7 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 		importWave3.addActionListener(aa);
 		exportSeq.addActionListener(aa);
 		exportSeqICST.addActionListener(aa);
+		exportSeqSDIF.addActionListener(aa);
 		
 		trackPopup.add(setCursor1);
 		trackPopup.addSeparator();
@@ -512,6 +517,7 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 		multiSeqPopup.add(importWave2);
 		multiSeqPopup.add(exportSeq);
 		multiSeqPopup.add(exportSeqICST);
+		multiSeqPopup.add(exportSeqSDIF);
 		seqPopup.add(setCursor3);
 		seqPopup.addSeparator();
 		seqPopup.add(viewAll3);
@@ -534,6 +540,7 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 		seqPopup.add(importWave3);
 		seqPopup.add(exportSeq);
 		seqPopup.add(exportSeqICST);
+		seqPopup.add(exportSeqSDIF);
 		add(trackPopup);
 		add(multiSeqPopup);
 		add(seqPopup);
@@ -1901,6 +1908,7 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 					cutAtSeq.setEnabled(seq);
 					exportSeq.setEnabled(seq);
 					exportSeqICST.setEnabled(seq);
+					exportSeqSDIF.setEnabled(seq);
 					viewSeq.setLabel(seq ? "View this trajectory" : "View this waveform");
 					zoomSeq.setLabel(seq ? "Zoom on this trajectory" : "Zoom on this waveform");
 					moveSeq.setLabel(seq ? "Move this trajectory to time..." : "Move this waveform to time...");
@@ -1911,6 +1919,7 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 					eraseSeq.setLabel(seq ? "Erase this trajectory" : "Erase this waveform");
 					exportSeq.setLabel(seq ? "Export this trajectory..." : "Cannot export waveforms");
 					exportSeqICST.setLabel(seq ? "Export this trajectory (ICST)..." : "Cannot export waveforms");
+					exportSeqSDIF.setLabel(seq ? "Export this trajectory (SDIF)..." : "Cannot export waveforms");
 					popupVisible = true;
 					holoEditRef.gestionPistes.selectTrack(ScoreIndex.getTrack());
 					seqPopup.show(this, e.getX(), e.getY() + 16);
@@ -4094,6 +4103,13 @@ public class ScoreGUI extends FloatingWindow implements GLEventListener, MouseLi
 		int[] iA = ScoreIndex.decode(selected);
 		if(ScoreIndex.isSeq())
 			holoEditRef.gestionPistes.exportSeqICST(iA[1],iA[2]);
+	}
+	
+	public void exportSeqSDIF()
+	{
+		int[] iA = ScoreIndex.decode(selected);
+		if(ScoreIndex.isSeq())
+			holoEditRef.gestionPistes.exportSeqSDIF(iA[1],iA[2]);
 	}
 	
 	public void importWave()

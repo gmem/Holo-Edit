@@ -43,6 +43,7 @@ import holoedit.fileio.TextRead;
 import holoedit.fileio.TjFileReader;
 import holoedit.fileio.TjFileWriter;
 import holoedit.fileio.ICSTFileWriter;
+import holoedit.fileio.SDIFFileWriter;
 import holoedit.fileio.TkFileReader;
 import holoedit.fileio.TkFileWriter;
 import holoedit.functions.Algorithm;
@@ -1729,6 +1730,34 @@ public class GestionPistes
 		return false;
 	}
 	
+	/** Choix d'un fichier SDIF Trajectory out*/
+	public boolean getSDIFFileOutName()
+	{
+		File fileOut = GestionPistes.chooseFile("Export a Holo-Edit Trajectory",tjDirectory,tjFilter,tjFilterXP,true);
+		if (fileOut != null)
+		{
+			tjFilename = fileOut.getName();
+			tjDirectory = Ut.dir(fileOut.getParent());
+			if (!tjFilename.endsWith(".sdif"))
+				tjFilename = tjFilename.concat(".sdif");
+			if (!Ut.MAC)
+			{
+				File fi = new File(Ut.dir(tjDirectory) + tjFilename);
+				if(fi.exists())
+				{
+					int returnVal2 = JOptionPane.showConfirmDialog(null, "File " + tjFilename + " already exists, overwrite ?", "Overwrite ?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+					if (returnVal2 == JOptionPane.YES_OPTION)
+						return true;
+					tjFilename = null;
+					return false;
+				}
+			}
+			return true;
+		}
+		tjFilename = null;
+		return false;
+	}
+	
 	public void readHoloFile()
 	{
 		if(holoEditRef == null)
@@ -1966,6 +1995,15 @@ public class GestionPistes
 			holoEditRef.connection.stop();
 		if(getICSTFileOutName())
 			new ICSTFileWriter(this, Ut.dir(tjDirectory) + tjFilename, tkNum, seqNum);
+	}
+	
+	/** export Trajectory */
+	public void exportSeqSDIF(int tkNum, int seqNum)
+	{
+		if(holoEditRef.connection.isPlaying())
+			holoEditRef.connection.stop();
+		if(getSDIFFileOutName())
+			new SDIFFileWriter(this, Ut.dir(tjDirectory) + tjFilename, tkNum, seqNum);
 	}
 	
 	

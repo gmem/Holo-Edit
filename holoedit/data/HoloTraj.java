@@ -33,7 +33,9 @@
  */
 package holoedit.data;
 
+import sdif.*;
 import holoedit.gui.TimeEditorGUI.CurvePoint;
+
 import holoedit.opengl.OpenGLUt;
 import holoedit.opengl.RoomIndex;
 import holoedit.opengl.ScoreIndex;
@@ -43,7 +45,9 @@ import java.awt.Color;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
+import java.util.Date;
 import javax.media.opengl.GL;
 
 //import com.sun.tools.example.debug.gui.GUI;
@@ -169,6 +173,71 @@ public class HoloTraj
 		return res.toString();
 	}
 	
+	public String toSDIFFile(String SDIFfilename)
+	{
+//	    Calendar maintenant = Calendar.getInstance();
+	    SimpleDateFormat moulageDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+	    // Création d'un fichier sdif suivant une trajectoire
+		System.loadLibrary("eaSDIFjava");
+		eaSDIF.EasdifInit("");
+		Entity entityToWrite = new Entity();
+
+ 		NameValueTable nameValueTableToWrite = new NameValueTable();
+	    nameValueTableToWrite.AddNameValue("TableName","FileInfo");
+	    nameValueTableToWrite.AddNameValue("Author","HoloEdit " + Ut.version );
+	    nameValueTableToWrite.AddNameValue("Date", moulageDate.format(new Date()) );
+	    entityToWrite.AddNVT(nameValueTableToWrite);
+	    
+/*	    // trouver les valeurs min et max de points et initialiser cette table !!!!!!!
+	    nameValueTableToWrite.clear();
+		nameValueTableToWrite.AddNameValue("TableName","Dimensions");
+		nameValueTableToWrite.AddNameValue("Xmin","-10.0");
+		nameValueTableToWrite.AddNameValue("Xmax", "10.0");
+		nameValueTableToWrite.AddNameValue("Ymin","-10.0");
+		nameValueTableToWrite.AddNameValue("Ymax", "10.0");
+		nameValueTableToWrite.AddNameValue("Zmin","-10.0");
+		nameValueTableToWrite.AddNameValue("Zmax", "10.0");
+		entityToWrite.AddNVT(nameValueTableToWrite);
+*/
+	    entityToWrite.AddMatrixType("XCAR",	"x, y, z");
+	    entityToWrite.AddFrameType("XSRC", "XCAR cartesian_coordinates");
+	    
+		try
+		{
+			entityToWrite.OpenWrite(SDIFfilename);
+
+			Frame frameToWrite = new Frame();
+			frameToWrite.begin();
+			for (HoloPoint hp : points)
+			{
+//				frameToWrite.SetHeader("XSRC", (long)1, (double)(hp.date) );
+				frameToWrite.SetHeader("XSRC", (long)1, hp.date/1000. );
+	        
+				Matrix matrixToWrite = new Matrix();
+				matrixToWrite.Init("XCAR", 1, 3, SdifDataTypeET.eFloat4);
+ 				matrixToWrite.Set(0, 0, (hp.x)/100);
+				matrixToWrite.Set(0, 1, (hp.y)/100);
+				matrixToWrite.Set(0, 2, (hp.z)/100);
+//				matrixToWrite.Set(0, 0, hp.x);
+//				matrixToWrite.Set(0, 1, hp.y);
+//				matrixToWrite.Set(0, 2, hp.z);
+
+				frameToWrite.AddMatrix(matrixToWrite);
+				frameToWrite.Write(entityToWrite);
+				frameToWrite.ClearData();
+			}
+			frameToWrite.end();
+
+			entityToWrite.eof();
+			entityToWrite.Close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return("-1");
+		}
+		return SDIFfilename;
+	}
+
 	public void print()
 	{
 		System.out.println("\t<traj begin_number=\"" + getBegNumber() + "\" nb=\"" + size() + "\" beg=\"" + getFirstDate() + "\" end=\"" + getLastDate() + "\"/>");
